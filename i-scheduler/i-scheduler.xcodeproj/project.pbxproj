@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A44E7AAD275DDC7700D92696 /* i-scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i-scheduler.xcdatamodeld */; };
+		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
 		A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85D275DD47100A77363 /* i_schedulerApp.swift */; };
 		A87FA860275DD47100A77363 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85F275DD47100A77363 /* ContentView.swift */; };
 		A87FA862275DD47200A77363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA861275DD47200A77363 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A87FA85A275DD47100A77363 /* i-scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i-scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A87FA85D275DD47100A77363 /* i_schedulerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i_schedulerApp.swift; sourceTree = "<group>"; };
 		A87FA85F275DD47100A77363 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 			children = (
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
+				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
+				A44E7AAB275DDC7700D92696 /* i-scheduler.xcdatamodeld */,
 				A87FA861275DD47200A77363 /* Assets.xcassets */,
 				A87FA863275DD47200A77363 /* Preview Content */,
 			);
@@ -138,7 +144,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
+				A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
+				A44E7AAD275DDC7700D92696 /* i-scheduler.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +349,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A44E7AAB275DDC7700D92696 /* i-scheduler.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */,
+			);
+			currentVersion = A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */;
+			path = "i-scheduler.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A87FA852275DD47100A77363 /* Project object */;
 }
