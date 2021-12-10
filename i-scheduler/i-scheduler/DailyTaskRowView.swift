@@ -12,6 +12,7 @@ struct DailyTaskRowView: View {
     @Environment(\.managedObjectContext) var context
     private var task: Task? { tasks.first }
     
+    // func in Task extension
     init(task: Task) {
         let request = Task.fetchRequest(NSPredicate(format: "id = %@", (task.id ?? UUID()) as CVarArg))
         _tasks = FetchRequest(fetchRequest: request)
@@ -44,6 +45,7 @@ struct DailyTaskRowView: View {
             Text(task.name ?? "")
                 .font(.headline)
                 .strikethrough(task.isFinished)
+            // var in Project extension
             Text(task.startToEnd)
                 .strikethrough(task.isFinished)
             Text(task.summary ?? "")

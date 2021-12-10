@@ -18,6 +18,7 @@ struct TaskDetailView: View {
                     .bold()
                 Text(task.name!)
                     .font(.largeTitle)
+                // func in Task extension
                 Text(task.startToEnd)
                 Text("")
                 Text(task.summary!)

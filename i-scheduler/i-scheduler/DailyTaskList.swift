@@ -16,6 +16,7 @@ struct DailyTaskList: View {
     init(isPresented: Binding<Bool>, projectId: UUID, date: Date) {
         self._isPresented = isPresented
         self.projectId = projectId
+        // func in Task extension
         let request = Task.fetchRequest(NSPredicate(format: "project.id = %@ and startDate <= %@ and endDate >= %@", projectId as CVarArg, date as CVarArg, date as CVarArg))
         _tasks = FetchRequest(fetchRequest: request)
     }
@@ -40,14 +41,16 @@ struct DailyTaskList: View {
                 ToolbarItem(placement: .navigationBarTrailing) { add }
             }
             .sheet(isPresented: $taskEditorIsPresented) {
-                FakeTaskEditor(projectId: projectId)
-                    .environment(\.managedObjectContext, context)
+//                replace this with eunbin's Editor
+//                FakeTaskEditor(projectId: projectId)
+//                    .environment(\.managedObjectContext, context)
             }
         }
     }
     
     private func deleteTask(at indexSet: IndexSet) {
         for index in indexSet {
+            // func in Task extension
             let task = Task.withId(tasks[index].id!, context: context)
             context.delete(task)
         }

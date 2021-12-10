@@ -40,7 +40,6 @@ struct Popup: ViewModifier {
 extension View {
     func popup(isPresented: Binding<Bool>, projectId: UUID, size: CGSize, date: Date) -> some View {
         self.modifier(Popup(isPresented: isPresented, projectId: projectId, size: size, date: date))
-
     }
 }
 
