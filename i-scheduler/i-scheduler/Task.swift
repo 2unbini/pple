@@ -12,20 +12,27 @@ extension Task: Comparable {
         lhs.name < rhs.name
     }
     
-    // MARK: - Fetching From CoreDate
+    // MARK: - Fetching From CoreData
     
-    static func withId(_ id: UUID, context: NSManagedObjectContext) -> Task {
+    static func withId(_ id: UUID, context: NSManagedObjectContext) -> Task? {
         let request = fetchRequest(NSPredicate(format: "taskId_ = %@", id as CVarArg))
-        let task = (try? context.fetch(request)) ?? []
-        if let task = task.first {
-            return task
-        } else {
-            // TODO: - protect against nil before shipping
-            let newTask = Task(context: context)
-            newTask.taskId = id
-            newTask.project = Project.withId(UUID(), context: context)
-            return newTask
+        do {
+            let task = try context.fetch(request)
+            if let task = task.first {
+                return task
+            } else {
+                // TODO: - protect against nil before shipping
+                let newTask = Task(context: context)
+                newTask.taskId = id
+                if let project = Project.withId(UUID(), context: context) {
+                    newTask.project = project
+                    return newTask
+                }
+            }
+        } catch(let error) {
+            print("태스크를 찾는 데 실패했습니다: \(error.localizedDescription)")
         }
+        return nil
     }
     
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Task> {
