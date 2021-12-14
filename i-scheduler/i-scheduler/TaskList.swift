@@ -16,7 +16,7 @@ struct TaskList: View {
     init(isPresented: Binding<Bool>, projectId: UUID, date: Date) {
         self._isPresented = isPresented
         self.projectId = projectId
-        let datePredicates = date.convertedToPredicates()
+        let datePredicates = date.modifiedForPredicates()
         let request = Task.fetchRequest(
             NSPredicate(
                 format: "project_.projectId_ = %@ and startDate_ < %@ and endDate_ >= %@",

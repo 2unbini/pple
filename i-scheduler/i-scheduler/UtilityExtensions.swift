@@ -19,17 +19,17 @@ extension Date {
     ///     - startDate needs to be Jan 2, 2000, 00:00:00
     ///     - endDate needs to be Jan 1, 2000, 00:00:00
     /// - To get these predicates, this method calculates the date of the given Date's
-    ///   next day, converts each of the two Date into a String and converts them back
+    ///   next day, converts each of the two Dates into a String and converts them back
     ///   to Date
     /// - `DateComponents` are used to get the next day's date because everyday
     ///   is not 24 hours due to issues like summer time etc.
     /// - then `DateFormatter` is used to convert Date into String in `mm/dd/yy`
-    ///   format (without time) and then back to Date again which results in
+    ///   format (without time) and then back to Date again which then results in
     ///   `mm/dd/yy 00:00:00`
     ///
     /// - Returns: `Tuple` of two `Dates` named `start` and `end` where
     ///   each repsents the Date to be used as predicates for StartDate and EndDate
-    func convertedToPredicates() -> (start: Date, end: Date) {
+    func modifiedForPredicates() -> (start: Date, end: Date) {
         var components = DateComponents()
         components.day = 1
         let tomorrow = Calendar.current.date(byAdding: components, to: self)
