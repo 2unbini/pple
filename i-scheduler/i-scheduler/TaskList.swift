@@ -57,8 +57,6 @@ struct TaskList: View {
     private func deleteTask(at indexSet: IndexSet) {
         for index in indexSet {
             if let task = Task.withId(tasks[index].taskId, context: context) {
-                task.objectWillChange.send()
-                task.project.objectWillChange.send()
                 context.delete(task)
             }
         }

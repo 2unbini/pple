@@ -27,8 +27,6 @@ struct CheckBox: View {
     }
     
     private func save() {
-        task.objectWillChange.send()
-        task.project.objectWillChange.send()
         do {
             try context.save()
         } catch(let error) {
