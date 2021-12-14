@@ -1,5 +1,5 @@
 //
-//  DailyTaskList.swift
+//  TaskList.swift
 //  i-scheduler
 //
 //  Created by sun on 2021/12/07.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyTaskList: View {
+struct TaskList: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest var tasks: FetchedResults<Task>
     @Binding var isPresented: Bool
@@ -16,8 +16,12 @@ struct DailyTaskList: View {
     init(isPresented: Binding<Bool>, projectId: UUID, date: Date) {
         self._isPresented = isPresented
         self.projectId = projectId
-        // func in Task extension
-        let request = Task.fetchRequest(NSPredicate(format: "project.id = %@ and startDate <= %@ and endDate >= %@", projectId as CVarArg, date as CVarArg, date as CVarArg))
+        let datePredicates = date.modifiedForPredicates()
+        let request = Task.fetchRequest(
+            NSPredicate(
+                format: "project_.projectId_ = %@ and startDate_ < %@ and endDate_ >= %@",
+                argumentArray: [projectId, datePredicates.start, datePredicates.end]
+        ))
         _tasks = FetchRequest(fetchRequest: request)
     }
     
@@ -25,14 +29,9 @@ struct DailyTaskList: View {
         NavigationView {
             ZStack {
                 if !tasks.isEmpty {
-                    List {
-                        ForEach(tasks) { task in
-                            DailyTaskRowView(task: task)
-                        }
-                        .onDelete(perform: deleteTask(at:))
-                    }
+                    taskList
                 } else {
-                    Text("No Tasks Today")
+                    Text("오늘은 자유!")
                 }
             }
             .navigationBarTitle("오늘의 할 일")
@@ -40,21 +39,33 @@ struct DailyTaskList: View {
                 ToolbarItem(placement: .cancellationAction) { cancel }
                 ToolbarItem(placement: .navigationBarTrailing) { add }
             }
-            .sheet(isPresented: $taskEditorIsPresented) {
-                // replace with 은빈's Editor
-                FakeTaskEditor(projectId: projectId)
-                    .environment(\.managedObjectContext, context)
+            .sheet(isPresented: $editorIsPresented) {
+                // integrate Eunbin's Editor lator
             }
+        }
+    }
+    
+    private var taskList: some View {
+        List {
+            ForEach(tasks) { task in
+                TaskRowView(task: task)
+            }
+            .onDelete(perform: deleteTask(at:))
         }
     }
     
     private func deleteTask(at indexSet: IndexSet) {
         for index in indexSet {
-            // func in Task extension
-            let task = Task.withId(tasks[index].id!, context: context)
-            context.delete(task)
+            if let task = Task.withId(tasks[index].taskId, context: context) {
+                context.delete(task)
+            }
         }
-        try? context.save()
+        // replace with PersistenceController.shared.save()
+        do {
+            try context.save()
+        } catch(let error) {
+            print("태스크 삭제에 실패했습니다: \(error.localizedDescription)")
+        }
     }
     
     private var cancel: some View {
@@ -65,19 +76,41 @@ struct DailyTaskList: View {
         }
     }
     
-    @State private var taskEditorIsPresented = false
+    @State private var editorIsPresented = false
+
     private var add: some View {
         Button {
-            taskEditorIsPresented = true
+            editorIsPresented = true
         } label: {
             Image(systemName: "plus")
         }
     }
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 //struct DailyTaskList_Previews: PreviewProvider {
 //    static var previews: some View {
 //        DailyTaskList()
+//    }
+//}
+
+
+//struct DailyTaskList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskList()
 //    }
 //}
