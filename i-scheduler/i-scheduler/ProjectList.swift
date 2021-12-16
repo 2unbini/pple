@@ -14,7 +14,7 @@ import CoreData
 struct ProjectList: View {
     
     @Environment(\.editMode) private var editMode: Binding<EditMode>?
-    @Environment(\.managedObjectContext) private var viewContet: NSManagedObjectContext
+    @Environment(\.managedObjectContext) var viewContext: NSManagedObjectContext
     
     @FetchRequest(
         entity: Project.entity(),
@@ -24,7 +24,8 @@ struct ProjectList: View {
     @State private var isEditing: Bool = false
     @State private var isTapped: Bool = false
     @State private var showAddSheet: Bool = false
-    @State private var editData: Project = Project()
+    
+    @StateObject private var selectedProject: TempData = TempData()
     
     var body: some View {
         NavigationView {
@@ -36,20 +37,20 @@ struct ProjectList: View {
                             .font(.title3)
                             .padding(8.0)
                     })
-                    .onTapGesture {
-                        if self.editMode?.wrappedValue == .active {
-                            editData = project
-                            isTapped.toggle()
+                        .onTapGesture {
+                            if self.editMode?.wrappedValue == .active {
+                                setSelectedData(with: project)
+                                isTapped.toggle()
+                            }
                         }
-                    }
                 }
                 .listStyle(.plain)
                 .navigationTitle(isEditing ? "프로젝트 선택" : "내 프로젝트")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading, content: {
                         Button(isEditing ? "완료" : "수정") {
-                            editMode?.wrappedValue.toggle()
-                            isEditing.toggle()
+                            self.editMode?.wrappedValue.toggle()
+                            self.isEditing.toggle()
                         }
                     })
                     ToolbarItem(placement: .navigationBarTrailing, content: {
@@ -58,16 +59,26 @@ struct ProjectList: View {
                                 showAddSheet.toggle()
                             }
                             .sheet(isPresented: $showAddSheet, content: {
-                                AddSheet(subject: .project)
+                                AddSheet(.project)
                             })
                         }
                     })
                 }
                 .sheet(isPresented: $isTapped, content: {
-                    EditSheet(subject: .project, editData: editData)
+                    EditSheet(editWith: selectedProject, .project)
+                        .environment(\.managedObjectContext, viewContext)
                 })
             }
         }
+    }
+    
+    private func setSelectedData(with project: Project) {
+        selectedProject.id = project.projectId
+        selectedProject.name = project.name
+        selectedProject.summary = project.summary
+        selectedProject.startDate = project.startDate
+        selectedProject.endDate = project.endDate
+        selectedProject.isFinished = project.isFinished
     }
 }
 
