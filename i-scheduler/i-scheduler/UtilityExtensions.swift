@@ -47,3 +47,16 @@ extension Date {
         return (startDate, endDate)
     }
 }
+
+
+extension View {
+    func popup<Content>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
+        let popupContent = content()
+            .transition(.move(edge: .bottom))
+        return self.overlay(isPresented.wrappedValue ? popupContent : nil)
+    }
+    
+    func cardify(size: CGSize) -> some View {
+        self.modifier(Cardify(size: size))
+    }
+}
