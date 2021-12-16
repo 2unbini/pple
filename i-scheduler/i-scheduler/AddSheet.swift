@@ -6,50 +6,57 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddSheet: View {
+    @Environment(\.presentationMode) private var presentationMode
+    @StateObject var addData: TempData = TempData()
     
     private var subject: Subject
     private var prefix: String
     
-    @State var addData: TestProject
-    
-    init(subject: Subject) {
-        self.subject = subject
-        
-        if subject == .project {
+    init(_ subject: Subject) {
+        switch subject {
+        case .project:
             self.prefix = "프로젝트"
-        } else {
+        case .task:
             self.prefix = "할 일"
         }
         
-        _addData = State(initialValue: TestProject(name: "", summary: ""))
+        self.subject = subject
     }
     
     var body: some View {
         VStack {
-            TopBar(bar: .addSheet, subject: subject, data: addData)
-            VStack {
-                Text("\(prefix) 이름")
-                TextField("", text: $addData.name)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal, 30.0)
+            AddToolBar(subject, addData: addData)
+            Form {
+                Section(content: {
+                    TextField("", text: $addData.name)
+                }, header: {
+                    Text("\(prefix) 이름")
+                })
+                
+                Section(content: {
+                    TextEditor(text: $addData.summary)
+                        .modifier(TextEditorModifier())
+                }, header: {
+                    Text("\(prefix) 설명")
+                })
+                
+                Section(content: {
+                    DatePicker("시작 날짜", selection: $addData.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $addData.endDate, in: PartialRangeFrom(addData.startDate), displayedComponents: .date)
+                }, header: {
+                    Text("\(prefix) 기간")
+                })
+                
+                Section(content: {
+                    Toggle("\(prefix) 완료", isOn: $addData.isFinished)
+                        .toggleStyle(.switch)
+                }, header: {
+                    Text("\(prefix) 완료")
+                })
             }
-            .padding()
-            VStack {
-                Text("\(prefix) 설명")
-                TextEditor(text: $addData.summary)
-                    .modifier(TextEditorModifier())
-            }
-            .padding()
-            VStack {
-                DatePicker("시작 날짜", selection: $addData.startDate, displayedComponents: .date)
-                DatePicker("종료 날짜", selection: $addData.endDate, in: PartialRangeFrom(addData.startDate), displayedComponents: .date)
-            }
-            .padding(.horizontal, 50.0)
-            .padding(.top, 20.0)
-            
-            Spacer()
         }
     }
 }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9398951B276339E400BF6F59 /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989511276339E300BF6F59 /* EditSheet.swift */; };
 		9398951C276339E400BF6F59 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989512276339E300BF6F59 /* Popup.swift */; };
-		9398951D276339E400BF6F59 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* TopBar.swift */; };
+		9398951D276339E400BF6F59 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* ToolBar.swift */; };
 		9398951E276339E400BF6F59 /* AddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989514276339E400BF6F59 /* AddSheet.swift */; };
 		9398951F276339E400BF6F59 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989515276339E400BF6F59 /* ProjectList.swift */; };
 		93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989516276339E400BF6F59 /* TaskDetailView.swift */; };
@@ -25,12 +25,14 @@
 		A87FA860275DD47100A77363 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85F275DD47100A77363 /* ContentView.swift */; };
 		A87FA862275DD47200A77363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA861275DD47200A77363 /* Assets.xcassets */; };
 		A87FA865275DD47200A77363 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA864275DD47200A77363 /* Preview Assets.xcassets */; };
+		A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */; };
+		A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1E276B2B540050F6C9 /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		93989511276339E300BF6F59 /* EditSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
 		93989512276339E300BF6F59 /* Popup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
-		93989513276339E400BF6F59 /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
+		93989513276339E400BF6F59 /* ToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
 		93989514276339E400BF6F59 /* AddSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSheet.swift; sourceTree = "<group>"; };
 		93989515276339E400BF6F59 /* ProjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
 		93989516276339E400BF6F59 /* TaskDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
@@ -47,6 +49,8 @@
 		A87FA85F275DD47100A77363 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A87FA861275DD47200A77363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A87FA864275DD47200A77363 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryModel.swift; sourceTree = "<group>"; };
+		A8AB6E1E276B2B540050F6C9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,12 +95,14 @@
 				93989517276339E400BF6F59 /* ProjectGrid.swift */,
 				93989515276339E400BF6F59 /* ProjectList.swift */,
 				93989516276339E400BF6F59 /* TaskDetailView.swift */,
-				93989513276339E400BF6F59 /* TopBar.swift */,
+				93989513276339E400BF6F59 /* ToolBar.swift */,
 				A45A941427639381008F626F /* Project.swift */,
 				A45A941627639387008F626F /* Task.swift */,
 				A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */,
 				A87FA861275DD47200A77363 /* Assets.xcassets */,
 				A87FA863275DD47200A77363 /* Preview Content */,
+				A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */,
+				A8AB6E1E276B2B540050F6C9 /* Enums.swift */,
 			);
 			path = "i-scheduler";
 			sourceTree = "<group>";
@@ -179,7 +185,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9398951D276339E400BF6F59 /* TopBar.swift in Sources */,
+				9398951D276339E400BF6F59 /* ToolBar.swift in Sources */,
 				9398951C276339E400BF6F59 /* Popup.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
 				93989521276339E400BF6F59 /* ProjectGrid.swift in Sources */,
@@ -192,8 +198,10 @@
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
 				A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */,
 				93989522276339E400BF6F59 /* DailyTaskRowView.swift in Sources */,
+				A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */,
 				93989524276339E400BF6F59 /* DailyTaskList.swift in Sources */,
 				9398951F276339E400BF6F59 /* ProjectList.swift in Sources */,
+				A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */,
 				A45A941527639381008F626F /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

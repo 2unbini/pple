@@ -6,55 +6,63 @@
 //
 
 import SwiftUI
+import CoreData
+
 
 struct EditSheet: View {
+    @Environment(\.managedObjectContext) var viewContext
+    @ObservedObject private var editData: TempData
     
     private var subject: Subject
     private var prefix: String
     
-    @State private var editedProject: TestProject
-    
-    init(subject: Subject, editData: TestProject) {
-        self.subject = subject
-        
-        if subject == .project {
+    init(editWith selectedData: TempData, _ subject: Subject) {
+        switch subject {
+        case .project:
             self.prefix = "프로젝트"
-        } else {
+        case .task:
             self.prefix = "할 일"
         }
         
-        _editedProject = State(initialValue: editData)
+        self.subject = subject
+        self.editData = selectedData
     }
     
     var body: some View {
         VStack {
-            TopBar(bar: .editSheet, subject: subject, data: editedProject)
-            VStack {
-                Text("\(prefix) 이름")
-                TextField("", text: $editedProject.name)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal, 30.0)
+            EditToolBar(subject: subject, editedData: editData)
+            Form {
+                Section(content: {
+                    TextField("", text: $editData.name)
+                }, header: {
+                    Text("\(prefix) 이름")
+                })
+                
+                Section(content: {
+                    TextEditor(text: $editData.summary)
+                        .modifier(TextEditorModifier())
+                }, header: {
+                    Text("\(prefix) 설명")
+                })
+                
+                Section(content: {
+                    DatePicker("시작 날짜", selection: $editData.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $editData.endDate,
+                               in: PartialRangeFrom(editData.startDate), displayedComponents: .date)
+                }, header: {
+                    Text("\(prefix) 기간")
+                })
+                
+                Section(content: {
+                    Toggle("\(prefix) 완료", isOn: $editData.isFinished)
+                        .toggleStyle(.switch)
+                }, header: {
+                    Text("\(prefix) 완료")
+                })
             }
-            .padding()
-            VStack {
-                Text("\(prefix) 설명")
-                TextEditor(text: $editedProject.summary)
-                    .modifier(TextEditorModifier())
-            }
-            .padding()
-            VStack {
-                DatePicker("시작 날짜", selection: $editedProject.startDate, displayedComponents: .date)
-                DatePicker("종료 날짜", selection: $editedProject.endDate, in: PartialRangeFrom(editedProject.startDate), displayedComponents: .date)
-            }
-            .padding(.horizontal, 50.0)
-            .padding(.top, 20.0)
-            
-            Toggle("\(prefix) 완료", isOn: $editedProject.isFinished)
-                .toggleStyle(.switch)
-                .padding(.horizontal, 50.0)
-                .padding(.top, 20.0)
-            
-            Spacer()
+//            .onAppear {
+//                UITableView.appearance().backgroundColor = .clear
+//            }
         }
     }
 }
@@ -66,12 +74,7 @@ struct TextEditorModifier: ViewModifier {
             .foregroundColor(Color.black)
             .font(.body)
             .lineSpacing(5)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 100, alignment: .center)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-            )
-            .padding(.horizontal, 30.0)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 100, alignment: .center)
     }
 }
 
