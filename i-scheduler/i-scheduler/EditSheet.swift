@@ -16,6 +16,8 @@ struct EditSheet: View {
     private var subject: Subject
     private var prefix: String
     
+    
+    // TODO: 프로젝트 시작, 종료 날짜에 맞춰 DatePicker 제한
     init(editWith selectedData: TempData, _ subject: Subject) {
         switch subject {
         case .project:
@@ -60,9 +62,6 @@ struct EditSheet: View {
                     Text("\(prefix) 완료")
                 })
             }
-//            .onAppear {
-//                UITableView.appearance().backgroundColor = .clear
-//            }
         }
     }
 }

@@ -25,13 +25,14 @@ struct ProjectList: View {
     @State private var isTapped: Bool = false
     @State private var showAddSheet: Bool = false
     
+    // TODO: Project 자체를 넘길 수 있는 방법 다시 생각
     @StateObject private var selectedProject: TempData = TempData()
     
     var body: some View {
         NavigationView {
             VStack {
                 List(projects, id: \.self) { project in
-                    NavigationLink(destination: ProjectGrid(row: project.name),
+                    NavigationLink(destination: ProjectCalendarView(project: project),
                                    label: {
                         Text(project.name)
                             .font(.title3)
@@ -70,6 +71,7 @@ struct ProjectList: View {
                 })
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func setSelectedData(with project: Project) {
