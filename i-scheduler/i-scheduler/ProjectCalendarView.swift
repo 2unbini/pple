@@ -9,15 +9,17 @@ import SwiftUI
 
 struct ModifyView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var bindingTest: Int
+    var getDays: Int
+    var startDate: Date
     var body: some View {
         VStack(spacing: 50) {
-            Text("Modal view.")
+            Text("modal")
                 .font(.largeTitle)
-            
             Button(action: {
                 presentationMode.wrappedValue.dismiss()
-                print(bindingTest)
+                // test passed data
+                print("func test = \(plusDays(startDate: startDate, dayOf: getDays))")
+                print("day = \(getDays)")
             }, label: {
                 Image(systemName: "xmark.circle")
                 
@@ -26,83 +28,93 @@ struct ModifyView: View {
     }
 }
 
-var day1 = Date(timeIntervalSinceNow: 1000000)
-var day2 = Date()
-var test = daysBetween(start: day2, end: day1)
+struct NavigationTrailingEditButton: View {
+    @State var showModifyTab: Bool = false
+    var body: some View {
+        Button {
+            self.showModifyTab = !self.showModifyTab
+        }
+    label: {
+        Text("수정")
+    }
+        //    .sheet(isPresented: self.$showModifyTab) {
+        //        ModifyView(bindingTest: 30)
+        //    }
+    }
+}
+
+struct DayButtonView: View {
+    let day: String
+    let width: CGFloat = UIScreen.main.bounds.size.width
+    let height: CGFloat = UIScreen.main.bounds.size.height
+    var body: some View {
+        ZStack {
+            Image(systemName: "square.fill")
+                .resizable()
+                .frame(width: UIDevice.current.userInterfaceIdiom != .pad ? width / 7 : width / 10,
+                       height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 15)
+                .foregroundColor(.white)
+                .shadow(color: .black, radius: 2)
+            Text(day)
+                .multilineTextAlignment(.center)
+                .frame(width: 80, height: 80, alignment: .center)
+                .foregroundColor(.black)
+                .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+        }
+        .padding(5)
+    }
+}
 
 struct ProjectCalendarView: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(
-      entity: Project.entity(),
-      sortDescriptors: [
-        NSSortDescriptor(keyPath: \Project.id, ascending: true)
-      ]
-    ) var project: FetchedResults<Project>
+    let startDate: Date
+    let endDate: Date
+    let dayData: [String]
     
     @State var showModifyView: Bool = false
-    let dayData: [String] = Array(1...test).map { "Day\n\($0)" }
-    @State var bindingTest = test
     
-    func addMovie() {
-        let newProject = Project(context: context)
-        newProject.endDate = Date()
-        newProject.startDate = Date(timeIntervalSinceNow: 1000000)
-        newProject.id = UUID()
-        newProject.isFinished = false
-        newProject.name = "project Name1"
-        newProject.summary = "nothing wroten"
-        saveContext()
+    // MARK : datData, startDate, endDate의 날짜를 받아서 수정할 예정
+    init(startDate: Date = Date(), endDate: Date = Date(timeIntervalSinceNow: 2 * 24 * 60 * 60)) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate)).map { "Day\n\($0)" }
     }
     
-    func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
     
     var body: some View {
-        ScrollView {
-            ZStack {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))]) {
+        NavigationView {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
                             self.showModifyView = !self.showModifyView
-                            addMovie()
-                            print("--------------------------------------------------")
-                            print(project)
-                            print("--------------------------------------------------")
                         } label: {
-                            ZStack {
-                                Image(systemName: "square.fill")
-                                    .resizable()
-                                    .frame(width: 60, height: 70)
-                                    .aspectRatio(0.8, contentMode: .fit)
-                                    .foregroundColor(.white)
-                                    .shadow(color: .black, radius: 2)
-                                Text(day)
-                                    .multilineTextAlignment(.center)
-                                    .frame(width: 80, height: 80, alignment: .center)
-                                    .foregroundColor(.black)
-                            }
+                            DayButtonView(day: day)
+                        }.sheet(isPresented: self.$showModifyView) {
+                            //몇번째 Day인지 넘겨줌 다음 뷰로
+                            ModifyView(getDays: Int(atoi(day.components(separatedBy: "Day\n")[1])))
                         }
-                    }.sheet(isPresented: self.$showModifyView) {
-                        ModifyView(bindingTest: bindingTest)
                     }
                 }
             }
+            .padding()
+            .navigationBarTitle("프로젝트")
+            .navigationBarItems(trailing: NavigationTrailingEditButton())
         }
-        .padding()
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
-func daysBetween(start: Date, end: Date) -> Int {
-        return Calendar.current.dateComponents([.day], from: start, to: end).day!
-    }
-
-struct ProjectCalendarView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProjectCalendarView()
-    }
+func daysBetween(startDate: Date, endDate: Date) -> Int {
+    return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
 }
+
+func plusDays(startDate: Date, dayOf: Int) -> Date {
+    var dateComponent = DateComponents()
+    dateComponent.day = dayOf
+    return Calendar.current.date(byAdding: dateComponent, to: startDate)!
+}
+//struct ProjectCalendarView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProjectCalendarView()
+//    }
+//}
