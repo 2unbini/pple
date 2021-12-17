@@ -8,29 +8,40 @@
 import SwiftUI
 
 struct TaskDetailView: View {
-    var task: Task
+    @ObservedObject var task: Task
+    @State var isPresented = false
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(task.isFinished ? "진행 상태 : 완료!" : "진행 상태 : 진행 중!")
-                    .foregroundColor(.green)
-                    .bold()
-                Text(task.name!)
-                    .font(.largeTitle)
-                Text(task.startToEnd)
-                Text("")
-                Text(task.summary!)
-                Spacer()
-            }
-            .padding(.leading)
+            taskDetails
             Spacer()
         }
         .padding(.horizontal)
+        // TODO: discuss button function and UI
         .toolbar {
-            // functioning not implemetened yet
-            Button("Edit") { print("edit") }
+            // TODO: implement functioning
+            Button("Edit") {
+                isPresented = true
+            }
         }
+    }
+    
+    private var taskDetails: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                CheckBox(task: task)
+                Text(task.isFinished ? "완료!" : "진행 중!")
+                    .bold()
+            }
+            .foregroundColor(task.isFinished ? .gray : .green)
+            Text(task.name)
+                .font(.title)
+            Text(task.startDateToEndDateInPrettyFormat)
+            Text(task.summary)
+            Spacer()
+        }
+        .foregroundColor(task.isFinished ? .gray : .black)
+        .padding(.leading)
     }
 }
 
