@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9398951B276339E400BF6F59 /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989511276339E300BF6F59 /* EditSheet.swift */; };
-		9398951C276339E400BF6F59 /* PopUpTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989512276339E300BF6F59 /* PopUpTaskList.swift */; };
 		9398951D276339E400BF6F59 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* TopBar.swift */; };
 		9398951E276339E400BF6F59 /* AddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989514276339E400BF6F59 /* AddSheet.swift */; };
 		9398951F276339E400BF6F59 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989515276339E400BF6F59 /* ProjectList.swift */; };
@@ -17,6 +16,7 @@
 		93989522276339E400BF6F59 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989518276339E400BF6F59 /* TaskRowView.swift */; };
 		93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989519276339E400BF6F59 /* ProjectCalendarView.swift */; };
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
+		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
 		A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */; };
 		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
 		A45A941527639381008F626F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A941427639381008F626F /* Project.swift */; };
@@ -31,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		93989511276339E300BF6F59 /* EditSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
-		93989512276339E300BF6F59 /* PopUpTaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpTaskList.swift; sourceTree = "<group>"; };
 		93989513276339E400BF6F59 /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
 		93989514276339E400BF6F59 /* AddSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSheet.swift; sourceTree = "<group>"; };
 		93989515276339E400BF6F59 /* ProjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		93989518276339E400BF6F59 /* TaskRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		93989519276339E400BF6F59 /* ProjectCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectCalendarView.swift; sourceTree = "<group>"; };
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A45A941427639381008F626F /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -93,8 +93,8 @@
 				93989518276339E400BF6F59 /* TaskRowView.swift */,
 				93989516276339E400BF6F59 /* TaskDetailView.swift */,
 				93989511276339E300BF6F59 /* EditSheet.swift */,
-				93989512276339E300BF6F59 /* PopUpTaskList.swift */,
 				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
+				A4162C52276B175E00A2BBDC /* Cardify.swift */,
 				93989517276339E400BF6F59 /* ProjectGrid.swift */,
 				93989515276339E400BF6F59 /* ProjectList.swift */,
 				93989513276339E400BF6F59 /* TopBar.swift */,
@@ -186,7 +186,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9398951D276339E400BF6F59 /* TopBar.swift in Sources */,
-				9398951C276339E400BF6F59 /* PopUpTaskList.swift in Sources */,
 				A4D52AA2276877F300E0B17A /* UtilityExtensions.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
 				93989521276339E400BF6F59 /* ProjectGrid.swift in Sources */,
@@ -198,6 +197,7 @@
 				9398951B276339E400BF6F59 /* EditSheet.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
+				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
 				A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */,
 				93989522276339E400BF6F59 /* TaskRowView.swift in Sources */,
 				93989524276339E400BF6F59 /* TaskList.swift in Sources */,
