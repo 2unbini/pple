@@ -40,7 +40,7 @@ struct TaskList: View {
                 ToolbarItem(placement: .navigationBarTrailing) { add }
             }
             .sheet(isPresented: $editorIsPresented) {
-                // integrate Eunbin's Editor lator
+                AddSheet(.task, projectId: projectId)
             }
         }
     }

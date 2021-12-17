@@ -7,39 +7,18 @@
 
 import SwiftUI
 
-struct ModifyView: View {
-    @Environment(\.presentationMode) var presentationMode
-    var getDays: Int
-    var startDate: Date
-    var body: some View {
-        VStack(spacing: 50) {
-            Text("modal")
-                .font(.largeTitle)
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-                // test passed data
-                print("func test = \(plusDays(startDate: startDate, dayOf: getDays))")
-                print("day = \(getDays)")
-            }, label: {
-                Image(systemName: "xmark.circle")
-                
-            })
-        }
-    }
-}
-
 struct NavigationTrailingEditButton: View {
     @State var showModifyTab: Bool = false
+    
     var body: some View {
         Button {
             self.showModifyTab = !self.showModifyTab
+        } label: {
+            Text("수정")
         }
-    label: {
-        Text("수정")
-    }
-        //    .sheet(isPresented: self.$showModifyTab) {
-        //        ModifyView(bindingTest: 30)
-        //    }
+        .sheet(isPresented: $showModifyTab) {
+            EditSheet(editWith: TempData(), .project)
+        }
     }
 }
 
@@ -70,37 +49,46 @@ struct ProjectCalendarView: View {
     let endDate: Date
     let dayData: [String]
     
+    @ObservedObject var project: Project
     @State var showModifyView: Bool = false
     
-    // MARK : datData, startDate, endDate의 날짜를 받아서 수정할 예정
-    init(startDate: Date = Date(), endDate: Date = Date(timeIntervalSinceNow: 2 * 24 * 60 * 60)) {
-        self.startDate = startDate
-        self.endDate = endDate
+    init(project: Project) {
+        
+        _project = ObservedObject(initialValue: project)
+        self.startDate = project.startDate
+        self.endDate = project.endDate
         self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate)).map { "Day\n\($0)" }
     }
     
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
-                    ForEach(dayData, id: \.self) { day in
-                        Button {
+        
+        // TODO: GeometryReader로 LazyVGrid 사이즈 수정 해 주기
+        
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
+                ForEach(dayData, id: \.self) { day in
+                    Button {
+                        withAnimation{
                             self.showModifyView = !self.showModifyView
-                        } label: {
-                            DayButtonView(day: day)
-                        }.sheet(isPresented: self.$showModifyView) {
-                            //몇번째 Day인지 넘겨줌 다음 뷰로
-                            ModifyView(getDays: Int(atoi(day.components(separatedBy: "Day\n")[1])))
                         }
+                    } label: {
+                        DayButtonView(day: day)
                     }
                 }
             }
-            .padding()
-            .navigationBarTitle("프로젝트")
-            .navigationBarItems(trailing: NavigationTrailingEditButton())
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .popup(isPresented: $showModifyView, content: {
+            
+            // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
+            // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
+            
+            TaskList(isPresented: $showModifyView, projectId: project.projectId, date: plusDays(startDate: startDate, dayOf: /*1*/ 3))
+                .cardify(size: /*2*/ CGSize(width: 450, height: 700))
+        })
+        .padding()
+        .navigationBarTitle("프로젝트")
+        .navigationBarItems(trailing: NavigationTrailingEditButton())
     }
 }
 

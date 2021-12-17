@@ -8,11 +8,15 @@
 import SwiftUI
 import CoreData
 
+
+// TODO: EditToolBar init, function 수정
+
 struct AddToolBar: View {
     
     private var subject: Subject
     private var barText: String
     private var saveData: TempData
+    private var projectId: UUID?
     
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
@@ -28,6 +32,18 @@ struct AddToolBar: View {
         }
         self.subject = subject
         self.saveData = addData
+    }
+    
+    init(_ subject: Subject, addData: TempData, projectId: UUID) {
+        switch subject {
+        case .project:
+            self.barText = "프로젝트 추가"
+        case .task:
+            self.barText = "할 일 추가"
+        }
+        self.subject = subject
+        self.saveData = addData
+        self.projectId = projectId
     }
     
     var body: some View {
@@ -51,6 +67,9 @@ struct AddToolBar: View {
                 }
             }
             .alert(isPresented: $showAlert) {
+                
+                // TODO: Alert 강종되는 오류 수정
+                
                 Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
                     showAlert.toggle()
                 }))
@@ -79,6 +98,8 @@ struct AddToolBar: View {
             newTask.summary = saveData.summary
             newTask.startDate = saveData.startDate
             newTask.endDate = saveData.endDate
+            
+            newTask.project = Project.withId(projectId!, context: viewContext)!
         }
         
         do {
@@ -132,6 +153,10 @@ struct EditToolBar: View {
                 presentationMode.wrappedValue.dismiss()
             }
             .alert(isPresented: $showAlert) {
+                
+                // TODO: Alert 강종되는 오류 수정
+                
+                
                 Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
                     showAlert.toggle()
                 }))

@@ -14,6 +14,7 @@ struct AddSheet: View {
     
     private var subject: Subject
     private var prefix: String
+    private var projectId: UUID?
     
     init(_ subject: Subject) {
         switch subject {
@@ -26,9 +27,28 @@ struct AddSheet: View {
         self.subject = subject
     }
     
+    // TODO: 프로젝트 시작, 종료 날짜에 맞춰 DatePicker 제한
+    
+    init(_ subject: Subject, projectId: UUID) {
+        switch subject {
+        case .project:
+            self.prefix = "프로젝트"
+        case .task:
+            self.prefix = "할 일"
+        }
+        
+        self.subject = subject
+        self.projectId = projectId
+    }
+    
     var body: some View {
         VStack {
-            AddToolBar(subject, addData: addData)
+            if subject == .project {
+                AddToolBar(subject, addData: addData)
+            }
+            else {
+                AddToolBar(subject, addData: addData, projectId: projectId!)
+            }
             Form {
                 Section(content: {
                     TextField("", text: $addData.name)
@@ -48,13 +68,6 @@ struct AddSheet: View {
                     DatePicker("종료 날짜", selection: $addData.endDate, in: PartialRangeFrom(addData.startDate), displayedComponents: .date)
                 }, header: {
                     Text("\(prefix) 기간")
-                })
-                
-                Section(content: {
-                    Toggle("\(prefix) 완료", isOn: $addData.isFinished)
-                        .toggleStyle(.switch)
-                }, header: {
-                    Text("\(prefix) 완료")
                 })
             }
         }

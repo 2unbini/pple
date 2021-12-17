@@ -95,7 +95,6 @@
 				A4D52AA1276877F300E0B17A /* UtilityExtensions.swift */,
 				9398951A276339E400BF6F59 /* TaskList.swift */,
 				93989518276339E400BF6F59 /* TaskRowView.swift */,
-				93989516276339E400BF6F59 /* TaskDetailView.swift */,
 				93989511276339E300BF6F59 /* EditSheet.swift */,
 				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
 				A4162C52276B175E00A2BBDC /* Cardify.swift */,
@@ -342,6 +341,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
+				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -371,6 +371,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
+				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
