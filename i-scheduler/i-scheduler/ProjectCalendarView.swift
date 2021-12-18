@@ -53,7 +53,7 @@ struct ProjectCalendarView: View {
     @State var showModifyView: Bool = false
     
     init(project: Project) {
-        
+
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
@@ -83,7 +83,7 @@ struct ProjectCalendarView: View {
             // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
             // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
             
-            TaskList(isPresented: $showModifyView, projectId: project.projectId, date: plusDays(startDate: startDate, dayOf: /*1*/ 3))
+            TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: /*1*/ 3))
                 .cardify(size: /*2*/ CGSize(width: 450, height: 700))
         })
         .padding()

@@ -20,13 +20,11 @@ struct TaskRowView: View {
     @ObservedObject var task: Task
     
     var body: some View {
-        NavigationLink(destination: TaskDetailView(task: task)) {
-            HStack {
-                CheckBox(task: task)
-                description(of: task)
-            }
-            .foregroundColor(task.isFinished ? .gray : .black)
+        HStack {
+            CheckBox(task: task)
+            description(of: task)
         }
+        .foregroundColor(task.isFinished ? .gray : .black)
     }
     
     private func description(of task: Task) -> some View{
