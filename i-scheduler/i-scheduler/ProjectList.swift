@@ -9,13 +9,9 @@ import SwiftUI
 import CoreData
 
 
-// MARK: - EditButton 사용하지 않고 Custom Button 만들어서 toolBar에서 사용하는 경우, 화면의 왼편과 오른편이 나뉘는 현상 발생...
-
 struct ProjectList: View {
     
     @Environment(\.editMode) private var editMode: Binding<EditMode>?
-    @Environment(\.managedObjectContext) var viewContext: NSManagedObjectContext
-    
     @FetchRequest(
         entity: Project.entity(),
         sortDescriptors: [NSSortDescriptor(key: "name_", ascending: true)]
@@ -24,9 +20,8 @@ struct ProjectList: View {
     @State private var isEditing: Bool = false
     @State private var isTapped: Bool = false
     @State private var showAddSheet: Bool = false
+    @State private var project: Project?
     
-    // TODO: Project 자체를 넘길 수 있는 방법 다시 생각
-    @StateObject private var selectedProject: TempData = TempData()
     
     var body: some View {
         NavigationView {
@@ -40,7 +35,7 @@ struct ProjectList: View {
                     })
                         .onTapGesture {
                             if self.editMode?.wrappedValue == .active {
-                                setSelectedData(with: project)
+                                self.project = project
                                 isTapped.toggle()
                             }
                         }
@@ -65,22 +60,13 @@ struct ProjectList: View {
                         }
                     })
                 }
-                .sheet(isPresented: $isTapped, content: {
-                    EditSheet(editWith: selectedProject, .project)
-                        .environment(\.managedObjectContext, viewContext)
-                })
+                .sheet(item: $project) { project in
+                    EditSheet(editWith: project, .project)
+                }
+                .environment(\.editMode, editMode)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-    }
-    
-    private func setSelectedData(with project: Project) {
-        selectedProject.id = project.projectId
-        selectedProject.name = project.name
-        selectedProject.summary = project.summary
-        selectedProject.startDate = project.startDate
-        selectedProject.endDate = project.endDate
-        selectedProject.isFinished = project.isFinished
     }
 }
 
