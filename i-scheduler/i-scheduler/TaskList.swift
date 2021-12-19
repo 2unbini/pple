@@ -16,11 +16,10 @@ struct TaskList: View {
     init(isPresented: Binding<Bool>, project: Project, date: Date) {
         self._isPresented = isPresented
         self.project = project
-        let datePredicates = date.modifiedForPredicates()
         let request = Task.fetchRequest(
             NSPredicate(
                 format: "project_ = %@ and startDate_ < %@ and endDate_ >= %@",
-                argumentArray: [project, datePredicates.start, datePredicates.end]
+                argumentArray: [project, date.tomorrowMidnight, date.midnight]
         ))
         _tasks = FetchRequest(fetchRequest: request)
     }
