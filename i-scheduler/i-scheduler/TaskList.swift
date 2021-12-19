@@ -42,7 +42,7 @@ struct TaskList: View {
             .sheet(isPresented: $editorIsPresented) {
                 AddSheet(.task, projectId: projectId)
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     private var taskList: some View {
