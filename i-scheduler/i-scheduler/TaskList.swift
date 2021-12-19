@@ -11,16 +11,16 @@ struct TaskList: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest var tasks: FetchedResults<Task>
     @Binding var isPresented: Bool
-    var projectId: UUID
+    private var project: Project
     
-    init(isPresented: Binding<Bool>, projectId: UUID, date: Date) {
+    init(isPresented: Binding<Bool>, project: Project, date: Date) {
         self._isPresented = isPresented
-        self.projectId = projectId
+        self.project = project
         let datePredicates = date.modifiedForPredicates()
         let request = Task.fetchRequest(
             NSPredicate(
-                format: "project_.projectId_ = %@ and startDate_ < %@ and endDate_ >= %@",
-                argumentArray: [projectId, datePredicates.start, datePredicates.end]
+                format: "project_ = %@ and startDate_ < %@ and endDate_ >= %@",
+                argumentArray: [project, datePredicates.start, datePredicates.end]
         ))
         _tasks = FetchRequest(fetchRequest: request)
     }
@@ -36,11 +36,12 @@ struct TaskList: View {
             }
             .navigationBarTitle("오늘의 할 일")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { cancel }
-                ToolbarItem(placement: .navigationBarTrailing) { add }
+                ToolbarItem(placement: .cancellationAction) { cancelButton }
+                ToolbarItem(placement: .navigationBarTrailing) { addButton }
             }
-            .sheet(isPresented: $editorIsPresented) {
-                AddSheet(.task, projectId: projectId)
+            .sheet(isPresented: $addSheetIsPresented) {
+                // TODO: replace with refactored AddSheet
+                AddSheet(.task, projectId: project.projectId)
             }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
@@ -48,7 +49,9 @@ struct TaskList: View {
     private var taskList: some View {
         List {
             ForEach(tasks) { task in
-                TaskRowView(task: task)
+                NavigationLink(destination: TaskDetailView(task: task)) {
+                    TaskRowView(task: task)
+                }
             }
             .onDelete(perform: deleteTask(at:))
         }
@@ -68,7 +71,7 @@ struct TaskList: View {
         }
     }
     
-    private var cancel: some View {
+    private var cancelButton: some View {
         Button("취소") {
             withAnimation {
                 isPresented = false
@@ -76,11 +79,11 @@ struct TaskList: View {
         }
     }
     
-    @State private var editorIsPresented = false
+    @State private var addSheetIsPresented = false
 
-    private var add: some View {
+    private var addButton: some View {
         Button {
-            editorIsPresented = true
+            addSheetIsPresented = true
         } label: {
             Image(systemName: "plus")
         }
