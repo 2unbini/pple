@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskDetailView: View {
     @ObservedObject var task: Task
-    @State var isPresented = false
+    @State private var isPresented = false
     
     var body: some View {
         HStack {
@@ -17,15 +17,11 @@ struct TaskDetailView: View {
             Spacer()
         }
         .padding(.horizontal)
-        // TODO: discuss button function and UI
         .toolbar {
-            // TODO: implement functioning
-            Button("Edit") {
-                isPresented = true
-            }
-            .sheet(isPresented: $isPresented) {
-                EditSheet(editWith: TempData(), .task)
-            }
+            editButton
+        }
+        .sheet(isPresented: $isPresented) {
+            EditSheet(editWith: TempData(), .task)
         }
     }
     
@@ -45,6 +41,12 @@ struct TaskDetailView: View {
         }
         .foregroundColor(task.isFinished ? .gray : .black)
         .padding(.leading)
+    }
+    
+    private var editButton: some View {
+        Button("수정") {
+            isPresented = true
+        }
     }
 }
 
