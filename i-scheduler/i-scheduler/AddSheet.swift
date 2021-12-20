@@ -8,64 +8,33 @@
 import SwiftUI
 import CoreData
 
-struct AddSheet: View {
-    @Environment(\.presentationMode) private var presentationMode
-    @StateObject var addData: TempData = TempData()
+struct ProjectAddSheet: View {
+    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+    @ObservedObject private var tempProject: TempData = TempData()
     
-    private var subject: Subject
-    private var prefix: String
-    private var projectId: UUID?
-    
-    init(_ subject: Subject) {
-        switch subject {
-        case .project:
-            self.prefix = "프로젝트"
-        case .task:
-            self.prefix = "할 일"
-        }
-        
-        self.subject = subject
-    }
-    
-    // TODO: 프로젝트 시작, 종료 날짜에 맞춰 DatePicker 제한
-    
-    init(_ subject: Subject, projectId: UUID) {
-        switch subject {
-        case .project:
-            self.prefix = "프로젝트"
-        case .task:
-            self.prefix = "할 일"
-        }
-        
-        self.subject = subject
-        self.projectId = projectId
-    }
-    
+    private var prefix: String = "프로젝트"
+
     var body: some View {
         VStack {
-            if subject == .project {
-                AddToolBar(subject, addData: addData)
-            }
-            else {
-                AddToolBar(subject, addData: addData, projectId: projectId!)
-            }
+            ProjectToolBar(.add, project: nil, with: tempProject)
             Form {
                 Section(content: {
-                    TextField("", text: $addData.name)
+                    TextField("", text: $tempProject.name)
                 }, header: {
                     Text("\(prefix) 이름")
                 })
                 
                 Section(content: {
-                    TextEditor(text: $addData.summary)
+                    TextEditor(text: $tempProject.summary)
                         .modifier(TextEditorModifier())
                 }, header: {
                     Text("\(prefix) 설명")
                 })
                 
                 Section(content: {
-                    DatePicker("시작 날짜", selection: $addData.startDate, displayedComponents: .date)
-                    DatePicker("종료 날짜", selection: $addData.endDate, in: PartialRangeFrom(addData.startDate), displayedComponents: .date)
+                    DatePicker("시작 날짜", selection: $tempProject.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $tempProject.endDate,
+                               in: PartialRangeFrom(tempProject.startDate), displayedComponents: .date)
                 }, header: {
                     Text("\(prefix) 기간")
                 })
@@ -74,8 +43,45 @@ struct AddSheet: View {
     }
 }
 
-//struct AddSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddSheet(subject: .project)
-//    }
-//}
+struct TaskAddSheet: View {
+    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+    @ObservedObject private var tempTask: TempData
+    
+    private var prefix: String = "할 일"
+    private var project: Project
+    
+    init(relatedTo project: Project) {
+        self.project = project
+        self.tempTask = TempData()
+        self.tempTask.startDate = project.startDate
+        self.tempTask.endDate = project.endDate
+    }
+    
+    var body: some View {
+        VStack {
+            TaskToolBar(.add, task: nil, with: tempTask, to: project)
+            Form {
+                Section(content: {
+                    TextField("", text: $tempTask.name)
+                }, header: {
+                    Text("\(prefix) 이름")
+                })
+                
+                Section(content: {
+                    TextEditor(text: $tempTask.summary)
+                        .modifier(TextEditorModifier())
+                }, header: {
+                    Text("\(prefix) 설명")
+                })
+                
+                Section(content: {
+                    DatePicker("시작 날짜", selection: $tempTask.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $tempTask.endDate,
+                               in: PartialRangeFrom(tempTask.startDate), displayedComponents: .date)
+                }, header: {
+                    Text("\(prefix) 기간")
+                })
+            }
+        }
+    }
+}

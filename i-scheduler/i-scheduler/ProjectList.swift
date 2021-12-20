@@ -55,13 +55,13 @@ struct ProjectList: View {
                                 showAddSheet.toggle()
                             }
                             .sheet(isPresented: $showAddSheet, content: {
-                                AddSheet(.project)
+                                ProjectAddSheet()
                             })
                         }
                     })
                 }
                 .sheet(item: $project) { project in
-                    EditSheet(editWith: project, .project)
+                    ProjectEditSheet(editWith: project)
                 }
                 .environment(\.editMode, editMode)
             }
@@ -75,9 +75,3 @@ extension EditMode {
         self = self == .active ? .inactive : .active
     }
 }
-
-//struct ProjectList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProjectList()
-//    }
-//}
