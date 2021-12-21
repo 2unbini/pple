@@ -42,7 +42,7 @@ struct TaskList: View {
                 // TODO: replace with refactored AddSheet
                 AddSheet(.task, projectId: project.projectId)
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     private var taskList: some View {

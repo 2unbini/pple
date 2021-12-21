@@ -31,7 +31,7 @@ struct DayButtonView: View {
             Image(systemName: "square.fill")
                 .resizable()
                 .frame(width: UIDevice.current.userInterfaceIdiom != .pad ? width / 7 : width / 10,
-                       height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 15)
+                       height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 11)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2)
             Text(day)
@@ -51,6 +51,7 @@ struct ProjectCalendarView: View {
     
     @ObservedObject var project: Project
     @State var showModifyView: Bool = false
+    @State var dayOf: Int = 0
     
     init(project: Project) {
 
@@ -59,41 +60,44 @@ struct ProjectCalendarView: View {
         self.endDate = project.endDate
         self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate)).map { "Day\n\($0)" }
     }
-    
-    
+
     var body: some View {
-        
-        // TODO: GeometryReader로 LazyVGrid 사이즈 수정 해 주기
-        
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
-                ForEach(dayData, id: \.self) { day in
-                    Button {
-                        withAnimation{
-                            self.showModifyView = !self.showModifyView
+
+        GeometryReader { geometry in
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
+                    ForEach(dayData, id: \.self) { day in
+                        Button {
+                            withAnimation{
+                                self.showModifyView = !self.showModifyView
+                            }
+                            self.dayOf = Int(atoi(day.components(separatedBy: "Day\n")[1]))
+                        } label: {
+                            DayButtonView(day: day)
+                            
                         }
-                    } label: {
-                        DayButtonView(day: day)
                     }
                 }
             }
+            .popup(isPresented: $showModifyView, content: {
+                TaskList(
+                    isPresented: $showModifyView, projectId: project.projectId,
+                    date: plusDays(startDate: startDate, dayOf: dayOf)
+                )
+                    .cardify(size: CGSize(width: geometry.size.width, height: geometry.size.height))
+            })
+            .padding()
+            .navigationBarTitle(project.name)
+            .navigationBarItems(trailing: NavigationTrailingEditButton())
         }
-        .popup(isPresented: $showModifyView, content: {
-            
-            // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
-            // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
-            
-            TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: /*1*/ 3))
-                .cardify(size: /*2*/ CGSize(width: 450, height: 700))
-        })
-        .padding()
-        .navigationBarTitle("프로젝트")
-        .navigationBarItems(trailing: NavigationTrailingEditButton())
     }
 }
 
 func daysBetween(startDate: Date, endDate: Date) -> Int {
-    return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
+    if endDate <= startDate {
+        return 1
+    }
+    return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day! + 1
 }
 
 func plusDays(startDate: Date, dayOf: Int) -> Date {
@@ -101,6 +105,8 @@ func plusDays(startDate: Date, dayOf: Int) -> Date {
     dateComponent.day = dayOf
     return Calendar.current.date(byAdding: dateComponent, to: startDate)!
 }
+
+
 //struct ProjectCalendarView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ProjectCalendarView()
