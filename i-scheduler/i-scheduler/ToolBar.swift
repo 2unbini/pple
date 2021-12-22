@@ -9,41 +9,31 @@ import SwiftUI
 import CoreData
 
 
-// TODO: EditToolBar init, function 수정
-
-struct AddToolBar: View {
-    
-    private var subject: Subject
-    private var barText: String
-    private var saveData: TempData
-    private var projectId: UUID?
+struct ProjectToolBar: View {
     
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
     
     @State private var showAlert: Bool = false
     
-    init(_ subject: Subject, addData: TempData) {
-        switch subject {
-        case .project:
-            self.barText = "프로젝트 추가"
-        case .task:
-            self.barText = "할 일 추가"
+    private var action: Action
+    private var barText: String
+    private var project: Project?
+    private var tempProject: TempData
+
+    init(_ action: Action, project: Project?, with tempProject: TempData) {
+        self.action = action
+        self.barText = "프로젝트"
+        
+        switch action {
+        case .add:
+            self.barText += " 추가"
+        case .edit:
+            self.barText += " 수정"
         }
-        self.subject = subject
-        self.saveData = addData
-    }
-    
-    init(_ subject: Subject, addData: TempData, projectId: UUID) {
-        switch subject {
-        case .project:
-            self.barText = "프로젝트 추가"
-        case .task:
-            self.barText = "할 일 추가"
-        }
-        self.subject = subject
-        self.saveData = addData
-        self.projectId = projectId
+        
+        self.project = project
+        self.tempProject = tempProject
     }
     
     var body: some View {
@@ -53,115 +43,67 @@ struct AddToolBar: View {
                 presentationMode.wrappedValue.dismiss()
             }
             .padding()
+
             Spacer()
             Text(barText)
                 .font(.system(size: 20))
             Spacer()
+            
             Button("저장") {
-                if saveData.name == "" {
-                    showAlert.toggle()
-                }
-                else {
-                    addNewData()
+                if isValidData() {
+                    switch action {
+                    case .add:
+                        setNewProject()
+                    case .edit:
+                        editProject()
+                    }
+                    saveContext()
                     presentationMode.wrappedValue.dismiss()
                 }
+                else {
+                    showAlert.toggle()
+                }
             }
             .alert(isPresented: $showAlert) {
                 
                 // TODO: Alert 강종되는 오류 수정
-                
-                Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
-                    showAlert.toggle()
-                }))
+                    Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
+                        showAlert.toggle()
+                    }))
             }
             .padding()
         }
     }
     
-    private func addNewData() {
+    private func isValidData() -> Bool {
         
-        if subject == .project {
-            let newProject = Project(context: viewContext)
-            
-            // id는 자동생성되게하는 것 어떤지
-            newProject.projectId = saveData.id
-            newProject.name = saveData.name
-            newProject.summary = saveData.summary
-            newProject.startDate = saveData.startDate
-            newProject.endDate = saveData.endDate
-        }
-        else if subject == .task {
-            let newTask = Task(context: viewContext)
-            
-            newTask.taskId = saveData.id
-            newTask.name = saveData.name
-            newTask.summary = saveData.summary
-            newTask.startDate = saveData.startDate
-            newTask.endDate = saveData.endDate
-            
-            newTask.project = Project.withId(projectId!, context: viewContext)!
-        }
+        if tempProject.name.isEmpty || tempProject.name == "" { return false }
+        if tempProject.startDate > tempProject.endDate { return false }
         
-        do {
-            try viewContext.save()
-        }
-        catch {
-            fatalError("error in addNewData: \(error)")
-        }
-    }
-}
-
-
-struct EditToolBar: View {
-    
-    private var subject: Subject
-    private var barText: String
-    private var saveData: TempData
-    
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    
-    @State private var showAlert: Bool = false
-    
-    init(subject: Subject, editedData: TempData) {
-        switch subject {
-        case .project:
-            self.barText = "프로젝트 수정"
-        case .task:
-            self.barText = "할 일 수정"
-        }
-        
-        self.subject = subject
-        self.saveData = editedData
+        return true
     }
     
-    var body: some View {
-        HStack {
-            
-            Button("닫기") {
-                presentationMode.wrappedValue.dismiss()
-            }
-            .padding()
-
-            Spacer()
-            Text(barText)
-                .font(.system(size: 20))
-            Spacer()
-            
-            Button("저장") {
-                saveEditedData()
-                presentationMode.wrappedValue.dismiss()
-            }
-            .alert(isPresented: $showAlert) {
-                
-                // TODO: Alert 강종되는 오류 수정
-                
-                
-                Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
-                    showAlert.toggle()
-                }))
-            }
-            .padding()
+    private func setNewProject() {
+        let newProject = Project(context: viewContext)
+        
+        newProject.projectId = UUID()
+        newProject.name = tempProject.name
+        newProject.summary = tempProject.summary
+        newProject.startDate = tempProject.startDate
+        newProject.endDate = tempProject.endDate
+        newProject.isFinished = tempProject.isFinished
+    }
+    
+    private func editProject() {
+        if project == nil {
+            fatalError("Error in editProject... Project to edit is nil")
+        }
+        else {
+            project!.name = tempProject.name
+            project!.summary = tempProject.summary
+            project!.startDate = tempProject.startDate
+            project!.endDate = tempProject.endDate
+            project!.isFinished = tempProject.isFinished
         }
     }
     
@@ -170,55 +112,123 @@ struct EditToolBar: View {
             try viewContext.save()
         }
         catch {
-            fatalError("error in saveContext: \(error)")
-        }
-    }
-    
-    private func saveEditedData() {
-        
-        if saveData.name == "" {
-            showAlert.toggle()
-            return
-        }
-
-        if subject == .project {
-
-            // View에서 사용하는 공용 Data로 넘겨받고, 저장시에 대입
-            // init 시점에서 context 사용하는 방법, Project 불러올 때 nil 오류들 해결 못함 -> TempData로 뷰에서 운용, 실제 저장시에 대입
-
-            // id 찾지 못했을 때 현재로선 새로운 프로젝트가 만들어짐
-            // 이 부분 보완 필요
-
-            guard let editedProject = Project.withId(saveData.id, context: viewContext) else { fatalError("Cannot Find Project with \(saveData.id.uuidString)") }
-
-            editedProject.name = saveData.name
-            editedProject.summary = saveData.summary
-            editedProject.startDate = saveData.startDate
-            editedProject.endDate = saveData.endDate
-            editedProject.isFinished = saveData.isFinished
-        }
-        else {
-            guard let editedTask = Task.withId(saveData.id, context: viewContext) else { fatalError("Cannot Find Task with \(saveData.id.uuidString)") }
-
-            editedTask.name = saveData.name
-            editedTask.summary = saveData.summary
-            editedTask.startDate = saveData.startDate
-            editedTask.endDate = saveData.endDate
-            editedTask.isFinished = saveData.isFinished
-        }
-
-        do {
-            try viewContext.save()
-        }
-        catch {
-            print(error.localizedDescription)
+            fatalError("Error in saveContext(): \(error.localizedDescription)")
         }
     }
 }
 
-//
-//struct TopBar_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TopBar(bar: Bar.editSheet, subject: Subject.project)
-//    }
-//}
+struct TaskToolBar: View {
+    
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+    
+    @State private var showAlert: Bool = false
+    
+    private var action: Action
+    private var barText: String
+    private var task: Task?
+    private var project: Project?
+    private var tempTask: TempData
+
+    init(_ action: Action, task: Task?, with tempTask: TempData, to project: Project?) {
+        self.action = action
+        self.barText = "할 일"
+        
+        switch action {
+        case .add:
+            self.barText += " 추가"
+        case .edit:
+            self.barText += " 수정"
+        }
+        
+        self.task = task
+        self.project = project
+        self.tempTask = tempTask
+    }
+    
+    var body: some View {
+        HStack {
+            
+            Button("닫기") {
+                presentationMode.wrappedValue.dismiss()
+            }
+            .padding()
+
+            Spacer()
+            Text(barText)
+                .font(.system(size: 20))
+            Spacer()
+            
+            Button("저장") {
+                if isValidData() {
+                    switch action {
+                    case .add:
+                        setNewTask()
+                    case .edit:
+                        editTask()
+                    }
+                    saveContext()
+                    presentationMode.wrappedValue.dismiss()
+                }
+                else {
+                    showAlert.toggle()
+                }
+            }
+            .alert(isPresented: $showAlert) {
+                
+                // TODO: Alert 강종되는 오류 수정
+                    Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
+                        showAlert.toggle()
+                    }))
+            }
+            .padding()
+        }
+    }
+    
+    private func isValidData() -> Bool {
+        
+        if tempTask.name.isEmpty || tempTask.name == "" { return false }
+        if tempTask.startDate > tempTask.endDate { return false }
+        
+        return true
+    }
+    
+    private func setNewTask() {
+        if project == nil {
+            fatalError("Error in setNewTask... Project to add new task is nil")
+        }
+        else {
+            let newTask = Task(context: viewContext)
+            
+            newTask.taskId = UUID()
+            newTask.name = tempTask.name
+            newTask.summary = tempTask.summary
+            newTask.startDate = tempTask.startDate
+            newTask.endDate = tempTask.endDate
+            newTask.isFinished = tempTask.isFinished
+            newTask.project = project!
+        }
+    }
+    
+    private func editTask() {
+        if task == nil {
+            fatalError("Error in editTask... Task to edit is nil")
+        }
+        else {
+            task!.name = tempTask.name
+            task!.summary = tempTask.summary
+            task!.startDate = tempTask.startDate
+            task!.endDate = tempTask.endDate
+            task!.isFinished = tempTask.isFinished
+        }
+    }
+    
+    private func saveContext() {
+        do {
+            try viewContext.save()
+        }
+        catch {
+            fatalError("Error in saveContext(): \(error.localizedDescription)")
+        }
+    }
+}

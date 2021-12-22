@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Subject {
-    case project
-    case task
+enum Action {
+    case add
+    case edit
 }

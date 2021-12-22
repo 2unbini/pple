@@ -8,55 +8,105 @@
 import SwiftUI
 import CoreData
 
-
-struct EditSheet: View {
-    @Environment(\.managedObjectContext) var viewContext
-    @ObservedObject private var editData: TempData
+struct ProjectEditSheet: View {
+    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+    @ObservedObject private var tempProject: TempData
     
-    private var subject: Subject
-    private var prefix: String
+    private var prefix: String = "프로젝트"
+    private var project: Project
     
-    
-    // TODO: 프로젝트 시작, 종료 날짜에 맞춰 DatePicker 제한
-    init(editWith selectedData: TempData, _ subject: Subject) {
-        switch subject {
-        case .project:
-            self.prefix = "프로젝트"
-        case .task:
-            self.prefix = "할 일"
-        }
+    init(editWith selectedProject: Project) {
+        self.project = selectedProject
+        self.tempProject = TempData()
         
-        self.subject = subject
-        self.editData = selectedData
+        self.tempProject.name = selectedProject.name
+        self.tempProject.summary = selectedProject.summary
+        self.tempProject.startDate = selectedProject.startDate
+        self.tempProject.endDate = selectedProject.endDate
+        self.tempProject.isFinished = selectedProject.isFinished
     }
     
     var body: some View {
         VStack {
-            EditToolBar(subject: subject, editedData: editData)
+            ProjectToolBar(.edit, project: project, with: tempProject)
             Form {
                 Section(content: {
-                    TextField("", text: $editData.name)
+                    TextField("", text: $tempProject.name)
                 }, header: {
                     Text("\(prefix) 이름")
                 })
                 
                 Section(content: {
-                    TextEditor(text: $editData.summary)
+                    TextEditor(text: $tempProject.summary)
                         .modifier(TextEditorModifier())
                 }, header: {
                     Text("\(prefix) 설명")
                 })
                 
                 Section(content: {
-                    DatePicker("시작 날짜", selection: $editData.startDate, displayedComponents: .date)
-                    DatePicker("종료 날짜", selection: $editData.endDate,
-                               in: PartialRangeFrom(editData.startDate), displayedComponents: .date)
+                    DatePicker("시작 날짜", selection: $tempProject.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $tempProject.endDate,
+                               in: PartialRangeFrom(tempProject.startDate), displayedComponents: .date)
                 }, header: {
                     Text("\(prefix) 기간")
                 })
                 
                 Section(content: {
-                    Toggle("\(prefix) 완료", isOn: $editData.isFinished)
+                    Toggle("\(prefix) 완료", isOn: $tempProject.isFinished)
+                        .toggleStyle(.switch)
+                }, header: {
+                    Text("\(prefix) 완료")
+                })
+            }
+        }
+    }
+}
+
+struct TaskEditSheet: View {
+    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+    @ObservedObject private var tempTask: TempData
+    
+    private var prefix: String = "할 일"
+    private var task: Task
+    
+    init(editWith selectedTask: Task) {
+        self.task = selectedTask
+        self.tempTask = TempData()
+        
+        self.tempTask.name = selectedTask.name
+        self.tempTask.summary = selectedTask.summary
+        self.tempTask.startDate = selectedTask.startDate
+        self.tempTask.endDate = selectedTask.endDate
+        self.tempTask.isFinished = selectedTask.isFinished
+    }
+    
+    var body: some View {
+        VStack {
+            TaskToolBar(.edit, task: task, with: tempTask, to: nil)
+            Form {
+                Section(content: {
+                    TextField("", text: $tempTask.name)
+                }, header: {
+                    Text("\(prefix) 이름")
+                })
+                
+                Section(content: {
+                    TextEditor(text: $tempTask.summary)
+                        .modifier(TextEditorModifier())
+                }, header: {
+                    Text("\(prefix) 설명")
+                })
+                
+                Section(content: {
+                    DatePicker("시작 날짜", selection: $tempTask.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $tempTask.endDate,
+                               in: PartialRangeFrom(tempTask.startDate), displayedComponents: .date)
+                }, header: {
+                    Text("\(prefix) 기간")
+                })
+                
+                Section(content: {
+                    Toggle("\(prefix) 완료", isOn: $tempTask.isFinished)
                         .toggleStyle(.switch)
                 }, header: {
                     Text("\(prefix) 완료")
@@ -76,9 +126,3 @@ struct TextEditorModifier: ViewModifier {
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 100, alignment: .center)
     }
 }
-
-//struct EditSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditSheet(subject: .task)
-//    }
-//}
