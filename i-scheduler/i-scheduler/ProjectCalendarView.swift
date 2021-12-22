@@ -54,13 +54,12 @@ struct ProjectCalendarView: View {
     @State var dayOf: Int = 0
     
     init(project: Project) {
-
+        
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
-        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate)).map { "Day\n\($0)" }
+        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1).map { "Day\n\($0)" }
     }
-
     var body: some View {
 
         GeometryReader { geometry in
@@ -80,8 +79,11 @@ struct ProjectCalendarView: View {
                 }
             }
             .popup(isPresented: $showModifyView, content: {
+                
+                // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
+                // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
                 TaskList(
-                    isPresented: $showModifyView, projectId: project.projectId,
+                    isPresented: $showModifyView, project: project,
                     date: plusDays(startDate: startDate, dayOf: dayOf)
                 )
                     .cardify(size: CGSize(width: geometry.size.width, height: geometry.size.height))
@@ -94,10 +96,17 @@ struct ProjectCalendarView: View {
 }
 
 func daysBetween(startDate: Date, endDate: Date) -> Int {
-    if endDate <= startDate {
+    if endDate < startDate {
         return 1
     }
-    return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day! + 1
+    return Calendar.current.dateComponents([.day], from: removeUnderHour(fromDate: startDate), to: removeUnderHour(fromDate: endDate)).day!
+}
+
+func removeUnderHour(fromDate: Date) -> Date {
+    guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: fromDate)) else {
+        fatalError("Failed to strip time from Date object")
+    }
+    return date
 }
 
 func plusDays(startDate: Date, dayOf: Int) -> Date {
