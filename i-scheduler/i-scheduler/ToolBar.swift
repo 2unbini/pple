@@ -16,12 +16,12 @@ struct ProjectToolBar: View {
     
     @State private var showAlert: Bool = false
     
-    private var action: Action
+    private var action: ToolBarAction
     private var barText: String
     private var project: Project?
     private var tempProject: TempData
 
-    init(_ action: Action, project: Project?, with tempProject: TempData) {
+    init(_ action: ToolBarAction, project: Project?, with tempProject: TempData) {
         self.action = action
         self.barText = "프로젝트"
         
@@ -124,13 +124,13 @@ struct TaskToolBar: View {
     
     @State private var showAlert: Bool = false
     
-    private var action: Action
+    private var action: ToolBarAction
     private var barText: String
     private var task: Task?
     private var project: Project?
     private var tempTask: TempData
 
-    init(_ action: Action, task: Task?, with tempTask: TempData, to project: Project?) {
+    init(_ action: ToolBarAction, task: Task?, with tempTask: TempData, to project: Project?) {
         self.action = action
         self.barText = "할 일"
         
