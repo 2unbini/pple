@@ -1,47 +1,12 @@
 //
-//  AddSheet.swift
+//  TaskAddSheet.swift
 //  i-scheduler
 //
-//  Created by 권은빈 on 2021/12/08.
+//  Created by 권은빈 on 2021/12/23.
 //
 
 import SwiftUI
 import CoreData
-
-struct ProjectAddSheet: View {
-    @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @ObservedObject private var tempProject: TempData = TempData()
-    
-    private var prefix: String = "프로젝트"
-
-    var body: some View {
-        VStack {
-            ProjectToolBar(.add, project: nil, with: tempProject)
-            Form {
-                Section(content: {
-                    TextField("", text: $tempProject.name)
-                }, header: {
-                    Text("\(prefix) 이름")
-                })
-                
-                Section(content: {
-                    TextEditor(text: $tempProject.summary)
-                        .modifier(TextEditorModifier())
-                }, header: {
-                    Text("\(prefix) 설명")
-                })
-                
-                Section(content: {
-                    DatePicker("시작 날짜", selection: $tempProject.startDate, displayedComponents: .date)
-                    DatePicker("종료 날짜", selection: $tempProject.endDate,
-                               in: PartialRangeFrom(tempProject.startDate), displayedComponents: .date)
-                }, header: {
-                    Text("\(prefix) 기간")
-                })
-            }
-        }
-    }
-}
 
 struct TaskAddSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
@@ -50,6 +15,8 @@ struct TaskAddSheet: View {
     private var prefix: String = "할 일"
     private var project: Project
     
+    // TODO: 실제 기기에서 textField, textEditor, DatePicker 선택시 초기화되는 오류 발생
+    // ObservedObject -> 계속 init됨
     init(relatedTo project: Project) {
         self.project = project
         self.tempTask = TempData()

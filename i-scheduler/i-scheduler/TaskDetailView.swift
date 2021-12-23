@@ -21,7 +21,7 @@ struct TaskDetailView: View {
             editButton
         }
         .sheet(isPresented: $isPresented) {
-            EditSheet(editWith: TempData(), .task)
+            TaskEditSheet(editWith: task)
         }
     }
     

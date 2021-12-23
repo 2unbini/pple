@@ -39,8 +39,7 @@ struct TaskList: View {
                 ToolbarItem(placement: .navigationBarTrailing) { addButton }
             }
             .sheet(isPresented: $addSheetIsPresented) {
-                // TODO: replace with refactored AddSheet
-                AddSheet(.task, projectId: project.projectId)
+                TaskAddSheet(relatedTo: self.project)
             }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
