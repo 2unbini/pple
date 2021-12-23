@@ -53,13 +53,14 @@ struct ProjectCalendarView: View {
     @ObservedObject var project: Project
     @State var showModifyView: Bool = false
     @State var dayOf: Int = 0
-    
+    @State var currentIndex: Int?
     init(project: Project) {
         
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
         self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1).map { "Day\n\($0)" }
+        print(dayData.count)
     }
     var body: some View {
 
@@ -68,27 +69,25 @@ struct ProjectCalendarView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
-                            withAnimation{
-                                self.showModifyView = !self.showModifyView
-                            }
+                            let index = Int(atoi(day.components(separatedBy: "Day\n")[1]))
+                                currentIndex = index
                             self.dayOf = Int(atoi(day.components(separatedBy: "Day\n")[1]))
                         } label: {
                             DayButtonView(day: day)
-                            
                         }
                     }
                 }
             }
-            .popup(isPresented: $showModifyView, content: {
-                
-                // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
-                // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
-                TaskList(
-                    isPresented: $showModifyView, project: project,
-                    date: plusDays(startDate: startDate, dayOf: dayOf)
-                )
-                    .cardify(size: CGSize(width: geometry.size.width, height: geometry.size.height))
-            })
+            .onChange(of: currentIndex) { index in
+                if index != nil {
+                    showModifyView.toggle()
+                    currentIndex = nil
+                }
+            }
+            .popup(isPresented: $showModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
+                TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: dayOf - 1))
+                    .cardify(size: geometry.size)
+            }
             .padding()
             .navigationBarTitle(project.name)
             .navigationBarItems(trailing: NavigationTrailingEditButton(project: self.project))

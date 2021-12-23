@@ -16,7 +16,7 @@ struct Cardify: ViewModifier {
             .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.gray.opacity(0.2), lineWidth: 2))
             .cornerRadius(15)
             .shadow(color: Color.gray.opacity(0.4), radius: 4)
-            .frame(width: size.width * 0.8, height: size.height * 0.7)
+            .frame(width: size.width * 0.9, height: size.height * 0.8)
     }
 }
 

@@ -17,6 +17,7 @@
 		93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989519276339E400BF6F59 /* ProjectCalendarView.swift */; };
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
+		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
 		A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */; };
 		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
 		A45A941527639381008F626F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A941427639381008F626F /* Project.swift */; };
@@ -45,6 +46,7 @@
 		93989519276339E400BF6F59 /* ProjectCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectCalendarView.swift; sourceTree = "<group>"; };
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A45A941427639381008F626F /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				93989511276339E300BF6F59 /* ProjectEditSheet.swift */,
 				A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */,
 				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
+				A4162D2D2774C87400A2BBDC /* PopupView.swift */,
 				A4162C52276B175E00A2BBDC /* Cardify.swift */,
 				93989517276339E400BF6F59 /* ProjectGrid.swift */,
 				93989515276339E400BF6F59 /* ProjectList.swift */,
@@ -209,6 +212,7 @@
 				A45A941727639387008F626F /* Task.swift in Sources */,
 				93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */,
 				A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */,
+				A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */,
 				9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
@@ -353,7 +357,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
-				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
+				DEVELOPMENT_TEAM = WA6PY6NL25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -367,7 +371,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bts.i-scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "skkimeo.i-scheduler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -383,7 +387,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
-				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
+				DEVELOPMENT_TEAM = WA6PY6NL25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -397,7 +401,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bts.i-scheduler";
+				PRODUCT_BUNDLE_IDENTIFIER = "skkimeo.i-scheduler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

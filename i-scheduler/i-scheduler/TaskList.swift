@@ -34,6 +34,7 @@ struct TaskList: View {
                 }
             }
             .navigationBarTitle("오늘의 할 일")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .navigationBarTrailing) { addButton }
@@ -41,7 +42,8 @@ struct TaskList: View {
             .sheet(isPresented: $addSheetIsPresented) {
                 TaskAddSheet(relatedTo: self.project)
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private var taskList: some View {
