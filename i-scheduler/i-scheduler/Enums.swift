@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Action {
+enum ToolBarAction {
     case add
     case edit
 }
