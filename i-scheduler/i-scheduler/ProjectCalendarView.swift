@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NavigationTrailingEditButton: View {
     @State var showModifyTab: Bool = false
+    @State var project: Project
     
     var body: some View {
         Button {
@@ -17,7 +18,7 @@ struct NavigationTrailingEditButton: View {
             Text("수정")
         }
         .sheet(isPresented: $showModifyTab) {
-            EditSheet(editWith: TempData(), .project)
+            ProjectEditSheet(editWith: project)
         }
     }
 }
@@ -90,7 +91,7 @@ struct ProjectCalendarView: View {
             })
             .padding()
             .navigationBarTitle(project.name)
-            .navigationBarItems(trailing: NavigationTrailingEditButton())
+            .navigationBarItems(trailing: NavigationTrailingEditButton(project: self.project))
         }
     }
 }

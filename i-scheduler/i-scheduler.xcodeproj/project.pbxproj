@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9398951B276339E400BF6F59 /* EditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989511276339E300BF6F59 /* EditSheet.swift */; };
-		9398951D276339E400BF6F59 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* ToolBar.swift */; };
-		9398951E276339E400BF6F59 /* AddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989514276339E400BF6F59 /* AddSheet.swift */; };
+		9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989511276339E300BF6F59 /* ProjectEditSheet.swift */; };
+		9398951D276339E400BF6F59 /* ProjectToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* ProjectToolBar.swift */; };
+		9398951E276339E400BF6F59 /* ProjectAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989514276339E400BF6F59 /* ProjectAddSheet.swift */; };
 		9398951F276339E400BF6F59 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989515276339E400BF6F59 /* ProjectList.swift */; };
 		93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989516276339E400BF6F59 /* TaskDetailView.swift */; };
 		93989521276339E400BF6F59 /* ProjectGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989517276339E400BF6F59 /* ProjectGrid.swift */; };
@@ -27,14 +27,17 @@
 		A87FA860275DD47100A77363 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85F275DD47100A77363 /* ContentView.swift */; };
 		A87FA862275DD47200A77363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA861275DD47200A77363 /* Assets.xcassets */; };
 		A87FA865275DD47200A77363 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA864275DD47200A77363 /* Preview Assets.xcassets */; };
+		A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */; };
+		A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */; };
+		A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */; };
 		A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */; };
 		A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1E276B2B540050F6C9 /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		93989511276339E300BF6F59 /* EditSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSheet.swift; sourceTree = "<group>"; };
-		93989513276339E400BF6F59 /* ToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
-		93989514276339E400BF6F59 /* AddSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSheet.swift; sourceTree = "<group>"; };
+		93989511276339E300BF6F59 /* ProjectEditSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectEditSheet.swift; sourceTree = "<group>"; };
+		93989513276339E400BF6F59 /* ProjectToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectToolBar.swift; sourceTree = "<group>"; };
+		93989514276339E400BF6F59 /* ProjectAddSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectAddSheet.swift; sourceTree = "<group>"; };
 		93989515276339E400BF6F59 /* ProjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
 		93989516276339E400BF6F59 /* TaskDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		93989517276339E400BF6F59 /* ProjectGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectGrid.swift; sourceTree = "<group>"; };
@@ -53,6 +56,9 @@
 		A87FA85F275DD47100A77363 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A87FA861275DD47200A77363 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A87FA864275DD47200A77363 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditSheet.swift; sourceTree = "<group>"; };
+		A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddSheet.swift; sourceTree = "<group>"; };
+		A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToolBar.swift; sourceTree = "<group>"; };
 		A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryModel.swift; sourceTree = "<group>"; };
 		A8AB6E1E276B2B540050F6C9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,18 +96,21 @@
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
-				93989514276339E400BF6F59 /* AddSheet.swift */,
+				93989514276339E400BF6F59 /* ProjectAddSheet.swift */,
+				A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */,
 				A4D52A9F276877D700E0B17A /* CheckBox.swift */,
 				A4D52AA1276877F300E0B17A /* UtilityExtensions.swift */,
 				9398951A276339E400BF6F59 /* TaskList.swift */,
 				93989518276339E400BF6F59 /* TaskRowView.swift */,
-				93989511276339E300BF6F59 /* EditSheet.swift */,
+				93989511276339E300BF6F59 /* ProjectEditSheet.swift */,
+				A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */,
 				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
 				A4162C52276B175E00A2BBDC /* Cardify.swift */,
 				93989517276339E400BF6F59 /* ProjectGrid.swift */,
 				93989515276339E400BF6F59 /* ProjectList.swift */,
 				93989516276339E400BF6F59 /* TaskDetailView.swift */,
-				93989513276339E400BF6F59 /* ToolBar.swift */,
+				93989513276339E400BF6F59 /* ProjectToolBar.swift */,
+				A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */,
 				A45A941427639381008F626F /* Project.swift */,
 				A45A941627639387008F626F /* Task.swift */,
 				A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */,
@@ -191,22 +200,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9398951D276339E400BF6F59 /* ToolBar.swift in Sources */,
+				9398951D276339E400BF6F59 /* ProjectToolBar.swift in Sources */,
 				A4D52AA2276877F300E0B17A /* UtilityExtensions.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
 				93989521276339E400BF6F59 /* ProjectGrid.swift in Sources */,
-				9398951E276339E400BF6F59 /* AddSheet.swift in Sources */,
+				9398951E276339E400BF6F59 /* ProjectAddSheet.swift in Sources */,
 				93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */,
 				A45A941727639387008F626F /* Task.swift in Sources */,
 				93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */,
 				A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */,
-				9398951B276339E400BF6F59 /* EditSheet.swift in Sources */,
+				9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
 				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
+				A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */,
+				A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */,
 				A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */,
 				A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */,
 				93989522276339E400BF6F59 /* TaskRowView.swift in Sources */,
+				A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */,
 				93989524276339E400BF6F59 /* TaskList.swift in Sources */,
 				9398951F276339E400BF6F59 /* ProjectList.swift in Sources */,
 				A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */,
