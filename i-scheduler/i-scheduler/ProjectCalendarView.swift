@@ -51,16 +51,17 @@ struct ProjectCalendarView: View {
     let dayData: [String]
     
     @ObservedObject var project: Project
-    @State var showModifyView: Bool = false
+    @State private var showModifyView: Bool = false
+    // TODO: check if anyone else needs this
     @State var dayOf: Int = 0
-    @State var currentIndex: Int?
+    @State private var currentIndex: Int?
+    @State private var carouselIndex: Int = 0
+    
     init(project: Project) {
-        
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
         self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1).map { "Day\n\($0)" }
-        print(dayData.count)
     }
     var body: some View {
 
@@ -70,7 +71,8 @@ struct ProjectCalendarView: View {
                     ForEach(dayData, id: \.self) { day in
                         Button {
                             let index = Int(atoi(day.components(separatedBy: "Day\n")[1]))
-                                currentIndex = index
+                            currentIndex = index - 1
+                            carouselIndex = index - 1
                             self.dayOf = Int(atoi(day.components(separatedBy: "Day\n")[1]))
                         } label: {
                             DayButtonView(day: day)
@@ -85,8 +87,10 @@ struct ProjectCalendarView: View {
                 }
             }
             .popup(isPresented: $showModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
-                TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: dayOf - 1))
+                ACarousel(Array(dayData.indices), index: $carouselIndex) { index in
+                    TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: index))
                     .cardify(size: geometry.size)
+                }
             }
             .padding()
             .navigationBarTitle(project.name)
