@@ -18,6 +18,11 @@
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
 		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
+		A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */; };
+		A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D492775AC0200A2BBDC /* ACarousel.swift */; };
+		A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */; };
+		A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */; };
+		A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */; };
 		A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */; };
 		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
 		A45A941527639381008F626F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A941427639381008F626F /* Project.swift */; };
@@ -47,6 +52,11 @@
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
+		A4162D492775AC0200A2BBDC /* ACarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarousel.swift; sourceTree = "<group>"; };
+		A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ReceiveTimer.swift"; sourceTree = "<group>"; };
+		A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselAutoScroll.swift; sourceTree = "<group>"; };
+		A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleModifier.swift; sourceTree = "<group>"; };
 		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A45A941427639381008F626F /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -76,6 +86,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4162D472775AC0200A2BBDC /* ACarousel */ = {
+			isa = PBXGroup;
+			children = (
+				A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */,
+				A4162D492775AC0200A2BBDC /* ACarousel.swift */,
+				A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */,
+				A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */,
+				A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */,
+			);
+			path = ACarousel;
+			sourceTree = "<group>";
+		};
 		A87FA851275DD47100A77363 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +143,7 @@
 				A87FA863275DD47200A77363 /* Preview Content */,
 				A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */,
 				A8AB6E1E276B2B540050F6C9 /* Enums.swift */,
+				A4162D472775AC0200A2BBDC /* ACarousel */,
 			);
 			path = "i-scheduler";
 			sourceTree = "<group>";
@@ -216,12 +239,17 @@
 				9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
+				A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */,
 				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
+				A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */,
+				A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */,
 				A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */,
 				A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */,
 				A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */,
 				A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */,
 				93989522276339E400BF6F59 /* TaskRowView.swift in Sources */,
+				A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */,
+				A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */,
 				A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */,
 				93989524276339E400BF6F59 /* TaskList.swift in Sources */,
 				9398951F276339E400BF6F59 /* ProjectList.swift in Sources */,

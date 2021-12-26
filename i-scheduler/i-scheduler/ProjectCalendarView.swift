@@ -70,11 +70,11 @@ struct ProjectCalendarView: View {
     let dayData: [Int]
     
     @ObservedObject var project: Project
-    @State var showModifyView: Bool = false
-    @State var dayOf: Int = 0
-    @State var currentIndex: Int?
+    @State private var showModifyView: Bool = false
+    @State private var currentIndex: Int?
+    @State private var carouselIndex: Int = 0
+
     init(project: Project) {
-        
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
@@ -88,7 +88,7 @@ struct ProjectCalendarView: View {
                     ForEach(dayData, id: \.self) { day in
                         Button {
                             currentIndex = day
-                            self.dayOf = day
+                            carouselIndex = day
                         } label: {
                             DayButtonView(day: day + 1, date: plusDays(startDate: startDate, dayOf: day))
                         }
@@ -102,12 +102,14 @@ struct ProjectCalendarView: View {
                 }
             }
             .popup(isPresented: $showModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
-                TaskList(
-                  isPresented: $showModifyView,
-                  project: project,
-                  date: plusDays(startDate: startDate, dayOf: dayOf
-                ))
-                    .cardify(size: geometry.size)
+                ACarousel(dayData, index: $carouselIndex) { index in
+                    TaskList(
+                      isPresented: $showModifyView,
+                      project: project,
+                      date: plusDays(startDate: startDate, dayOf: index)
+                    )
+                        .cardify(size: geometry.size)
+                }
             }
             .padding()
             .navigationBarTitle(project.name)
