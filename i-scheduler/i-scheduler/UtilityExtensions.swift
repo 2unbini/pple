@@ -23,22 +23,11 @@ extension Date {
     }
 }
 
-
-// TODO: UIActivityView 와 비슷한 녀석을
-// 혹은 Gesture
+extension Int: Identifiable {
+    public var id: Int { self }
+}
 
 extension View {
-    @ViewBuilder
-    func popup<Content>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
-        if isPresented.wrappedValue == true {
-            let popupContent = content()
-                .transition(.move(edge: .bottom))
-            self.overlay(popupContent)
-        } else {
-            self
-        }
-    }
-    
     func cardify(size: CGSize) -> some View {
         self.modifier(Cardify(size: size))
     }

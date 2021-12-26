@@ -72,14 +72,13 @@ struct ProjectCalendarView: View {
     @ObservedObject var project: Project
     @State var showModifyView: Bool = false
     @State var dayOf: Int = 0
-    
+    @State var currentIndex: Int?
     init(project: Project) {
         
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
         self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
-
     }
     var body: some View {
 
@@ -88,24 +87,28 @@ struct ProjectCalendarView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
-                            withAnimation{
-                                self.showModifyView = !self.showModifyView
-                            }
+                            currentIndex = day
                             self.dayOf = day
                         } label: {
                             DayButtonView(day: day + 1, date: plusDays(startDate: startDate, dayOf: day))
-\
                         }
                     }
                 }
             }
-            .popup(isPresented: $showModifyView, content: {
+            .onChange(of: currentIndex) { index in
+                if index != nil {
+                    showModifyView.toggle()
+                    currentIndex = nil
+                }
+            }
+            .popup(isPresented: $showModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
                 TaskList(
-                    isPresented: $showModifyView, project: project,
-                    date: plusDays(startDate: startDate, dayOf: dayOf)
-                )
-                    .cardify(size: CGSize(width: geometry.size.width, height: geometry.size.height))
-            })
+                  isPresented: $showModifyView,
+                  project: project,
+                  date: plusDays(startDate: startDate, dayOf: dayOf
+                ))
+                    .cardify(size: geometry.size)
+            }
             .padding()
             .navigationBarTitle(project.name)
             .navigationBarItems(trailing: NavigationTrailingEditButton(project: self.project))
