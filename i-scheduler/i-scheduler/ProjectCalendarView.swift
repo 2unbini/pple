@@ -34,6 +34,7 @@ struct DayButtonView: View {
     
     // MARK: colorOpacity - TaskList에서 할일의 개수를 받아와서 사용 예정
     let colorOpacity: Double = 20
+
     let width: CGFloat = UIScreen.main.bounds.size.width
     let height: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
@@ -78,6 +79,7 @@ struct ProjectCalendarView: View {
         self.startDate = project.startDate
         self.endDate = project.endDate
         self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
+
     }
     var body: some View {
 
@@ -92,6 +94,7 @@ struct ProjectCalendarView: View {
                             self.dayOf = day
                         } label: {
                             DayButtonView(day: day + 1, date: plusDays(startDate: startDate, dayOf: day))
+\
                         }
                     }
                 }
