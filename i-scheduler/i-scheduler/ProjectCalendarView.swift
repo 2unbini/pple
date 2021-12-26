@@ -24,7 +24,14 @@ struct NavigationTrailingEditButton: View {
 }
 
 struct DayButtonView: View {
-    let day: String
+    let day: Int
+    let date: Date
+    static let dateformat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M.d"
+        return formatter
+    }()
+    
     let width: CGFloat = UIScreen.main.bounds.size.width
     let height: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
@@ -35,11 +42,19 @@ struct DayButtonView: View {
                        height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 11)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 2)
-            Text(day)
-                .multilineTextAlignment(.center)
-                .frame(width: 80, height: 80, alignment: .center)
-                .foregroundColor(.black)
-                .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+            VStack {
+                Text(String(day))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .frame(alignment: .center)
+                    .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+                    .padding(2.0)
+                Text("\(date, formatter: DayButtonView.dateformat)")
+                    .lineLimit(1)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+                    .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
+            }
         }
         .padding(5)
     }
@@ -48,7 +63,7 @@ struct DayButtonView: View {
 struct ProjectCalendarView: View {
     let startDate: Date
     let endDate: Date
-    let dayData: [String]
+    let dayData: [Int]
     
     @ObservedObject var project: Project
     @State var showModifyView: Bool = false
@@ -59,7 +74,7 @@ struct ProjectCalendarView: View {
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
-        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1).map { "Day\n\($0)" }
+        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1)
     }
     var body: some View {
 
@@ -71,18 +86,15 @@ struct ProjectCalendarView: View {
                             withAnimation{
                                 self.showModifyView = !self.showModifyView
                             }
-                            self.dayOf = Int(atoi(day.components(separatedBy: "Day\n")[1]))
+                            self.dayOf = day
                         } label: {
-                            DayButtonView(day: day)
+                            DayButtonView(day: day, date: plusDays(startDate: startDate, dayOf: day - 1))
                             
                         }
                     }
                 }
             }
             .popup(isPresented: $showModifyView, content: {
-                
-                // TODO: 1) dayOf 인자로 넘겨지는 것 해야 함!
-                // TODO: 2) cardify의 인자로 들어가는 size GeometryReader로 넘겨주기
                 TaskList(
                     isPresented: $showModifyView, project: project,
                     date: plusDays(startDate: startDate, dayOf: dayOf)
