@@ -63,12 +63,9 @@ struct TaskList: View {
                 context.delete(task)
             }
         }
-        // replace with PersistenceController.shared.save()
-        do {
-            try context.save()
-        } catch(let error) {
-            print("태스크 삭제에 실패했습니다: \(error.localizedDescription)")
-        }
+        PersistenceController.shared.save(
+            errorDescription: "TaskList.deleteTask"
+        )
     }
     
     private var cancelButton: some View {
