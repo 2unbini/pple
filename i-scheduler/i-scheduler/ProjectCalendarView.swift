@@ -32,6 +32,9 @@ struct DayButtonView: View {
         return formatter
     }()
     
+    // MARK: colorOpacity - TaskList에서 할일의 개수를 받아와서 사용 예정
+    let colorOpacity: Double = 20
+
     let width: CGFloat = UIScreen.main.bounds.size.width
     let height: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
@@ -40,7 +43,8 @@ struct DayButtonView: View {
                 .resizable()
                 .frame(width: UIDevice.current.userInterfaceIdiom != .pad ? width / 7 : width / 10,
                        height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 11)
-                .foregroundColor(.white)
+                .foregroundColor(colorOpacity == 20 ? .white : Color(red: 117/255, green: 249/255, blue: 217/255))
+                .opacity(colorOpacity == 20 ? 1 : colorOpacity / 100)
                 .shadow(color: .black, radius: 2)
             VStack {
                 Text(String(day))
@@ -48,11 +52,11 @@ struct DayButtonView: View {
                     .multilineTextAlignment(.center)
                     .frame(alignment: .center)
                     .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
-                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .title3 : .title2)
                     .padding(2.0)
                 Text("\(date, formatter: DayButtonView.dateformat)")
                     .lineLimit(1)
-                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .footnote : .title3)
                     .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
             }
         }
@@ -74,7 +78,8 @@ struct ProjectCalendarView: View {
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
-        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1)
+        self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
+
     }
     var body: some View {
 
@@ -88,8 +93,8 @@ struct ProjectCalendarView: View {
                             }
                             self.dayOf = day
                         } label: {
-                            DayButtonView(day: day, date: plusDays(startDate: startDate, dayOf: day - 1))
-                            
+                            DayButtonView(day: day + 1, date: plusDays(startDate: startDate, dayOf: day))
+\
                         }
                     }
                 }
