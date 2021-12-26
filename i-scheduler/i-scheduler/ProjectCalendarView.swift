@@ -24,7 +24,17 @@ struct NavigationTrailingEditButton: View {
 }
 
 struct DayButtonView: View {
-    let day: String
+    let day: Int
+    let date: Date
+    static let dateformat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M.d"
+        return formatter
+    }()
+    
+    // MARK: colorOpacity - TaskList에서 할일의 개수를 받아와서 사용 예정
+    let colorOpacity: Double = 20
+
     let width: CGFloat = UIScreen.main.bounds.size.width
     let height: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
@@ -33,13 +43,22 @@ struct DayButtonView: View {
                 .resizable()
                 .frame(width: UIDevice.current.userInterfaceIdiom != .pad ? width / 7 : width / 10,
                        height: UIDevice.current.userInterfaceIdiom != .pad ? height / 12 : height / 11)
-                .foregroundColor(.white)
+                .foregroundColor(colorOpacity == 20 ? .white : Color(red: 117/255, green: 249/255, blue: 217/255))
+                .opacity(colorOpacity == 20 ? 1 : colorOpacity / 100)
                 .shadow(color: .black, radius: 2)
-            Text(day)
-                .multilineTextAlignment(.center)
-                .frame(width: 80, height: 80, alignment: .center)
-                .foregroundColor(.black)
-                .font(UIDevice.current.userInterfaceIdiom != .pad ? .none : .title3)
+            VStack {
+                Text(String(day))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .frame(alignment: .center)
+                    .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .title3 : .title2)
+                    .padding(2.0)
+                Text("\(date, formatter: DayButtonView.dateformat)")
+                    .lineLimit(1)
+                    .font(UIDevice.current.userInterfaceIdiom != .pad ? .footnote : .title3)
+                    .foregroundColor(date.midnight == Date().midnight ? .accentColor : .black)
+            }
         }
         .padding(5)
     }
@@ -48,7 +67,7 @@ struct DayButtonView: View {
 struct ProjectCalendarView: View {
     let startDate: Date
     let endDate: Date
-    let dayData: [String]
+    let dayData: [Int]
     
     @ObservedObject var project: Project
     @State var showModifyView: Bool = false
@@ -59,8 +78,7 @@ struct ProjectCalendarView: View {
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
         self.endDate = project.endDate
-        self.dayData = Array(1...daysBetween(startDate: startDate, endDate: endDate) + 1).map { "Day\n\($0)" }
-        print(dayData.count)
+        self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
     }
     var body: some View {
 
@@ -69,11 +87,10 @@ struct ProjectCalendarView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
-                            let index = Int(atoi(day.components(separatedBy: "Day\n")[1]))
-                                currentIndex = index
-                            self.dayOf = Int(atoi(day.components(separatedBy: "Day\n")[1]))
+                            currentIndex = day
+                            self.dayOf = day
                         } label: {
-                            DayButtonView(day: day)
+                            DayButtonView(day: day + 1, date: plusDays(startDate: startDate, dayOf: day))
                         }
                     }
                 }
@@ -85,7 +102,11 @@ struct ProjectCalendarView: View {
                 }
             }
             .popup(isPresented: $showModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
-                TaskList(isPresented: $showModifyView, project: project, date: plusDays(startDate: startDate, dayOf: dayOf - 1))
+                TaskList(
+                  isPresented: $showModifyView,
+                  project: project,
+                  date: plusDays(startDate: startDate, dayOf: dayOf
+                ))
                     .cardify(size: geometry.size)
             }
             .padding()
