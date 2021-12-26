@@ -10,7 +10,7 @@ import CoreData
 
 struct ProjectAddSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @ObservedObject private var tempProject: TempData = TempData()
+    @State private var tempProject: TempData = TempData()
     
     private var prefix: String = "프로젝트"
 

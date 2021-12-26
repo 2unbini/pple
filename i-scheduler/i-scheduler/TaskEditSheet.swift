@@ -10,20 +10,13 @@ import CoreData
 
 struct TaskEditSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @ObservedObject private var tempTask: TempData
+    @State private var tempTask: TempData = TempData()
     
     private var prefix: String = "할 일"
     private var task: Task
     
     init(editWith selectedTask: Task) {
         self.task = selectedTask
-        self.tempTask = TempData()
-        
-        self.tempTask.name = selectedTask.name
-        self.tempTask.summary = selectedTask.summary
-        self.tempTask.startDate = selectedTask.startDate
-        self.tempTask.endDate = selectedTask.endDate
-        self.tempTask.isFinished = selectedTask.isFinished
     }
     
     var body: some View {
@@ -31,7 +24,9 @@ struct TaskEditSheet: View {
             TaskToolBar(.edit, task: task, with: tempTask, to: nil)
             Form {
                 Section(content: {
-                    TextField("", text: $tempTask.name)
+                    VStack {
+                        TextField("", text: $tempTask.name)
+                    }
                 }, header: {
                     Text("\(prefix) 이름")
                 })
@@ -58,6 +53,9 @@ struct TaskEditSheet: View {
                     Text("\(prefix) 완료")
                 })
             }
+        }
+        .onAppear {
+            self.tempTask.setSpecificTask(with: task)
         }
     }
 }
