@@ -81,7 +81,6 @@ struct ProjectCalendarView: View {
         self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
     }
     var body: some View {
-
         GeometryReader { geometry in
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
@@ -97,7 +96,9 @@ struct ProjectCalendarView: View {
             }
             .onChange(of: currentIndex) { index in
                 if index != nil {
-                    showModifyView.toggle()
+                    withAnimation {
+                        showModifyView.toggle()
+                    }
                     currentIndex = nil
                 }
             }
@@ -113,7 +114,9 @@ struct ProjectCalendarView: View {
             }
             .padding()
             .navigationBarTitle(project.name)
-            .navigationBarItems(trailing: NavigationTrailingEditButton(project: self.project))
+            .navigationBarItems(trailing: NavigationTrailingEditButton(project: self.project)
+                                    .disabled(showModifyView)
+            )
         }
     }
 }

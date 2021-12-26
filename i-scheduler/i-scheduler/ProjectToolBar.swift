@@ -19,7 +19,7 @@ struct ProjectToolBar: View {
     private var barText: String
     private var project: Project?
     private var tempProject: TempData
-
+    
     init(_ action: ToolBarAction, project: Project?, with tempProject: TempData) {
         self.action = action
         self.barText = "프로젝트"
@@ -42,7 +42,7 @@ struct ProjectToolBar: View {
                 presentationMode.wrappedValue.dismiss()
             }
             .padding()
-
+            
             Spacer()
             Text(barText)
                 .font(.system(size: 20))
@@ -66,9 +66,9 @@ struct ProjectToolBar: View {
             .alert(isPresented: $showAlert) {
                 
                 // TODO: Alert 강종되는 오류 수정
-                    Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
-                        showAlert.toggle()
-                    }))
+                Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
+                    showAlert.toggle()
+                }))
             }
             .padding()
         }
@@ -107,11 +107,8 @@ struct ProjectToolBar: View {
     }
     
     private func saveContext() {
-        do {
-            try viewContext.save()
-        }
-        catch {
-            fatalError("Error in saveContext(): \(error.localizedDescription)")
-        }
+        PersistenceController.shared.save(
+            errorDescription: "Error in saveContext()"
+        )
     }
 }

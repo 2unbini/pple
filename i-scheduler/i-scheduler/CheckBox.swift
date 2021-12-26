@@ -13,25 +13,15 @@ struct CheckBox: View {
 
     var body: some View {
         Button {
-            // maybe take this to the extension
-            // make sth like func publish and put it in all the computed properties
             task.isFinished.toggle()
-//          replace this with
-//          PersistenceController.shared.saveContext()
-            save()
+            PersistenceController.shared.save(
+                errorDescription: "Error in Checkbox"
+            )
         } label: {
             Image(systemName: task.isFinished ? "checkmark.square" : "square")
                 .scaleEffect(1.3)
         }
         .buttonStyle(.plain)
-    }
-    
-    private func save() {
-        do {
-            try context.save()
-        } catch(let error) {
-            print("태스크 저장에 실패했습니다: \(error.localizedDescription)")
-        }
     }
 }
 

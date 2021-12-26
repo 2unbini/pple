@@ -115,11 +115,8 @@ struct TaskToolBar: View {
     }
     
     private func saveContext() {
-        do {
-            try viewContext.save()
-        }
-        catch {
-            fatalError("Error in saveContext(): \(error.localizedDescription)")
-        }
+        PersistenceController.shared.save(
+            errorDescription: "Error in saveContext()"
+        )
     }
 }

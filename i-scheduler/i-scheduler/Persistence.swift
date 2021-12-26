@@ -52,4 +52,16 @@ struct PersistenceController {
             }
         })
     }
+    
+    func save(errorDescription: String = "") {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch(let error) {
+                // TODO: protect against b/f shipping!!!
+                fatalError(errorDescription + ": \(error.localizedDescription)")
+            }
+        }
+    }
 }
