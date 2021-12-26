@@ -10,18 +10,13 @@ import CoreData
 
 struct TaskAddSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @ObservedObject private var tempTask: TempData
+    @State private var tempTask: TempData = TempData()
     
     private var prefix: String = "할 일"
     private var project: Project
     
-    // TODO: 실제 기기에서 textField, textEditor, DatePicker 선택시 초기화되는 오류 발생
-    // ObservedObject -> 계속 init됨
     init(relatedTo project: Project) {
         self.project = project
-        self.tempTask = TempData()
-        self.tempTask.startDate = project.startDate
-        self.tempTask.endDate = project.endDate
     }
     
     var body: some View {
@@ -49,6 +44,9 @@ struct TaskAddSheet: View {
                     Text("\(prefix) 기간")
                 })
             }
+        }
+        .onAppear {
+            self.tempTask.setSpecificDate(with: project.startDate, project.endDate)
         }
     }
 }

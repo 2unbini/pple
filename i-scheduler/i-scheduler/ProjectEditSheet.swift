@@ -10,20 +10,13 @@ import CoreData
 
 struct ProjectEditSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @ObservedObject private var tempProject: TempData
+    @State private var tempProject: TempData = TempData()
     
     private var prefix: String = "프로젝트"
     private var project: Project
     
     init(editWith selectedProject: Project) {
         self.project = selectedProject
-        self.tempProject = TempData()
-        
-        self.tempProject.name = selectedProject.name
-        self.tempProject.summary = selectedProject.summary
-        self.tempProject.startDate = selectedProject.startDate
-        self.tempProject.endDate = selectedProject.endDate
-        self.tempProject.isFinished = selectedProject.isFinished
     }
     
     var body: some View {
@@ -31,7 +24,9 @@ struct ProjectEditSheet: View {
             ProjectToolBar(.edit, project: project, with: tempProject)
             Form {
                 Section(content: {
-                    TextField("", text: $tempProject.name)
+                    VStack{
+                        TextField("", text: $tempProject.name)
+                    }
                 }, header: {
                     Text("\(prefix) 이름")
                 })
@@ -58,6 +53,9 @@ struct ProjectEditSheet: View {
                     Text("\(prefix) 완료")
                 })
             }
+        }
+        .onAppear {
+            self.tempProject.setSpecificProject(with: project)
         }
     }
 }
