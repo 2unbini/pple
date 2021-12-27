@@ -8,6 +8,14 @@
 import SwiftUI
 
 extension Date {
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        calendar.component(component, from: self)
+    }
+    
+    var day: Int { self.get(.day) }
+    var month: Int { self.get(.month) }
+    var year: Int { self.get(.year) }
+    
     var midnight: Date {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
