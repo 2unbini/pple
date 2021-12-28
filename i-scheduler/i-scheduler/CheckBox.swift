@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CheckBox: View {
-    @Environment(\.managedObjectContext) var context
     @ObservedObject var task: Task
 
     var body: some View {
