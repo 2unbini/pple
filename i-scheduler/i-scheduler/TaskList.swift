@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct TaskList: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest var tasks: FetchedResults<Task>
+    @Environment(\.managedObjectContext) private var context
+    @FetchRequest private var tasks: FetchedResults<Task>
     @Binding var isPresented: Bool
     private var project: Project
+    private var date: Date
     
     init(isPresented: Binding<Bool>, project: Project, date: Date) {
         self._isPresented = isPresented
         self.project = project
+        self.date = date
         let request = Task.fetchRequest(
             NSPredicate(
                 format: "project_ = %@ and startDate_ < %@ and endDate_ >= %@",
@@ -33,7 +35,7 @@ struct TaskList: View {
                     Text("오늘은 자유!")
                 }
             }
-            .navigationBarTitle("오늘의 할 일")
+            .navigationBarTitle("\(date.month)월 \(date.day)일의 할 일")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
@@ -58,20 +60,16 @@ struct TaskList: View {
     }
     
     private func deleteTask(at indexSet: IndexSet) {
-        for index in indexSet {
-            if let task = Task.withId(tasks[index].taskId, context: context) {
-                context.delete(task)
-            }
-        }
+        indexSet.forEach { context.delete(tasks[$0]) }
         PersistenceController.shared.save(
             errorDescription: "TaskList.deleteTask"
         )
     }
     
     private var cancelButton: some View {
-        Button("취소") {
+        Button("닫기") {
             withAnimation {
-                isPresented = false
+                isPresented.toggle()
             }
         }
     }
@@ -80,7 +78,7 @@ struct TaskList: View {
 
     private var addButton: some View {
         Button {
-            addSheetIsPresented = true
+            addSheetIsPresented.toggle()
         } label: {
             Image(systemName: "plus")
         }
