@@ -31,7 +31,6 @@ import SwiftUI
 import Combine
 
 extension View {
-
     public func popup<PopupContent: View>(
         isPresented: Binding<Bool>,
         type: Popup<PopupContent>.PopupType = .`default`,
@@ -281,8 +280,9 @@ public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
 
     public func body(content: Content) -> some View {
         Group {
-            if showContent {
+            if isPresented {
                 main(content: content)
+                    .opacity(isPresented ? 1 : 0)
             } else {
                 content
             }
@@ -306,7 +306,7 @@ public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
                 }
                 .edgesIgnoringSafeArea(.all)
                 .opacity(currentBackgroundOpacity)
-                .animation(animation)
+//                .animation(animation)
         }
         .overlay(sheet())
     }
@@ -339,7 +339,7 @@ public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
                 .frameGetter($sheetContentRect)
                 .frame(width: screenWidth)
                 .offset(x: 0, y: currentOffset)
-                .animation(animation)
+//                .animation(animation)
         }
 
         #if !os(tvOS)
@@ -394,7 +394,9 @@ public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
     
     private func dismiss() {
         dispatchWorkHolder.work?.cancel()
-        isPresented = false
+        withAnimation {
+            isPresented = false
+        }
         dismissCallback()
     }
 }
@@ -452,3 +454,6 @@ struct FrameGetter: ViewModifier {
             )
     }
 }
+
+
+
