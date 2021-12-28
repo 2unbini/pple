@@ -72,11 +72,9 @@ struct ProjectList: View {
         guard let index = indexSet.first else { fatalError("Cannot Convert IndexSet to Int") }
         
         viewContext.delete(projects[index])
-        do {
-            try viewContext.save()
-        } catch {
-            fatalError("Cannot save context")
-        }
+        PersistenceController.shared.save(
+            errorDescription: "Cannot save context"
+        )
     }
 }
 
