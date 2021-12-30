@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-
-
 struct ProjectCalendarView: View {
     let startDate: Date
     let endDate: Date
     let dayData: [Int]
     
     @ObservedObject var project: Project
-    @State private var isShowModifyView: Bool = false
+    @State private var isPopupPresented: Bool = false
     @State private var currentIndex: Int?
     @State private var carouselIndex: Int = 0
 
@@ -34,7 +32,7 @@ struct ProjectCalendarView: View {
                             currentIndex = day
                             carouselIndex = day
                         } label: {
-                            DayButtonView(dayOfTheWeek: day + 1, displayedDate: plusDays(startDate: startDate, dayOf: day))
+                            DayButtonView(nTHDay: day + 1, displayedDate: plusDays(startDate: startDate, dayOf: day))
                         }
                     }
                 }
@@ -42,15 +40,15 @@ struct ProjectCalendarView: View {
             .onChange(of: currentIndex) { index in
                 if index != nil {
                     withAnimation {
-                        isShowModifyView.toggle()
+                        isPopupPresented.toggle()
                     }
                     currentIndex = nil
                 }
             }
-            .popup(isPresented: $isShowModifyView, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
+            .popup(isPresented: $isPopupPresented, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
                 ACarousel(dayData, index: $carouselIndex) { index in
                     TaskList(
-                      isPresented: $isShowModifyView,
+                      isPresented: $isPopupPresented,
                       project: project,
                       date: plusDays(startDate: startDate, dayOf: index)
                     )
@@ -60,7 +58,7 @@ struct ProjectCalendarView: View {
             .padding()
             .navigationBarTitle(project.name)
             .navigationBarItems(trailing: ProjectCalendarNavigationTrailingEditButton(project: self.project)
-                                    .disabled(isShowModifyView)
+                                    .disabled(isPopupPresented)
             )
         }
     }

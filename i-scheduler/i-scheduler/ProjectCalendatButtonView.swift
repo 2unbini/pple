@@ -23,7 +23,7 @@ struct ProjectCalendarNavigationTrailingEditButton: View {
     }
 }
 
-struct DayButtonImageView: View {
+struct DayButtonImage: View {
     let buttonViewColorOpacity: Double
     let screenWidth: CGFloat
     let screenHeight: CGFloat
@@ -38,11 +38,11 @@ struct DayButtonImageView: View {
     }
 }
 
-struct DayOfTheWeekTextView: View {
-    let dayOfTheWeek: Int
+struct nTHDayText: View {
+    let nTHDay: Int
     let displayedDate: Date
     var body: some View {
-        Text(String(dayOfTheWeek))
+        Text(String(nTHDay))
             .fontWeight(.bold)
             .multilineTextAlignment(.center)
             .frame(alignment: .center)
@@ -53,7 +53,7 @@ struct DayOfTheWeekTextView: View {
     
 }
 
-struct DisplayDateTextView: View {
+struct DisplayDateText: View {
     static let dateformat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M.d"
@@ -63,7 +63,7 @@ struct DisplayDateTextView: View {
     let displayedDate: Date
     
     var body: some View {
-        Text("\(displayedDate, formatter: DisplayDateTextView.dateformat)")
+        Text("\(displayedDate, formatter: DisplayDateText.dateformat)")
             .lineLimit(1)
             .font(UIDevice.current.userInterfaceIdiom != .pad ? .footnote : .title3)
             .foregroundColor(displayedDate.midnight == Date().midnight ? .accentColor : .black)
@@ -71,7 +71,7 @@ struct DisplayDateTextView: View {
 }
 
 struct DayButtonView: View {
-    let dayOfTheWeek: Int
+    let nTHDay: Int
     let displayedDate: Date
 
     // MARK: colorOpacity - TaskList에서 할일의 개수를 받아와서 사용 예정
@@ -81,10 +81,10 @@ struct DayButtonView: View {
     let screenHeight: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
         ZStack {
-            DayButtonImageView(buttonViewColorOpacity: buttonViewColorOpacity, screenWidth: screenWidth, screenHeight: screenHeight)
+            DayButtonImage(buttonViewColorOpacity: buttonViewColorOpacity, screenWidth: screenWidth, screenHeight: screenHeight)
             VStack {
-                DayOfTheWeekTextView(dayOfTheWeek: dayOfTheWeek, displayedDate: displayedDate)
-                DisplayDateTextView(displayedDate: displayedDate)
+                nTHDayText(nTHDay: nTHDay, displayedDate: displayedDate)
+                DisplayDateText(displayedDate: displayedDate)
             }
         }
         .padding(5)
