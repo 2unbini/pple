@@ -16,6 +16,7 @@
 		93989522276339E400BF6F59 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989518276339E400BF6F59 /* TaskRowView.swift */; };
 		93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989519276339E400BF6F59 /* ProjectCalendarView.swift */; };
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
+		93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
 		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
 		A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */; };
@@ -50,6 +51,7 @@
 		93989518276339E400BF6F59 /* TaskRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		93989519276339E400BF6F59 /* ProjectCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectCalendarView.swift; sourceTree = "<group>"; };
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCalendatButtonView.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				93989511276339E300BF6F59 /* ProjectEditSheet.swift */,
 				A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */,
 				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
+				93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */,
 				A4162D2D2774C87400A2BBDC /* PopupView.swift */,
 				A4162C52276B175E00A2BBDC /* Cardify.swift */,
 				93989517276339E400BF6F59 /* ProjectGrid.swift */,
@@ -242,6 +245,7 @@
 				A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */,
 				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
 				A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */,
+				93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */,
 				A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */,
 				A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */,
 				A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */,
