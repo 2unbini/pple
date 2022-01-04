@@ -23,7 +23,7 @@ struct ProjectCalendarNavigationTrailingEditButton: View {
     }
 }
 
-struct DayButtonImage: View {
+struct DayButtonImageForiPad: View {
     let buttonViewColorOpacity: Double
     let screenWidth: CGFloat
     let screenHeight: CGFloat
@@ -35,6 +35,21 @@ struct DayButtonImage: View {
             .foregroundColor(buttonViewColorOpacity == 20 ? .white : Color(red: 117/255, green: 249/255, blue: 217/255))
             .opacity(buttonViewColorOpacity == 20 ? 1 : buttonViewColorOpacity / 100)
             .shadow(color: .black, radius: 2)
+    }
+}
+
+struct DayButtonImageForiPhone: View {
+    let buttonViewColorOpacity: Double
+    var body: some View {
+        GeometryReader { geometry in
+            Image(systemName: "square.fill")
+                .resizable()
+                .frame(width: geometry.size.width ,
+                       height: geometry.size.height * 1.2)
+                .foregroundColor(buttonViewColorOpacity == 20 ? .white : Color(red: 117/255, green: 249/255, blue: 217/255))
+                .opacity(buttonViewColorOpacity == 20 ? 1 : buttonViewColorOpacity / 100)
+                .shadow(color: .black, radius: 2)
+        }
     }
 }
 
@@ -81,12 +96,20 @@ struct DayButtonView: View {
     let screenHeight: CGFloat = UIScreen.main.bounds.size.height
     var body: some View {
         ZStack {
-            DayButtonImage(buttonViewColorOpacity: buttonViewColorOpacity, screenWidth: screenWidth, screenHeight: screenHeight)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                DayButtonImageForiPad(buttonViewColorOpacity: buttonViewColorOpacity, screenWidth: screenWidth, screenHeight: screenHeight)
+            }
+            else if UIDevice.current.userInterfaceIdiom != .pad {
+                DayButtonImageForiPhone(buttonViewColorOpacity: buttonViewColorOpacity)
+            }
             VStack {
                 nTHDayText(nTHDay: nTHDay, displayedDate: displayedDate)
+                    .multilineTextAlignment(.center)
                 DisplayDateText(displayedDate: displayedDate)
+                    .multilineTextAlignment(.center)
+                    
             }
         }
-        .padding(5)
+        .padding(8)
     }
 }
