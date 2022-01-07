@@ -17,11 +17,18 @@ struct MainCalendar<DateView>: View where DateView: View {
         self.contents = contents
     }
     var body: some View {
-        ScrollView(.vertical) {
-            LazyVStack{
-                ForEach(years, id: \.self) { year in
-                    YearView(of: year, content: contents)
-                }
+        VStack(spacing: 0) {
+            // Year
+            // Weekdays
+            Divider()
+            
+            ScrollView(.vertical) {
+//                calendarBody
+//                LazyVStack{
+//                    ForEach(years, id: \.self) { year in
+//                        YearView(of: year, content: contents)
+//                    }
+//                }
             }
         }
         /*LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
@@ -30,6 +37,13 @@ struct MainCalendar<DateView>: View where DateView: View {
             }
         }*/
     }
+    private var year: some View {
+        // TODO: @State로 만들기
+        Text("2021")
+    }
+//    private var daysOfTheWeek: some View {
+//        HStack
+//    }
     var years: [Date] {
         return calendar.generateDates(interval: interval, dateComponents: DateComponents(month: 1, day: 1, hour: 0, minute: 0, second: 0))
     }

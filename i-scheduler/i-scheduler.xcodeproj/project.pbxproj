@@ -39,6 +39,7 @@
 		A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */; };
 		A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */; };
 		A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1E276B2B540050F6C9 /* Enums.swift */; };
+		A8B4925B2788687700F63B78 /* CalendarBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B4925A2788687700F63B78 /* CalendarBody.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToolBar.swift; sourceTree = "<group>"; };
 		A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryModel.swift; sourceTree = "<group>"; };
 		A8AB6E1E276B2B540050F6C9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		A8B4925A2788687700F63B78 /* CalendarBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBody.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
 				A404F4BB278858E20082E36E /* MainCalendar.swift */,
+				A8B4925A2788687700F63B78 /* CalendarBody.swift */,
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
 				93989514276339E400BF6F59 /* ProjectAddSheet.swift */,
 				A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */,
@@ -255,6 +258,7 @@
 				A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */,
 				A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */,
 				A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */,
+				A8B4925B2788687700F63B78 /* CalendarBody.swift in Sources */,
 				93989524276339E400BF6F59 /* TaskList.swift in Sources */,
 				9398951F276339E400BF6F59 /* ProjectList.swift in Sources */,
 				A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */,

@@ -23,7 +23,11 @@ extension Calendar {
     }
 }
 
-extension Date {
+extension Date: Identifiable {
+    public var id: String {
+        description
+    }
+    
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         calendar.component(component, from: self)
     }
