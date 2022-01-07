@@ -11,7 +11,8 @@ struct MainCalendar<DateView>: View where DateView: View {
     @Environment(\.calendar) var calendar
     let contents: (Date) -> DateView
     let interval: DateInterval
-    let sevendaysInterval: DateInterval = DateInterval(start: Date(timeIntervalSince1970: 60 * 60 * 24 * 3), end: Date(timeIntervalSince1970: 60 * 60 * 24 * 9))
+    let sevendaysInterval: DateInterval = DateInterval(start: Date(timeIntervalSince1970: 60 * 60 * 24 * 3),
+                                                       end: Date(timeIntervalSince1970: 60 * 60 * 24 * 9))
     init(interval: DateInterval, @ViewBuilder contents: @escaping (Date) -> DateView) {
         self.interval = interval
         self.contents = contents
@@ -23,36 +24,36 @@ struct MainCalendar<DateView>: View where DateView: View {
             Divider()
             
             ScrollView(.vertical) {
-                LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-                    ForEach(createMonths, id: \.self) { month in
-                        Section{
-                            ForEach(createDaysThroughMonth(month: month), id: \.self) { date in
-                                if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                                    contents(date).id(date)
-                                } else {
-                                    contents(date).hidden()
-                                }
-                            }
-                            
-                        }
-                    header: {
-                        VStack {
-                            header(month: month)
-                            LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-                                ForEach(createAnArrayToDisplayWeekDay, id: \.self) { date in
-                                    showWeekDay(date: date)
-                                }
-                            }
-                        }
-                    }
-                    }
-                }
-//                calendarBody
-//                LazyVStack{
-//                    ForEach(years, id: \.self) { year in
-//                        YearView(of: year, content: contents)
+//                LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+//                    ForEach(createMonths, id: \.self) { month in
+//                        Section{
+//                            ForEach(createDaysThroughMonth(month: month), id: \.self) { date in
+//                                if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+//                                    contents(date).id(date)
+//                                } else {
+//                                    contents(date).hidden()
+//                                }
+//                            }
+//
+//                        }
+//                    header: {
+//                        VStack {
+//                            header(month: month)
+//                            LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+//                                ForEach(createAnArrayToDisplayWeekDay, id: \.self) { date in
+//                                    showWeekDay(date: date)
+//                                }
+//                            }
+//                        }
+//                    }
 //                    }
 //                }
+//                calendarBody
+                LazyVStack{
+                    ForEach(years, id: \.self) { year in
+                        YearView(of: year, content: contents)
+                    }
+                }
             }
         }
     }
@@ -128,6 +129,19 @@ struct YearView<DateView>: View where DateView: View {
     }
 }
 
+struct MonthLabel: View {
+    @Environment(\.calendar) var calendar
+    let month: Date
+    let week: Date
+    private var startDayOfMonth: Date {
+        return calendar.startOfDay(for: month)
+    }
+    init(of month: Date, upon week: Date) {
+        self.month = month
+        self.week = week
+    }
+    
+}
 struct MonthView<DateView>: View where DateView: View {
     @Environment(\.calendar) var calendar
     let month: Date
@@ -140,9 +154,9 @@ struct MonthView<DateView>: View where DateView: View {
         LazyVStack{
             ForEach(0..<weeks.count, id: \.self) { nth in
                 if nth == 0 {
-                    MonthLabel
+                    MonthLabel(of: month, upon: weeks[nth])
                 }
-                WeekView
+                WeekView(of: weeks[nth], content: content)
             }
         }
     }
@@ -164,6 +178,35 @@ struct WeekView<DateView>: View where DateView: View {
         guard let weekInterval = calendar.dateInterval(of: .weekOfMonth, for: week)
         else { return[] }
         return calendar.generateDates(interval: weekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
+    }
+    var body: some View {
+        LazyHStack(spacing: 0) {
+            ForEach(days, id: \.self) { day in
+                if calendar.isDate(day, equalTo: week, toGranularity: .month) {
+                    content(day)
+                } else {
+                    content(day).hidden()
+                }
+            }
+        }
+    }
+}
+struct DayView: View {
+    let label: String
+    init(presenting label: String){
+        self.label = label
+    }
+    var body: some View {
+        Text("1")
+            .hidden()
+            .padding(10)
+            .padding(.bottom, 20)
+            .overlay (
+                VStack {
+                    Divider()
+                    Text(label)
+                }
+            )
     }
 }
 //struct MainCalendar_Previews: PreviewProvider {
