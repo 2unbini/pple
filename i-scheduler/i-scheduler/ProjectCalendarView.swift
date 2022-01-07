@@ -23,10 +23,11 @@ struct ProjectCalendarView: View {
         self.endDate = project.endDate
         self.dayData = Array(0...daysBetween(startDate: startDate, endDate: endDate))
     }
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130))]) {
+                LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130)), count: UIDevice.current.userInterfaceIdiom != .pad ? 5 : 7)) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
                             currentIndex = day
