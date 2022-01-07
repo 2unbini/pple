@@ -23,6 +23,30 @@ struct MainCalendar<DateView>: View where DateView: View {
             Divider()
             
             ScrollView(.vertical) {
+                LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+                    ForEach(createMonths, id: \.self) { month in
+                        Section{
+                            ForEach(createDaysThroughMonth(month: month), id: \.self) { date in
+                                if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                                    contents(date).id(date)
+                                } else {
+                                    contents(date).hidden()
+                                }
+                            }
+                            
+                        }
+                    header: {
+                        VStack {
+                            header(month: month)
+                            LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+                                ForEach(createAnArrayToDisplayWeekDay, id: \.self) { date in
+                                    showWeekDay(date: date)
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
 //                calendarBody
 //                LazyVStack{
 //                    ForEach(years, id: \.self) { year in
@@ -31,12 +55,13 @@ struct MainCalendar<DateView>: View where DateView: View {
 //                }
             }
         }
-        /*LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-            ForEach(createMonths, id: \.self) { months in
-                
-            }
-        }*/
     }
+        func header(month: Date) -> some View {
+            let formatter = DateFormatter.yearAndMonth
+            return Text(formatter.string(from: month))
+                .font(.title)
+                .padding()
+        }
     private var year: some View {
         // TODO: @State로 만들기
         Text("2021")
@@ -66,6 +91,18 @@ struct MainCalendar<DateView>: View where DateView: View {
     
     var createMonths: [Date] {
         calendar.generateDates(interval: interval, dateComponents: DateComponents(day: 1))
+    }
+}
+
+struct RootView: View {
+    @Environment(\.calendar) var calendar
+    var customDateInterval: DateInterval = DateInterval(start: Date(timeIntervalSinceNow: 60 * 60 * 24 * 365 * -1), end: Date(timeIntervalSinceNow: 60 * 60 * 24 * 365))
+    var body: some View {
+        MainCalendar(interval: customDateInterval) { date in
+            Text(String(calendar.component(.day, from: date)))
+                .frame(width: 40, height: 40, alignment: .center)
+                .padding()
+        }
     }
 }
 

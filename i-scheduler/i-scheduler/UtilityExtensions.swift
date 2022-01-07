@@ -57,6 +57,12 @@ extension DateFormatter {
         formatter.dateFormat = "E"
         return formatter
     }
+    
+    static var yearAndMonth: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy MMMM"
+        return formatter
+    }
 }
 
 extension Int: Identifiable {
