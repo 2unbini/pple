@@ -16,6 +16,7 @@
 		93989522276339E400BF6F59 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989518276339E400BF6F59 /* TaskRowView.swift */; };
 		93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989519276339E400BF6F59 /* ProjectCalendarView.swift */; };
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
+		A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A404F4BB278858E20082E36E /* MainCalendar.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
 		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
 		A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */; };
@@ -50,6 +51,7 @@
 		93989518276339E400BF6F59 /* TaskRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		93989519276339E400BF6F59 /* ProjectCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectCalendarView.swift; sourceTree = "<group>"; };
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		A404F4BB278858E20082E36E /* MainCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCalendar.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
+				A404F4BB278858E20082E36E /* MainCalendar.swift */,
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
 				93989514276339E400BF6F59 /* ProjectAddSheet.swift */,
 				A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */,
@@ -250,6 +253,7 @@
 				93989522276339E400BF6F59 /* TaskRowView.swift in Sources */,
 				A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */,
 				A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */,
+				A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */,
 				A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */,
 				93989524276339E400BF6F59 /* TaskList.swift in Sources */,
 				9398951F276339E400BF6F59 /* ProjectList.swift in Sources */,
