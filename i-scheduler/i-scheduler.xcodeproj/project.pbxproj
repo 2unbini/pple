@@ -40,6 +40,7 @@
 		A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */; };
 		A8AB6E1F276B2B540050F6C9 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6E1E276B2B540050F6C9 /* Enums.swift */; };
 		A8B4925B2788687700F63B78 /* CalendarBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B4925A2788687700F63B78 /* CalendarBody.swift */; };
+		A8B4925D2788840900F63B78 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B4925C2788840900F63B78 /* DateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryModel.swift; sourceTree = "<group>"; };
 		A8AB6E1E276B2B540050F6C9 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A8B4925A2788687700F63B78 /* CalendarBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBody.swift; sourceTree = "<group>"; };
+		A8B4925C2788840900F63B78 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
 				A404F4BB278858E20082E36E /* MainCalendar.swift */,
 				A8B4925A2788687700F63B78 /* CalendarBody.swift */,
+				A8B4925C2788840900F63B78 /* DateView.swift */,
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
 				93989514276339E400BF6F59 /* ProjectAddSheet.swift */,
 				A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */,
@@ -234,6 +237,7 @@
 			files = (
 				9398951D276339E400BF6F59 /* ProjectToolBar.swift in Sources */,
 				A4D52AA2276877F300E0B17A /* UtilityExtensions.swift in Sources */,
+				A8B4925D2788840900F63B78 /* DateView.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
 				93989521276339E400BF6F59 /* ProjectGrid.swift in Sources */,
 				9398951E276339E400BF6F59 /* ProjectAddSheet.swift in Sources */,

@@ -17,7 +17,11 @@ struct CalendarBody<DateView: View>: View {
             ForEach(months) { month in
                 Section {
                     ForEach(days(of: month)) { date in
-                        // content
+                        if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                            content(month, date)
+                        } else {
+                            content(month, date).hidden()
+                        }
                     }
                 }
                 .id(month)
