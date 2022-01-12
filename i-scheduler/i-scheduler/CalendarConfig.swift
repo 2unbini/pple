@@ -8,7 +8,8 @@
 import SwiftUI
 
 class CalendarConfig: ObservableObject {
-    @Published var initialDateId: Date
+    @Published var yearLabel: String
+    let initialDateId: Date
     var today: Today
     let interval: DateInterval
     let calendar = Calendar(identifier: .gregorian)
@@ -18,16 +19,19 @@ class CalendarConfig: ObservableObject {
         self.interval = DateInterval(start: calendar.date(from: startDate)!, end: calendar.date(from: endDate)!)
         self.today = Today()
         initialDateId = calendar.date(from: DateComponents(year: today.year, month: today.month)) ?? Date()
+        self.yearLabel = today.stringify(content: today.year)
     }
     
     struct Today {
         var date = Date()
         var year: Int
         var month: Int
-        let calendar = Calendar(identifier: .gregorian)
         init() {
-            self.year = calendar.component(.year, from: date)
-            self.month = calendar.component(.month, from: date)
+            self.year = date.year
+            self.month = date.month
+        }
+        func stringify(content: Int) -> String {
+            return String(content)
         }
     }
 }

@@ -68,6 +68,9 @@ struct MonthLabel: View {
                     .hidden()
             }
         }
+        .onAppear {
+            // upadate year label
+        }
         Divider()
         VStack(spacing: 0) {
             // monthly label

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ScrollableCalendarVGrid<DateView: View>: View {
     @Environment(\.calendar) private var calendar
-    let interval: DateInterval
+    @ObservedObject var calendarConfig: CalendarConfig
+//    let interval: DateInterval
     let content: (Date, Date, CGFloat) -> DateView
     
     var body: some View {
@@ -23,7 +24,7 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
                     }
                 }
                 .onAppear {
-                    scrollView.scrollTo(calendar.dateInterval(of: .month, for: Date()), anchor: .top)
+                    scrollView.scrollTo(calendarConfig.initialDateId, anchor: .top)
                 }
             }
         }
@@ -42,7 +43,7 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
         .id(month)
     }
     private var months: [Date] {
-        calendar.generateDates(interval: DateInterval(start: interval.start, end: interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
+        calendar.generateDates(interval: DateInterval(start: calendarConfig.interval.start, end: calendarConfig.interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
     }
     private func days(of month: Date) -> [Date] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: month),
