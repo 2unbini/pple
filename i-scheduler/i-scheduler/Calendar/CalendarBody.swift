@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-struct ScrollableCalendarVGrid<DateView: View>: View {
+struct ScrollableCalendarVGrid: View {
     @Environment(\.calendar) private var calendar
-    @ObservedObject var calendarConfig: CalendarConfig
-//    let interval: DateInterval
-    let content: (Date, Date, CGFloat) -> DateView
+    @EnvironmentObject var calendarConfig: CalendarConfig
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,7 +17,7 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: 7), spacing: 0) {
                         ForEach(months) { month in
-                            monthSection(month: month, width: geometry.size.width / 7)
+                            MonthSection(month: month, width: geometry.size.width / 7)
                         }
                     }
                 }
@@ -30,7 +28,25 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
             }
         }
     }
-    private func monthSection(month: Date, width: CGFloat) -> some View {
+    
+    private var months: [Date] {
+        calendar.generateDates(interval: DateInterval(start: calendarConfig.interval.start, end: calendarConfig.interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
+    }
+}
+
+struct MonthSection: View {
+    @Environment(\.calendar) var calendar: Calendar
+    @EnvironmentObject var calendarConfig: CalendarConfig
+    
+    let month: Date
+    let width: CGFloat
+    
+    init (month: Date, width: CGFloat) {
+        self.month = month
+        self.width = width
+    }
+    
+    var body: some View {
         Section {
             monthLabel(month: month)
                 .onAppear {
@@ -40,9 +56,9 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
                 }
             ForEach(days(of: month)) { date in
                 if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                    content(month, date, width)
+                    DateView(month: month, date: date, width: width)
                 } else {
-                    content(month, date, width).hidden()
+                    DateView(month: month, date: date, width: width).hidden()
                 }
             }
         }
@@ -53,6 +69,7 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
     private func monthLabel(month: Date) -> some View {
         if let monthFirstWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: month) {
             let daysOfMonthFirstWeek = calendar.generateDates(interval: monthFirstWeekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
+            
             ForEach(daysOfMonthFirstWeek) { date in
                 if date.day == 1 {
                     Text(String(month.month) + "월")
@@ -72,49 +89,13 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
         }
     }
     
-    private var months: [Date] {
-        calendar.generateDates(interval: DateInterval(start: calendarConfig.interval.start, end: calendarConfig.interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
-    }
     private func days(of month: Date) -> [Date] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: month),
               let firstWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
               let lastDayOfMonth = calendar.date(byAdding: .day, value: -1, to: monthInterval.end),
-                let lastWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: lastDayOfMonth)
+              let lastWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: lastDayOfMonth)
         else { return [] }
-        return calendar.generateDates(interval: DateInterval(start: firstWeekInterval.start, end: lastWeekInterval.end), dateComponents: DateComponents(hour:0, minute: 0, second: 0))
-    }
-}
-
-struct CalendarBody<DateView: View>: View {
-    @Environment(\.calendar) private var calendar
-    let interval: DateInterval
-    let content: (Date, Date) -> DateView
-    
-    var body: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: 7), spacing: 0) {
-            ForEach(months) { month in
-                Section {
-                    ForEach(days(of: month)) { date in
-                        if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                            content(month, date)
-                        } else {
-                            content(month, date).hidden()
-                        }
-                    }
-                }
-                .id(month)
-            }
-        }
-    }
-    private var months: [Date] {
-        calendar.generateDates(interval: DateInterval(start: interval.start, end: interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
-    }
-    private func days(of month: Date) -> [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: month),
-              let firstWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
-              let lastDayOfMonth = calendar.date(byAdding: .day, value: -1, to: monthInterval.end),
-                let lastWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: lastDayOfMonth)
-        else { return [] }
+        
         return calendar.generateDates(interval: DateInterval(start: firstWeekInterval.start, end: lastWeekInterval.end), dateComponents: DateComponents(hour:0, minute: 0, second: 0))
     }
 }

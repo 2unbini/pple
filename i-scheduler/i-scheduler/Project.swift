@@ -15,26 +15,6 @@ extension Project: Comparable {
     
     // MARK: - Fetching From CoreData
     
-    static func withId(_ id: UUID, context: NSManagedObjectContext) -> Project? {
-        let request = fetchRequest(NSPredicate(format: "projectId_ = %@", id as CVarArg))
-        do {
-            let project = try context.fetch(request)
-            if let project = project.first {
-                return project
-            } else {
-                // TODO: throw an error instead? also think of ways to make this more applicable
-                // could be used to create new Project
-                let newProject = Project(context: context)
-                newProject.projectId = id
-                newProject.tasks = []
-                return newProject
-            }
-        } catch(let error) {
-            print("프로젝트를 찾는 데 실패했습니다: \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Project> {
         let request = NSFetchRequest<Project>(entityName: "Project")
         request.sortDescriptors = [NSSortDescriptor(key: "name_", ascending: true)]

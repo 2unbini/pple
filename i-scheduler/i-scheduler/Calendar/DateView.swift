@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DateView: View {
     @Environment(\.calendar) private var calendar
+    
     let month: Date
     let date: Date
     let width: CGFloat
@@ -17,24 +18,17 @@ struct DateView: View {
         VStack(spacing: 5) {
             Divider()
             dayCell
-//            MonthLabel(date: date)
         }
     }
     
     private var dayCell: some View {
         VStack(spacing: 0) {
-//            monthLabel
             dayText
-            // Project Indicatior
+            // TODO: Project Indicatior
             Spacer(minLength: 0)
         }
         .frame(width: width, height: width * 1.5)
     }
-    
-//    private var monthLabel: some View {
-//        Text("")
-//            .overlay(Text(String(month.month)))
-//    }
     
     private var dayText: some View {
         Text("30")
@@ -46,9 +40,11 @@ struct DateView: View {
                 Text(String(date.day))
             )
             .foregroundColor(date.isToday ? Color.white : date.isWeekend ? Color.gray : Color.primary)
-        // bold if today
+            // TODO: bold if today
     }
 }
+
+// MARK: Tae's Refactor
 
 struct MonthLabel: View {
     let date: Date

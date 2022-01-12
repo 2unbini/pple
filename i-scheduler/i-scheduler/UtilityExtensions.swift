@@ -43,17 +43,11 @@ extension Date: Identifiable {
     var isWeekend: Bool { calendar.isDateInWeekend(self)}
     
     var midnight: Date {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        let midnightString = formatter.string(from: self)
-        return formatter.date(from: midnightString) ?? self
+        calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self) ?? self
     }
     
     var tomorrowMidnight: Date {
-        var components = DateComponents()
-        components.day = 1
-        return Calendar.current.date(byAdding: components, to: midnight) ?? midnight
+        calendar.date(byAdding: .day, value: 1, to: midnight) ?? midnight
     }
 }
 
@@ -75,12 +69,16 @@ extension DateFormatter {
         formatter.dateFormat = "MMM"
         return formatter
     }
-
-    
 }
 
 extension Int: Identifiable {
     public var id: Int { self }
+}
+
+extension Int {
+    func stringify() -> String {
+        String(self)
+    }
 }
 
 extension View {

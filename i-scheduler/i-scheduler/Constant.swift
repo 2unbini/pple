@@ -7,5 +7,12 @@
 
 import Foundation
 
-let start = 2000
-let end = 2100
+enum Interval {
+    static let start = 2000
+    static let end = 2100
+}
+
+enum ToolBarAction {
+    case add
+    case edit
+}
