@@ -9,68 +9,55 @@ import SwiftUI
 
 struct MainCalendar: View {
     @Environment(\.calendar) var calendar
-//    let contents: (Date) -> DateView
+    //    let contents: (Date) -> DateView
     let interval: DateInterval = DateInterval(start: Date(), end: Date().addingTimeInterval(60 * 60 * 24 * 365))
-    let sevendaysInterval: DateInterval = DateInterval(start: Date(timeIntervalSince1970: 60 * 60 * 24 * 3),
-                                                       end: Date(timeIntervalSince1970: 60 * 60 * 24 * 9))
-//    init(interval: DateInterval, @ViewBuilder contents: @escaping (Date) -> DateView) {
-//        self.interval = interval
-//        self.contents = contents
-//    }
+    let sevendaysInterval: DateInterval = DateInterval(
+        start: Date(timeIntervalSince1970: 60 * 60 * 24 * 3),
+        end: Date(timeIntervalSince1970: 60 * 60 * 24 * 9)
+    )
+    //    init(interval: DateInterval, @ViewBuilder contents: @escaping (Date) -> DateView) {
+    //        self.interval = interval
+    //        self.contents = contents
+    //    }
+    //    @State var year: Int = 0
+    
     var body: some View {
         VStack(spacing: 0) {
-             year
-             daysOfTheWeek
-            Divider()
-            
-            ScrollView(.vertical) {
-//                LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-//                    ForEach(createMonths, id: \.self) { month in
-//                        Section{
-//                            ForEach(createDaysThroughMonth(month: month), id: \.self) { date in
-//                                if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-//                                    contents(date).id(date)
-//                                } else {
-//                                    contents(date).hidden()
-//                                }
-//                            }
-//
-//                        }
-//                    header: {
-//                        VStack {
-//                            header(month: month)
-//                            LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
-//                                ForEach(createAnArrayToDisplayWeekDay, id: \.self) { date in
-//                                    showWeekDay(date: date)
-//                                }
-//                            }
+            ScrollViewReader { value in
+                //                year
+                daysOfTheWeek
+                Divider()
+                ScrollView(.vertical) {
+                    CalendarBody(interval: interval) { month, date in
+                        DateView(month: month, date: date)
+                            .onAppear {
+                                //
+                            }
+                    }
+//                    LazyVStack{
+//                        ForEach(years, id: \.self) { year in
+//                            YearView(of: year, content: contents)
 //                        }
 //                    }
-//                    }
-//                }
-                CalendarBody(interval: interval) { month, date in
-                    DateView(month: month, date: date)
                 }
-//                LazyVStack{
-//                    ForEach(years, id: \.self) { year in
-//                        YearView(of: year, content: contents)
-//                    }
-//                }
+                .onAppear(perform: {
+                    value.scrollTo(calendar.dateInterval(of: .month, for: Date()), anchor: .top)
+                })
+                .background(Color.white)
             }
-            .background(Color.white)
         }
         .background(Color.init(white: 0.95).ignoresSafeArea(.all, edges: .top))
     }
-        func header(month: Date) -> some View {
-            let formatter = DateFormatter.yearAndMonth
-            return Text(formatter.string(from: month))
-                .font(.title)
-                .padding()
-        }
-    private var year: some View {
-        // TODO: @State로 만들기
-        Text("2021")
+    func header(month: Date) -> some View {
+        let formatter = DateFormatter.yearAndMonth
+        return Text(formatter.string(from: month))
+            .font(.title)
+            .padding()
     }
+    //    private var year: some View {
+    //        // TODO: @State로 만들기
+    //        Text("2021")
+    //    }
     private var daysOfTheWeek: some View {
         HStack(spacing: 0) {
             let daysOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"]

@@ -63,6 +63,14 @@ extension DateFormatter {
         formatter.dateFormat = "yyyy MMMM"
         return formatter
     }
+    
+    static var month: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter
+    }
+
+    
 }
 
 extension Int: Identifiable {
