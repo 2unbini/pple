@@ -23,6 +23,7 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
                         }
                     }
                 }
+                .background(Color.white)
                 .onAppear {
                     scrollView.scrollTo(calendarConfig.initialDateId, anchor: .top)
                 }
@@ -31,7 +32,12 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
     }
     private func monthSection(month: Date, width: CGFloat) -> some View {
         Section {
-            // Month Label
+            monthLabel(month: month)
+                .onAppear {
+                    if month.month == 12 && calendarConfig.yearLabel != String(month.year) {
+                        calendarConfig.yearLabel = String(month.year)
+                    }
+                }
             ForEach(days(of: month)) { date in
                 if calendar.isDate(date, equalTo: month, toGranularity: .month) {
                     content(month, date, width)
@@ -42,6 +48,30 @@ struct ScrollableCalendarVGrid<DateView: View>: View {
         }
         .id(month)
     }
+    
+    @ViewBuilder
+    private func monthLabel(month: Date) -> some View {
+        if let monthFirstWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: month) {
+            let daysOfMonthFirstWeek = calendar.generateDates(interval: monthFirstWeekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
+            ForEach(daysOfMonthFirstWeek) { date in
+                if date.day == 1 {
+                    Text(String(month.month) + "월")
+                        .bold()
+                        .font(.title3)
+                        .foregroundColor(calendar.isDate(date, equalTo: Date(), toGranularity: .month) ? .pink : .primary)
+                        .padding(.top, 10)
+                        .padding(.bottom, 5)
+                }
+                else {
+                    Text(String(month.month))
+                        .font(.title3)
+                        .bold()
+                        .hidden()
+                }
+            }
+        }
+    }
+    
     private var months: [Date] {
         calendar.generateDates(interval: DateInterval(start: calendarConfig.interval.start, end: calendarConfig.interval.end.addingTimeInterval(1)), dateComponents: DateComponents(day: 1))
     }

@@ -43,6 +43,7 @@ struct MainCalendar: View {
             // TODO: @State로 만들기
             Text(calendarConfig.yearLabel)
         }
+    
     private var daysOfTheWeek: some View {
         HStack(spacing: 0) {
             let daysOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"]

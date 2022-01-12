@@ -14,10 +14,10 @@ struct DateView: View {
     let width: CGFloat
     
     var body: some View {
-        VStack(spacing: 0) {
-//            Divider()
-//            dayCell
-            MonthLabel(date: date)
+        VStack(spacing: 5) {
+            Divider()
+            dayCell
+//            MonthLabel(date: date)
         }
     }
     
@@ -46,6 +46,7 @@ struct DateView: View {
                 Text(String(date.day))
             )
             .foregroundColor(date.isToday ? Color.white : date.isWeekend ? Color.gray : Color.primary)
+        // bold if today
     }
 }
 
