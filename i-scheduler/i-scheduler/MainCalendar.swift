@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainCalendar: View {
     @Environment(\.calendar) var calendar
+    @StateObject var calendarConfig: CalendarConfig = CalendarConfig()
     //    let contents: (Date) -> DateView
     let interval: DateInterval = DateInterval(start: Date(), end: Date().addingTimeInterval(60 * 60 * 24 * 365))
     let sevendaysInterval: DateInterval = DateInterval(
@@ -34,11 +35,6 @@ struct MainCalendar: View {
                                 //
                             }
                     }
-//                    LazyVStack{
-//                        ForEach(years, id: \.self) { year in
-//                            YearView(of: year, content: contents)
-//                        }
-//                    }
                 }
                 .onAppear(perform: {
                     value.scrollTo(calendar.dateInterval(of: .month, for: Date()), anchor: .top)
@@ -54,10 +50,10 @@ struct MainCalendar: View {
             .font(.title)
             .padding()
     }
-    //    private var year: some View {
-    //        // TODO: @State로 만들기
-    //        Text("2021")
-    //    }
+        private var year: some View {
+            // TODO: @State로 만들기
+            Text("2021")
+        }
     private var daysOfTheWeek: some View {
         HStack(spacing: 0) {
             let daysOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"]
@@ -94,120 +90,6 @@ struct MainCalendar: View {
     }
 }
 
-//struct RootView: View {
-//    @Environment(\.calendar) var calendar
-//    var customDateInterval: DateInterval = DateInterval(start: Date(timeIntervalSinceNow: 60 * 60 * 24 * 365 * -1), end: Date(timeIntervalSinceNow: 60 * 60 * 24 * 365))
-//    var body: some View {
-//        MainCalendar(interval: customDateInterval) { date in
-//            Text(String(calendar.component(.day, from: date)))
-//                .frame(width: 40, height: 40, alignment: .center)
-//                .padding()
-//        }
-//    }
-//}
-
-//struct YearView<DateView>: View where DateView: View {
-//    @Environment(\.calendar) var calendar
-//    let year: Date
-//    let content: (Date) -> DateView
-//    init(of year: Date, @ViewBuilder content: @escaping (Date) -> DateView){
-//        self.year = year
-//        self.content = content
-//    }
-//    var body: some View {
-//        LazyVStack{
-//            ForEach(months, id: \.self) { month in
-//                MonthView(of: month, content: content)
-//            }
-//        }
-//    }
-//    var months: [Date] {
-//        guard let yearInterval = calendar.dateInterval(of: .year, for: year)
-//        else { return [] }
-//        return calendar.generateDates(interval: yearInterval, dateComponents: DateComponents(day: 1))
-//    }
-//}
-
-//struct MonthLabel: View {
-//    @Environment(\.calendar) var calendar
-//    let month: Date
-//    let week: Date
-//    private var startDayOfMonth: Date {
-//        return calendar.startOfDay(for: month)
-//    }
-//    init(of month: Date, upon week: Date) {
-//        self.month = month
-//        self.week = week
-//    }
-//
-//}
-//struct MonthView<DateView>: View where DateView: View {
-//    @Environment(\.calendar) var calendar
-//    let month: Date
-//    let content: (Date) -> DateView
-//    init(of month: Date, @ViewBuilder content: @escaping (Date) -> DateView){
-//        self.month = month
-//        self.content = content
-//    }
-//    var body: some View {
-//        LazyVStack{
-//            ForEach(0..<weeks.count, id: \.self) { nth in
-//                if nth == 0 {
-//                    MonthLabel(of: month, upon: weeks[nth])
-//                }
-//                WeekView(of: weeks[nth], content: content)
-//            }
-//        }
-//    }
-//    var weeks: [Date] {
-//        guard let monthInterval = calendar.dateInterval(of: .month, for: month)
-//        else { return[] }
-//        return calendar.generateDates(interval: monthInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0, weekday: calendar.firstWeekday))
-//    }
-//}
-struct WeekView<DateView>: View where DateView: View {
-    @Environment(\.calendar) var calendar
-    let week: Date
-    let content: (Date) -> DateView
-    init(of week: Date, @ViewBuilder content: @escaping (Date) -> DateView){
-        self.week = week
-        self.content = content
-    }
-    var days: [Date] {
-        guard let weekInterval = calendar.dateInterval(of: .weekOfMonth, for: week)
-        else { return[] }
-        return calendar.generateDates(interval: weekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
-    }
-    var body: some View {
-        LazyHStack(spacing: 0) {
-            ForEach(days, id: \.self) { day in
-                if calendar.isDate(day, equalTo: week, toGranularity: .month) {
-                    content(day)
-                } else {
-                    content(day).hidden()
-                }
-            }
-        }
-    }
-}
-struct DayView: View {
-    let label: String
-    init(presenting label: String){
-        self.label = label
-    }
-    var body: some View {
-        Text("1")
-            .hidden()
-            .padding(10)
-            .padding(.bottom, 20)
-            .overlay (
-                VStack {
-                    Divider()
-                    Text(label)
-                }
-            )
-    }
-}
 //struct MainCalendar_Previews: PreviewProvider {
 //    static var previews: some View {
 //        MainCalendar()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9325AE29278E9AC90081C3E5 /* CalendarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325AE28278E9AC90081C3E5 /* CalendarConfig.swift */; };
+		9325AE2B278E9D360081C3E5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325AE2A278E9D360081C3E5 /* Constant.swift */; };
 		9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989511276339E300BF6F59 /* ProjectEditSheet.swift */; };
 		9398951D276339E400BF6F59 /* ProjectToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989513276339E400BF6F59 /* ProjectToolBar.swift */; };
 		9398951E276339E400BF6F59 /* ProjectAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989514276339E400BF6F59 /* ProjectAddSheet.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9325AE28278E9AC90081C3E5 /* CalendarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarConfig.swift; sourceTree = "<group>"; };
+		9325AE2A278E9D360081C3E5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		93989511276339E300BF6F59 /* ProjectEditSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectEditSheet.swift; sourceTree = "<group>"; };
 		93989513276339E400BF6F59 /* ProjectToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectToolBar.swift; sourceTree = "<group>"; };
 		93989514276339E400BF6F59 /* ProjectAddSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectAddSheet.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
 				A404F4BB278858E20082E36E /* MainCalendar.swift */,
+				9325AE28278E9AC90081C3E5 /* CalendarConfig.swift */,
+				9325AE2A278E9D360081C3E5 /* Constant.swift */,
 				A8B4925A2788687700F63B78 /* CalendarBody.swift */,
 				A8B4925C2788840900F63B78 /* DateView.swift */,
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
@@ -236,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9398951D276339E400BF6F59 /* ProjectToolBar.swift in Sources */,
+				9325AE2B278E9D360081C3E5 /* Constant.swift in Sources */,
 				A4D52AA2276877F300E0B17A /* UtilityExtensions.swift in Sources */,
 				A8B4925D2788840900F63B78 /* DateView.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
@@ -247,6 +254,7 @@
 				A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */,
 				A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */,
 				9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */,
+				9325AE29278E9AC90081C3E5 /* CalendarConfig.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
 				A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */,
