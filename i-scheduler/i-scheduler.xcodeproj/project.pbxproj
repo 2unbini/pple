@@ -18,6 +18,7 @@
 		93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93989519276339E400BF6F59 /* ProjectCalendarView.swift */; };
 		93989524276339E400BF6F59 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9398951A276339E400BF6F59 /* TaskList.swift */; };
 		A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A404F4BB278858E20082E36E /* MainCalendar.swift */; };
+		93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
 		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
 		A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */; };
@@ -55,6 +56,7 @@
 		93989519276339E400BF6F59 /* ProjectCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectCalendarView.swift; sourceTree = "<group>"; };
 		9398951A276339E400BF6F59 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		A404F4BB278858E20082E36E /* MainCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCalendar.swift; sourceTree = "<group>"; };
+		93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCalendatButtonView.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
@@ -166,6 +168,20 @@
 				A865D02C278ECCCF000814C2 /* ProjectCalendar */,
 				A87FA85D275DD47100A77363 /* i_schedulerApp.swift */,
 				A87FA85F275DD47100A77363 /* ContentView.swift */,
+				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
+				93989514276339E400BF6F59 /* ProjectAddSheet.swift */,
+				A88F9AA827744E8000831DD3 /* TaskAddSheet.swift */,
+				A4D52A9F276877D700E0B17A /* CheckBox.swift */,
+				A4D52AA1276877F300E0B17A /* UtilityExtensions.swift */,
+				9398951A276339E400BF6F59 /* TaskList.swift */,
+				93989518276339E400BF6F59 /* TaskRowView.swift */,
+				93989511276339E300BF6F59 /* ProjectEditSheet.swift */,
+				A88F9AA627744E4600831DD3 /* TaskEditSheet.swift */,
+				93989519276339E400BF6F59 /* ProjectCalendarView.swift */,
+				93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */,
+				A4162D2D2774C87400A2BBDC /* PopupView.swift */,
+				A4162C52276B175E00A2BBDC /* Cardify.swift */,
+				93989517276339E400BF6F59 /* ProjectGrid.swift */,
 				93989515276339E400BF6F59 /* ProjectList.swift */,
 				A8AB6E1A27684F730050F6C9 /* TemporaryModel.swift */,
 				9325AE2A278E9D360081C3E5 /* Constant.swift */,
@@ -277,6 +293,7 @@
 				A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */,
 				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
 				A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */,
+				93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */,
 				A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */,
 				A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */,
 				A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */,
