@@ -28,13 +28,19 @@ extension Date: Identifiable {
         description
     }
     
-    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+    private var calendar: Calendar {
+        Calendar.current
+    }
+    
+    func getComponent(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         calendar.component(component, from: self)
     }
     
-    var day: Int { self.get(.day) }
-    var month: Int { self.get(.month) }
-    var year: Int { self.get(.year) }
+    var day: Int { self.getComponent(.day) }
+    var month: Int { self.getComponent(.month) }
+    var year: Int { self.getComponent(.year) }
+    var isToday: Bool { calendar.isDateInToday(self)}
+    var isWeekend: Bool { calendar.isDateInWeekend(self)}
     
     var midnight: Date {
         let formatter = DateFormatter()

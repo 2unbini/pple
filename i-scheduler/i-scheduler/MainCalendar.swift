@@ -24,22 +24,11 @@ struct MainCalendar: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScrollViewReader { value in
-                //                year
-                daysOfTheWeek
-                Divider()
-                ScrollView(.vertical) {
-                    CalendarBody(interval: interval) { month, date in
-                        DateView(month: month, date: date)
-                            .onAppear {
-                                //
-                            }
-                    }
-                }
-                .onAppear(perform: {
-                    value.scrollTo(calendar.dateInterval(of: .month, for: Date()), anchor: .top)
-                })
-                .background(Color.white)
+            //                year
+            daysOfTheWeek
+            Divider()
+            ScrollableCalendarVGrid(interval: interval) { month, date, width in
+                DateView(month: month, date: date, width: width)
             }
         }
         .background(Color.init(white: 0.95).ignoresSafeArea(.all, edges: .top))
