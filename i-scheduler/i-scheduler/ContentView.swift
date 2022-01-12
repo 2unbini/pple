@@ -10,7 +10,10 @@ import CoreData
 
 struct ContentView: View {
     var body: some View {
-        ProjectList()
+        TabView {
+            MainCalendar()
+            ProjectList()
+        }
     }
 }
 
