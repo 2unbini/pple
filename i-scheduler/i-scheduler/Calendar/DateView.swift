@@ -9,10 +9,29 @@ import SwiftUI
 
 struct DateView: View {
     @Environment(\.calendar) private var calendar
+    @FetchRequest private var dailyProjects: FetchedResults<Project>
+    @EnvironmentObject private var calendarConfig: CalendarConfig
     
     let month: Date
     let date: Date
     let width: CGFloat
+    let weeklyProjectList: [[Project]]
+    
+    init(month: Date, date: Date, width: CGFloat, weeklyProjectList: [[Project]]) {
+        self.month = month
+        self.date = date
+        self.width = width
+        self.weeklyProjectList = weeklyProjectList
+        
+        let request = Project.fetchRequest(
+            predicate: NSPredicate(
+                format: "startDate_ < %@ and endDate_ >= %@",
+                argumentArray: [date.tomorrowMidnight, date.midnight]
+            ),
+            sortDescriptor: [NSSortDescriptor(key: "startDate_", ascending: true)]
+        )
+        self._dailyProjects = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
         VStack(spacing: 5) {

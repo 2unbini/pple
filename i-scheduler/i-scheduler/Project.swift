@@ -15,9 +15,9 @@ extension Project: Comparable {
     
     // MARK: - Fetching From CoreData
     
-    static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Project> {
+    static func fetchRequest(predicate: NSPredicate, sortDescriptor: [NSSortDescriptor] = [NSSortDescriptor(key: "name_", ascending: true)]) -> NSFetchRequest<Project> {
         let request = NSFetchRequest<Project>(entityName: "Project")
-        request.sortDescriptors = [NSSortDescriptor(key: "name_", ascending: true)]
+        request.sortDescriptors = sortDescriptor
         request.predicate = predicate
         return request
     }
