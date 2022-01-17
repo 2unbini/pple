@@ -67,9 +67,30 @@ struct DateView: View {
     }
     
     private var indicator: some View {
-        Rectangle()
+        let taskLabel = Rectangle()
             .foregroundColor(.pink)
             .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.height * 0.2)
+        
+        return VStack(spacing: 1) {
+            ForEach(weeklyProjectList) { project in
+                // if this week and today, draw
+                if dailyProjects.contains(project) {
+                    ZStack {
+                        taskLabel
+                        Text("\(project.name)")
+                    }
+                }
+//                else if  {
+//                    ZStack {
+//                        taskLabel
+////                        Text("\(project.name)")
+//                    }
+////                    .hidden()
+//                }
+                // if this week but not today, hidden
+                // if not this week, do nothing
+            }
+        }
     }
 }
 
