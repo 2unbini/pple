@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
-
+import CoreData
 class CalendarConfig: ObservableObject {
     @Published var yearLabel: String
     
+    var projects: [Project]
+    var cellSize: CGSize
     var today: Today
     let initialDateId: Date
     let interval: DateInterval
@@ -23,7 +25,16 @@ class CalendarConfig: ObservableObject {
         self.initialDateId = calendar.date(from: DateComponents(year: today.year, month: today.month)) ?? Date()
         self.interval = DateInterval(start: calendar.date(from: startDate)!, end: calendar.date(from: endDate)!)
         self.yearLabel = today.year.stringify()
-        
+        self.cellSize = CGSize()
+        let request: NSFetchRequest<Project> = Project.fetchRequest()
+        do {
+            let context = PersistenceController.shared.container.viewContext
+            let entries = try context.fetch(request)
+            self.projects = entries.map{ $0 }
+        }catch{
+            projects = []
+            fatalError()
+        }
     }
     
     struct Today {

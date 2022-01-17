@@ -23,6 +23,8 @@ struct ScrollableCalendarVGrid: View {
                 }
                 .background(Color.white)
                 .onAppear {
+                    calendarConfig.cellSize.width = geometry.size.width / 7
+                    calendarConfig.cellSize.height = calendarConfig.cellSize.width * 1.5
                     scrollView.scrollTo(calendarConfig.initialDateId, anchor: .top)
                 }
             }
@@ -64,6 +66,24 @@ struct MonthSection: View {
         }
         .id(month)
     }
+    
+    private var weeks: [Date] {
+        guard let monthInterval: DateInterval = calendar.dateInterval(of: .month, for: month)
+        else { return [] }
+        return calendar.generateDates(interval: monthInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0, weekday: calendar.firstWeekday))
+    }
+    
+    private var weeklyProjectList: [[Project]] {
+        for week in weeks {
+            var days: [Date]
+            guard let weekInterval: DateInterval = calendar.dateInterval(of: .weekOfMonth, for: week)
+            else { return [[]] }
+            days = calendar.generateDates(interval: weekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
+            for project in calendarConfig.projects
+        }
+        
+    }
+    
     
     @ViewBuilder
     private func monthLabel(month: Date) -> some View {
