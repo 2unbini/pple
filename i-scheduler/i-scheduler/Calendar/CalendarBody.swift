@@ -58,10 +58,10 @@ struct MonthSection: View {
                 }
             ForEach(days(of: month)) { date in
                 // TODO: fix index to meet .weekOfMonth start index
-                let currentWeek = calendar.component(.weekOfMonth, from: date)
+                let currentWeek = calendar.component(.weekOfMonth, from: date) - 1
                 
                 if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList[0])
+                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList[currentWeek])
                 } else {
                     DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList[0]).hidden()
                 }
@@ -79,16 +79,38 @@ struct MonthSection: View {
     private var weeklyProjectList: [[Project]] {
         var weeklyProjectList = [[Project]]()
 
-        for (index, week) in weeks.enumerated() {
+        for week in weeks {
+            var weekProjects: [Project] = []
             var days: [Date]
             guard let weekInterval: DateInterval = calendar.dateInterval(of: .weekOfMonth, for: week)
             else { return [[]] }
             days = calendar.generateDates(interval: weekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
+            
             for project in calendarConfig.projects {
                 if project.startDate < days.last!.tomorrowMidnight && project.endDate >= days.first! {
-                    weeklyProjectList[index].append(project)
+                    if weekProjects.contains(project) == false {
+                        weekProjects.append(project)
+                    }
                 }
             }
+            
+            let sortedWeekList = weekProjects.sorted { first, second in
+                let firstStartDate = first.startDate.midnight
+                let secondStartDate = second.startDate.midnight
+                let firstDays = daysBetween(startDate: first.startDate, endDate: first.endDate)
+                let secondDays = daysBetween(startDate: second.startDate, endDate: second.endDate)
+                
+                if firstStartDate < secondStartDate {
+                    return true
+                }
+                else if firstStartDate > secondStartDate {
+                    return false
+                }
+                else {
+                    return firstDays > secondDays
+                }
+            }
+            weeklyProjectList.append(sortedWeekList)
         }
         return weeklyProjectList
     }

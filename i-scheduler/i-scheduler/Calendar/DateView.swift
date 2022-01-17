@@ -44,6 +44,7 @@ struct DateView: View {
         VStack(spacing: 0) {
             dayText
             // TODO: Project Indicatior
+            indicator
             Spacer(minLength: 0)
         }
         .frame(width: width, height: width * 1.5)
@@ -63,6 +64,12 @@ struct DateView: View {
             )
             .foregroundColor(date.isToday ? Color.white : date.isWeekend ? Color.gray : Color.primary)
             // TODO: bold if today
+    }
+    
+    private var indicator: some View {
+        Rectangle()
+            .foregroundColor(.pink)
+            .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.height * 0.2)
     }
 }
 

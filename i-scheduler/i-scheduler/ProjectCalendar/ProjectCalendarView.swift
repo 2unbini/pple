@@ -65,14 +65,14 @@ struct ProjectCalendarView: View {
     }
 }
 
-fileprivate func daysBetween(startDate: Date, endDate: Date) -> Int {
+func daysBetween(startDate: Date, endDate: Date) -> Int {
     if endDate < startDate {
         return 1
     }
     return Calendar.current.dateComponents([.day], from: removeUnderHour(fromDate: startDate), to: removeUnderHour(fromDate: endDate)).day!
 }
 
-fileprivate func removeUnderHour(fromDate: Date) -> Date {
+func removeUnderHour(fromDate: Date) -> Date {
     guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: fromDate)) else {
         fatalError("Failed to strip time from Date object")
     }
