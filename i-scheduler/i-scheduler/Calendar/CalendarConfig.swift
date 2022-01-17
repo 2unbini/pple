@@ -31,7 +31,7 @@ class CalendarConfig: ObservableObject {
             let context = PersistenceController.shared.container.viewContext
             let entries = try context.fetch(request)
             self.projects = entries.map{ $0 }
-        }catch{
+        } catch {
             projects = []
             fatalError()
         }

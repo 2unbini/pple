@@ -57,12 +57,13 @@ struct MonthSection: View {
                     }
                 }
             ForEach(days(of: month)) { date in
+                // TODO: fix index to meet .weekOfMonth start index
                 let currentWeek = calendar.component(.weekOfMonth, from: date)
                 
                 if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList)
+                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList[0])
                 } else {
-                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList).hidden()
+                    DateView(month: month, date: date, width: width, weeklyProjectList: weeklyProjectList[0]).hidden()
                 }
             }
         }
@@ -77,20 +78,18 @@ struct MonthSection: View {
     
     private var weeklyProjectList: [[Project]] {
         var weeklyProjectList = [[Project]]()
-        
+
         for (index, week) in weeks.enumerated() {
             var days: [Date]
             guard let weekInterval: DateInterval = calendar.dateInterval(of: .weekOfMonth, for: week)
             else { return [[]] }
             days = calendar.generateDates(interval: weekInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0))
             for project in calendarConfig.projects {
-//                calendar.isDate(<#T##date1: Date##Date#>, equalTo: <#T##Date#>, toGranularity: <#T##Calendar.Component#>)
                 if project.startDate < days.last!.tomorrowMidnight && project.endDate >= days.first! {
                     weeklyProjectList[index].append(project)
                 }
             }
         }
-        
         return weeklyProjectList
     }
     

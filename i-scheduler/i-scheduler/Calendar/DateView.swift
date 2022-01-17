@@ -15,9 +15,9 @@ struct DateView: View {
     let month: Date
     let date: Date
     let width: CGFloat
-    let weeklyProjectList: [[Project]]
+    let weeklyProjectList: [Project]
     
-    init(month: Date, date: Date, width: CGFloat, weeklyProjectList: [[Project]]) {
+    init(month: Date, date: Date, width: CGFloat, weeklyProjectList: [Project]) {
         self.month = month
         self.date = date
         self.width = width
@@ -47,6 +47,9 @@ struct DateView: View {
             Spacer(minLength: 0)
         }
         .frame(width: width, height: width * 1.5)
+        .onAppear {
+            print(weeklyProjectList)
+        }
     }
     
     private var dayText: some View {
