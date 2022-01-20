@@ -6,13 +6,31 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DateView: View {
     @Environment(\.calendar) private var calendar
+    @FetchRequest private var dailyProjects: FetchedResults<Project>
+    @EnvironmentObject private var calendarConfig: CalendarConfig
     
     let month: Date
     let date: Date
-    let width: CGFloat
+    let projectPositions: [Project:Int]
+    
+    init(month: Date, date: Date, projectPositions: [Project:Int]) {
+        self.month = month
+        self.date = date
+        self.projectPositions = projectPositions
+        
+        let request = Project.fetchRequest(
+            predicate: NSPredicate(
+                format: "startDate_ < %@ and endDate_ >= %@",
+                argumentArray: [date.tomorrowMidnight, date.midnight]
+            ),
+            sortDescriptor: [NSSortDescriptor(key: "startDate_", ascending: true)]
+        )
+        self._dailyProjects = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
         VStack(spacing: 5) {
@@ -24,10 +42,10 @@ struct DateView: View {
     private var dayCell: some View {
         VStack(spacing: 0) {
             dayText
-            // TODO: Project Indicatior
+            projectIndicatorStack
             Spacer(minLength: 0)
         }
-        .frame(width: width, height: width * 1.5)
+        .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.height)
     }
     
     private var dayText: some View {
@@ -40,50 +58,51 @@ struct DateView: View {
                 Text(String(date.day))
             )
             .foregroundColor(date.isToday ? Color.white : date.isWeekend ? Color.gray : Color.primary)
-            // TODO: bold if today
+        // TODO: bold if today
     }
-}
-
-// MARK: Tae's Refactor
-
-struct MonthLabel: View {
-    let date: Date
-    var body: some View {
-        VStack {
-            if date.day == 1 {
-                if (date.year, date.month) == (Date().year, Date().month) {
-                    Text(DateFormatter.month.string(from: date))
-                        .bold()
-                        .foregroundColor(.yellow)
-                } else {
-                    Text(DateFormatter.month.string(from: date))
-                        .bold()
-                }
-            }
-            else {
-                Text(DateFormatter.month.string(from: date))
-                    .hidden()
+    
+    private var projectIndicatorStack: some View {
+        var positions = [Int:Project?]()
+        var lastIndex = 0
+        
+        dailyProjects.forEach { project in
+            if let projectPosition = projectPositions[project] {
+                positions[projectPosition] = project
+                lastIndex = max(lastIndex, projectPosition)
             }
         }
-        .onAppear {
-            // upadate year label
-        }
-        Divider()
-        VStack(spacing: 0) {
-            // monthly label
-            VStack(spacing: 0) {
-                if (date.day, date.year, date.month) == (Date().day, Date().year, Date().month) {
+        
+        return VStack(spacing: 0) {
+//            Spacer(minLength: 0)
+            let end = lastIndex >= 3 ? 1 : lastIndex
+            ForEach(0...end) { index in
+                if positions[index] != nil {
                     ZStack {
-                        Image(systemName: "circle.fill")
-                            .foregroundColor(.yellow)
-                        Text(String(date.day))
+                        Color.orange
+                        if date.midnight == positions[index]!!.startDate.midnight {
+                            Text(positions[index]!!.name)
+                        }
                     }
-                }
-                else {
-                    Text(String(date.day))
+                    .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
+                    .clipped()
+                    .padding(.top, 2)
+                } else {
+                    Color.orange
+                        .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
+                        .hidden()
+                        .clipped()
+                        .padding(.top, 2)
                 }
             }
+            if lastIndex >= 3 {
+                // TODO: replace w/ image...?
+                Text("...")
+//                    .frame(width: width, height: width * 0.1)
+                    .font(.caption)
+                    .clipped()
+            }
         }
-        .padding()
+        .clipped()
+        .padding(.bottom, 0.5)
     }
 }

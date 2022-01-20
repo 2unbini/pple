@@ -17,12 +17,14 @@ struct ScrollableCalendarVGrid: View {
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: 7), spacing: 0) {
                         ForEach(months) { month in
-                            MonthSection(month: month, width: geometry.size.width / 7)
+                            MonthSection(month: month)
                         }
                     }
                 }
                 .background(Color.white)
                 .onAppear {
+                    calendarConfig.cellSize.width = geometry.size.width / 7
+                    calendarConfig.cellSize.height = calendarConfig.cellSize.width * 1.5
                     scrollView.scrollTo(calendarConfig.initialDateId, anchor: .top)
                 }
             }
@@ -39,30 +41,26 @@ struct MonthSection: View {
     @EnvironmentObject var calendarConfig: CalendarConfig
     
     let month: Date
-    let width: CGFloat
-    
-    init (month: Date, width: CGFloat) {
-        self.month = month
-        self.width = width
-    }
     
     var body: some View {
         Section {
             monthLabel(month: month)
                 .onAppear {
-                    if month.month == 12 && calendarConfig.yearLabel != String(month.year) {
-                        calendarConfig.yearLabel = String(month.year)
+                    if [1, 2, 12].contains(month.month) {
+                        calendarConfig.yearLabel = month.year.stringify()
                     }
                 }
-            ForEach(days(of: month)) { date in
-                if calendar.isDate(date, equalTo: month, toGranularity: .month) {
-                    DateView(month: month, date: date, width: width)
-                } else {
-                    DateView(month: month, date: date, width: width).hidden()
-                }
+            ForEach(weeks) { week in
+                WeekView(month: month, week: week)
             }
         }
         .id(month)
+    }
+    
+    private var weeks: [Date] {
+        guard let monthInterval: DateInterval = calendar.dateInterval(of: .month, for: month)
+        else { return [] }
+        return  calendar.generateDates(interval: monthInterval, dateComponents: DateComponents(hour: 0, minute: 0, second: 0, weekday: calendar.firstWeekday))
     }
     
     @ViewBuilder
@@ -87,15 +85,5 @@ struct MonthSection: View {
                 }
             }
         }
-    }
-    
-    private func days(of month: Date) -> [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: month),
-              let firstWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
-              let lastDayOfMonth = calendar.date(byAdding: .day, value: -1, to: monthInterval.end),
-              let lastWeekInterval = calendar.dateInterval(of: .weekOfMonth, for: lastDayOfMonth)
-        else { return [] }
-        
-        return calendar.generateDates(interval: DateInterval(start: firstWeekInterval.start, end: lastWeekInterval.end), dateComponents: DateComponents(hour:0, minute: 0, second: 0))
     }
 }
