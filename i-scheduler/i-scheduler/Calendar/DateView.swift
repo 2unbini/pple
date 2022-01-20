@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DateView: View {
     @Environment(\.calendar) private var calendar
@@ -14,14 +15,12 @@ struct DateView: View {
     
     let month: Date
     let date: Date
-    let width: CGFloat
-    let weeklyProjectList: [Project]
+    let projectPositions: [Project:Int]
     
-    init(month: Date, date: Date, width: CGFloat, weeklyProjectList: [Project]) {
+    init(month: Date, date: Date, projectPositions: [Project:Int]) {
         self.month = month
         self.date = date
-        self.width = width
-        self.weeklyProjectList = weeklyProjectList
+        self.projectPositions = projectPositions
         
         let request = Project.fetchRequest(
             predicate: NSPredicate(
@@ -43,14 +42,10 @@ struct DateView: View {
     private var dayCell: some View {
         VStack(spacing: 0) {
             dayText
-            // TODO: Project Indicatior
-            indicator
+            projectIndicatorStack
             Spacer(minLength: 0)
         }
-        .frame(width: width, height: width * 1.5)
-        .onAppear {
-            print(weeklyProjectList)
-        }
+        .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.height)
     }
     
     private var dayText: some View {
@@ -63,77 +58,51 @@ struct DateView: View {
                 Text(String(date.day))
             )
             .foregroundColor(date.isToday ? Color.white : date.isWeekend ? Color.gray : Color.primary)
-            // TODO: bold if today
+        // TODO: bold if today
     }
     
-    private var indicator: some View {
-        let taskLabel = Rectangle()
-            .foregroundColor(.pink)
-            .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.height * 0.2)
+    private var projectIndicatorStack: some View {
+        var positions = [Int:Project?]()
+        var lastIndex = 0
         
-        return VStack(spacing: 1) {
-            ForEach(weeklyProjectList) { project in
-                // if this week and today, draw
-                if dailyProjects.contains(project) {
-                    ZStack {
-                        taskLabel
-                        Text("\(project.name)")
-                    }
-                }
-//                else if  {
-//                    ZStack {
-//                        taskLabel
-////                        Text("\(project.name)")
-//                    }
-////                    .hidden()
-//                }
-                // if this week but not today, hidden
-                // if not this week, do nothing
+        dailyProjects.forEach { project in
+            if let projectPosition = projectPositions[project] {
+                positions[projectPosition] = project
+                lastIndex = max(lastIndex, projectPosition)
             }
         }
-    }
-}
-
-// MARK: Tae's Refactor
-
-struct MonthLabel: View {
-    let date: Date
-    var body: some View {
-        VStack {
-            if date.day == 1 {
-                if (date.year, date.month) == (Date().year, Date().month) {
-                    Text(DateFormatter.month.string(from: date))
-                        .bold()
-                        .foregroundColor(.yellow)
+        
+        return VStack(spacing: 0) {
+//            Spacer(minLength: 0)
+            let end = lastIndex >= 3 ? 1 : lastIndex
+            ForEach(0...end) { index in
+                if positions[index] != nil {
+                    ZStack {
+                        Color.orange
+                        if date.midnight == positions[index]!!.startDate.midnight {
+                            Text(positions[index]!!.name)
+                        }
+                    }
+                    .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
+                    .clipped()
+                    .padding(.top, 2)
                 } else {
-                    Text(DateFormatter.month.string(from: date))
-                        .bold()
+                    Color.orange
+                        .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
+                        .hidden()
+                        .clipped()
+                        .padding(.top, 2)
                 }
             }
-            else {
-                Text(DateFormatter.month.string(from: date))
-                    .hidden()
+            if lastIndex >= 3 {
+                // TODO: replace w/ image...?
+                Text("...")
+//                    .frame(width: width, height: width * 0.1)
+                    .font(.caption)
+                    .clipped()
             }
         }
-        .onAppear {
-            // upadate year label
-        }
-        Divider()
-        VStack(spacing: 0) {
-            // monthly label
-            VStack(spacing: 0) {
-                if (date.day, date.year, date.month) == (Date().day, Date().year, Date().month) {
-                    ZStack {
-                        Image(systemName: "circle.fill")
-                            .foregroundColor(.yellow)
-                        Text(String(date.day))
-                    }
-                }
-                else {
-                    Text(String(date.day))
-                }
-            }
-        }
-        .padding()
+        .clipped()
+        .padding(.bottom, 0.5)
     }
 }

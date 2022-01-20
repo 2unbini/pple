@@ -16,6 +16,7 @@ class CalendarConfig: ObservableObject {
     let initialDateId: Date
     let interval: DateInterval
     let calendar = Calendar.current
+    var yearsDisplayed = Set<Int>()
     
     init() {
         let startDate = DateComponents(year: Interval.start)

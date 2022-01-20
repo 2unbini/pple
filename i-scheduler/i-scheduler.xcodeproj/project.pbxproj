@@ -26,6 +26,7 @@
 		A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */; };
 		A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */; };
 		A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */; };
+		A442615427994B52005761FB /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A442615327994B52005761FB /* WeekView.swift */; };
 		A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */; };
 		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
 		A45A941527639381008F626F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A941427639381008F626F /* Project.swift */; };
@@ -64,6 +65,7 @@
 		A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ReceiveTimer.swift"; sourceTree = "<group>"; };
 		A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselAutoScroll.swift; sourceTree = "<group>"; };
 		A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleModifier.swift; sourceTree = "<group>"; };
+		A442615327994B52005761FB /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A45A941427639381008F626F /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		A865D028278EC883000814C2 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				A442615327994B52005761FB /* WeekView.swift */,
 				A8B4925A2788687700F63B78 /* CalendarBody.swift */,
 				9325AE28278E9AC90081C3E5 /* CalendarConfig.swift */,
 				A404F4BB278858E20082E36E /* MainCalendar.swift */,
@@ -268,6 +271,7 @@
 				A8B4925D2788840900F63B78 /* DateView.swift in Sources */,
 				A87FA860275DD47100A77363 /* ContentView.swift in Sources */,
 				9398951E276339E400BF6F59 /* ProjectAddSheet.swift in Sources */,
+				A442615427994B52005761FB /* WeekView.swift in Sources */,
 				93989523276339E400BF6F59 /* ProjectCalendarView.swift in Sources */,
 				A45A941727639387008F626F /* Task.swift in Sources */,
 				93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */,
@@ -425,7 +429,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
-				DEVELOPMENT_TEAM = FQ63CT4A3G;
+				DEVELOPMENT_TEAM = WA6PY6NL25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -455,7 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"i-scheduler/Preview Content\"";
-				DEVELOPMENT_TEAM = FQ63CT4A3G;
+				DEVELOPMENT_TEAM = WA6PY6NL25;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
