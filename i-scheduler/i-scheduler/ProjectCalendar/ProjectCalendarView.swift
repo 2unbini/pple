@@ -13,10 +13,9 @@ struct ProjectCalendarView: View {
     let dayData: [Int]
     
     @ObservedObject var project: Project
-    @State private var isPopupPresented: Bool = false
     @State private var currentIndex: Int?
-    @State private var carouselIndex: Int = 0
-
+    @State private var lastIndex = 0
+    
     init(project: Project) {
         _project = ObservedObject(initialValue: project)
         self.startDate = project.startDate
@@ -26,41 +25,42 @@ struct ProjectCalendarView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            ScrollViewReader { scrollView in
             ScrollView {
                 LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130)), count: UIDevice.current.userInterfaceIdiom != .pad ? 5 : 7)) {
                     ForEach(dayData, id: \.self) { day in
                         Button {
-                            currentIndex = day
-                            carouselIndex = day
+                            withAnimation {
+                                currentIndex = day
+                            }
                         } label: {
                             DayButtonView(nTHDay: day + 1, displayedDate: plusDays(startDate: startDate, dayOf: day))
                         }
                     }
                 }
             }
-            .onChange(of: currentIndex) { index in
-                if index != nil {
-                    withAnimation {
-                        isPopupPresented.toggle()
-                    }
-                    currentIndex = nil
-                }
+            .popup(item: $currentIndex) { index in
+                TaskList(
+                    item: $currentIndex,
+                    project: project,
+                    date: plusDays(startDate: startDate, dayOf: index)
+                )
+                    .cardify(size: geometry.size)
             }
-            .popup(isPresented: $isPopupPresented, dragToDismiss: true, closeOnTap: false, closeOnTapOutside: true) {
-                ACarousel(dayData, index: $carouselIndex) { index in
-                    TaskList(
-                      isPresented: $isPopupPresented,
-                      project: project,
-                      date: plusDays(startDate: startDate, dayOf: index)
-                    )
-                        .cardify(size: geometry.size)
+            .onChange(of: currentIndex) { newValue in
+                if newValue == nil {
+                    scrollView.scrollTo(lastIndex, anchor: .center)
+                } else {
+                    lastIndex = newValue!
+                    scrollView.scrollTo(newValue!, anchor: .center)
                 }
             }
             .padding()
             .navigationBarTitle(project.name)
             .navigationBarItems(trailing: ProjectCalendarNavigationTrailingEditButton(project: self.project)
-                                    .disabled(isPopupPresented)
+                                    .disabled(currentIndex != nil)
             )
+        }
         }
     }
 }

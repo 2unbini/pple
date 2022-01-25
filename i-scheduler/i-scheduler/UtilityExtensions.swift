@@ -85,4 +85,30 @@ extension View {
     func cardify(size: CGSize) -> some View {
         self.modifier(Cardify(size: size))
     }
+    
+    @ViewBuilder
+    func popup<Content: View>(
+        item: Binding<Int?>,
+        @ViewBuilder content: @escaping (Int) -> Content
+    ) -> some View {
+        if item.wrappedValue != nil {
+            let index = item.wrappedValue!
+            let backgroundShadow = Color.primary
+                .opacity(0.15)
+                .frame(
+                    width: UIScreen.main.bounds.width,
+                    height: UIScreen.main.bounds.height * 1.5
+                )
+            self
+                .overlay(
+                    ZStack {
+                        backgroundShadow
+                        content(index)
+                            .offset(x: 0, y: -50)
+                    }
+                )
+        } else {
+            self
+        }
+    }
 }

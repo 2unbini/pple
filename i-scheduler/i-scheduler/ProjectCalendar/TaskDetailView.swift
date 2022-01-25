@@ -14,7 +14,7 @@ struct TaskDetailView: View {
     var body: some View {
         HStack {
             taskDetails
-            Spacer()
+            Spacer(minLength: 0)
         }
         .padding(.horizontal)
         .toolbar {
@@ -39,13 +39,13 @@ struct TaskDetailView: View {
             Text(task.summary)
             Spacer()
         }
-        .foregroundColor(task.isFinished ? .gray : .black)
+        .foregroundColor(task.isFinished ? .gray : .primary)
         .padding(.leading)
     }
     
     private var editButton: some View {
         Button("수정") {
-            isPresented = true
+            isPresented.toggle()
         }
     }
 }

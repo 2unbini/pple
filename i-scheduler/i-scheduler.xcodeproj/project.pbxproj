@@ -20,12 +20,6 @@
 		93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */; };
 		A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A404F4BB278858E20082E36E /* MainCalendar.swift */; };
 		A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162C52276B175E00A2BBDC /* Cardify.swift */; };
-		A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D2D2774C87400A2BBDC /* PopupView.swift */; };
-		A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */; };
-		A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D492775AC0200A2BBDC /* ACarousel.swift */; };
-		A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */; };
-		A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */; };
-		A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */; };
 		A442615427994B52005761FB /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A442615327994B52005761FB /* WeekView.swift */; };
 		A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A44E7AAB275DDC7700D92696 /* i_scheduler.xcdatamodeld */; };
 		A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E7ACD275DE32E00D92696 /* Persistence.swift */; };
@@ -59,12 +53,6 @@
 		93D34360277C48BF0011B539 /* ProjectCalendatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCalendatButtonView.swift; sourceTree = "<group>"; };
 		A404F4BB278858E20082E36E /* MainCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCalendar.swift; sourceTree = "<group>"; };
 		A4162C52276B175E00A2BBDC /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
-		A4162D2D2774C87400A2BBDC /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
-		A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselViewModel.swift; sourceTree = "<group>"; };
-		A4162D492775AC0200A2BBDC /* ACarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarousel.swift; sourceTree = "<group>"; };
-		A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+ReceiveTimer.swift"; sourceTree = "<group>"; };
-		A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACarouselAutoScroll.swift; sourceTree = "<group>"; };
-		A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleModifier.swift; sourceTree = "<group>"; };
 		A442615327994B52005761FB /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		A44E7AAC275DDC7700D92696 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A44E7ACD275DE32E00D92696 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -96,18 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A4162D472775AC0200A2BBDC /* ACarousel */ = {
-			isa = PBXGroup;
-			children = (
-				A4162D482775AC0200A2BBDC /* ACarouselViewModel.swift */,
-				A4162D492775AC0200A2BBDC /* ACarousel.swift */,
-				A4162D4A2775AC0200A2BBDC /* View+ReceiveTimer.swift */,
-				A4162D4B2775AC0200A2BBDC /* ACarouselAutoScroll.swift */,
-				A4162D4C2775AC0200A2BBDC /* AppLifeCycleModifier.swift */,
-			);
-			path = ACarousel;
-			sourceTree = "<group>";
-		};
 		A865D028278EC883000814C2 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,7 +99,6 @@
 		A865D02B278ECB6F000814C2 /* UtilityViews */ = {
 			isa = PBXGroup;
 			children = (
-				A4162D2D2774C87400A2BBDC /* PopupView.swift */,
 				A4162C52276B175E00A2BBDC /* Cardify.swift */,
 				93989513276339E400BF6F59 /* ProjectToolBar.swift */,
 				A88F9AAA27744EBE00831DD3 /* TaskToolBar.swift */,
@@ -182,7 +157,6 @@
 				A44E7ACD275DE32E00D92696 /* Persistence.swift */,
 				A87FA861275DD47200A77363 /* Assets.xcassets */,
 				A87FA863275DD47200A77363 /* Preview Content */,
-				A4162D472775AC0200A2BBDC /* ACarousel */,
 			);
 			path = "i-scheduler";
 			sourceTree = "<group>";
@@ -276,23 +250,17 @@
 				A45A941727639387008F626F /* Task.swift in Sources */,
 				93989520276339E400BF6F59 /* TaskDetailView.swift in Sources */,
 				A44E7ACE275DE32E00D92696 /* Persistence.swift in Sources */,
-				A4162D2E2774C87500A2BBDC /* PopupView.swift in Sources */,
 				9398951B276339E400BF6F59 /* ProjectEditSheet.swift in Sources */,
 				9325AE29278E9AC90081C3E5 /* CalendarConfig.swift in Sources */,
 				A4D52AA0276877D700E0B17A /* CheckBox.swift in Sources */,
 				A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */,
-				A4162D4E2775AC0200A2BBDC /* ACarousel.swift in Sources */,
 				A4162C53276B175E00A2BBDC /* Cardify.swift in Sources */,
-				A4162D512775AC0200A2BBDC /* AppLifeCycleModifier.swift in Sources */,
 				93D34361277C48BF0011B539 /* ProjectCalendatButtonView.swift in Sources */,
-				A4162D502775AC0200A2BBDC /* ACarouselAutoScroll.swift in Sources */,
 				A88F9AA727744E4600831DD3 /* TaskEditSheet.swift in Sources */,
 				A88F9AA927744E8000831DD3 /* TaskAddSheet.swift in Sources */,
 				A44E7AAD275DDC7700D92696 /* i_scheduler.xcdatamodeld in Sources */,
 				A8AB6E1B27684F730050F6C9 /* TemporaryModel.swift in Sources */,
 				93989522276339E400BF6F59 /* TaskRowView.swift in Sources */,
-				A4162D4F2775AC0200A2BBDC /* View+ReceiveTimer.swift in Sources */,
-				A4162D4D2775AC0200A2BBDC /* ACarouselViewModel.swift in Sources */,
 				A404F4BC278858E20082E36E /* MainCalendar.swift in Sources */,
 				A88F9AAB27744EBE00831DD3 /* TaskToolBar.swift in Sources */,
 				A8B4925B2788687700F63B78 /* CalendarBody.swift in Sources */,
