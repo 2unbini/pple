@@ -14,7 +14,8 @@ struct TaskToolBar: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
     
     @State private var showAlert: Bool = false
-    
+    @State private var showCoreDataAlert: Bool = false
+
     private var action: ToolBarAction
     private var barText: String
     private var task: Task?
@@ -74,6 +75,12 @@ struct TaskToolBar: View {
             }
             .padding()
         }
+        .alert(
+            isPresented: $showCoreDataAlert,
+            title: "저장 오류",
+            message: "저장에 실패했습니다",
+            buttonLabel: "확인"
+        )
     }
     
     private func isValidData() -> Bool {
@@ -115,8 +122,10 @@ struct TaskToolBar: View {
     }
     
     private func saveContext() {
-        PersistenceController.shared.save(
+        let saved = PersistenceController.shared.save(
             errorDescription: "Error in saveContext()"
         )
+        
+        saved == true ? nil : showCoreDataAlert.toggle()
     }
 }
