@@ -10,12 +10,12 @@ import SwiftUI
 struct TaskList: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest private var tasks: FetchedResults<Task>
-    @Binding var isPresented: Bool
+    @Binding var item: Int?
     private var project: Project
     private var date: Date
     
-    init(isPresented: Binding<Bool>, project: Project, date: Date) {
-        self._isPresented = isPresented
+    init(item: Binding<Int?>, project: Project, date: Date) {
+        self._item = item
         self.project = project
         self.date = date
         let request = Task.fetchRequest(
@@ -32,7 +32,7 @@ struct TaskList: View {
                 if !tasks.isEmpty {
                     taskList
                 } else {
-                    Text("오늘은 자유!")
+                    Text("할 일을 추가하세요")
                 }
             }
             .navigationBarTitle("\(date.month)월 \(date.day)일의 할 일")
@@ -41,7 +41,7 @@ struct TaskList: View {
                 ToolbarItem(placement: .cancellationAction) { cancelButton }
                 ToolbarItem(placement: .navigationBarTrailing) { addButton }
             }
-            .sheet(isPresented: $addSheetIsPresented) {
+            .sheet(isPresented: $isPresented) {
                 TaskAddSheet(relatedTo: self.project)
             }
         }
@@ -69,16 +69,16 @@ struct TaskList: View {
     private var cancelButton: some View {
         Button("닫기") {
             withAnimation {
-                isPresented.toggle()
+                item = nil
             }
         }
     }
     
-    @State private var addSheetIsPresented = false
+    @State private var isPresented = false
 
     private var addButton: some View {
         Button {
-            addSheetIsPresented.toggle()
+            isPresented.toggle()
         } label: {
             Image(systemName: "plus")
         }

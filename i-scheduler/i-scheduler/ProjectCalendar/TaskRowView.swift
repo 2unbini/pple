@@ -24,7 +24,7 @@ struct TaskRowView: View {
             CheckBox(task: task)
             description(of: task)
         }
-        .foregroundColor(task.isFinished ? .gray : .black)
+        .foregroundColor(task.isFinished ? .gray : .primary)
     }
     
     private func description(of task: Task) -> some View{
