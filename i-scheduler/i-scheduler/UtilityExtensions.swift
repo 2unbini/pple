@@ -106,3 +106,41 @@ extension View {
         )
     }
 }
+
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
+struct CustomViewModifier: ViewModifier {
+    var width: CGFloat
+    var height: CGFloat
+    var offset: CGFloat
+    var corners: UIRectCorner
+    func body(content: Content) -> some View {
+        content
+            .font(UIDevice.current.userInterfaceIdiom == .pad ? .title2 : .caption)
+            .frame(width: width , height: height)
+            .background(Color.orange)
+            .cornerRadius(3, corners: corners)
+            .offset(x: offset * 0.025)
+            .clipped()
+    }
+}
+
+extension View {
+    func calendarStackModifier(width: CGFloat, height: CGFloat, offset: CGFloat, corners: UIRectCorner) -> some View {
+        modifier(CustomViewModifier(width: width, height: height, offset: offset, corners: corners))
+    }
+}
