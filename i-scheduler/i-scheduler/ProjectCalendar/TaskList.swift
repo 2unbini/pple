@@ -57,13 +57,22 @@ struct TaskList: View {
             }
             .onDelete(perform: deleteTask(at:))
         }
+        .alert(
+            isPresented: $showCoreDataAlert,
+            title: "삭제 오류",
+            message: "삭제에 실패했습니다",
+            buttonLabel: "확인"
+        )
     }
+    
+    @State private var showCoreDataAlert = false
     
     private func deleteTask(at indexSet: IndexSet) {
         indexSet.forEach { context.delete(tasks[$0]) }
-        PersistenceController.shared.save(
+        let saved = PersistenceController.shared.save(
             errorDescription: "TaskList.deleteTask"
         )
+        saved == true ? nil : showCoreDataAlert.toggle()
     }
     
     private var cancelButton: some View {

@@ -21,6 +21,7 @@ struct ProjectList: View {
     @State private var showAddSheet: Bool = false
     @State private var project: Project?
     @State private var editMode: EditMode = .inactive
+    @State private var showCoreDataAlert: Bool = false
     
     var body: some View {
         NavigationView {
@@ -66,15 +67,24 @@ struct ProjectList: View {
             .environment(\.editMode, $editMode)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .alert(
+            isPresented: $showCoreDataAlert,
+            title: "삭제 오류",
+            message: "삭제에 실패했습니다",
+            buttonLabel: "확인"
+        )
     }
     
     private func removeSelectedProject(at indexSet: IndexSet) {
+        
         guard let index = indexSet.first else { fatalError("Cannot Convert IndexSet to Int") }
         
         viewContext.delete(projects[index])
-        PersistenceController.shared.save(
+        let saved = PersistenceController.shared.save(
             errorDescription: "Cannot save context"
         )
+        
+        saved == true ? nil : showCoreDataAlert.toggle()
     }
 }
 
