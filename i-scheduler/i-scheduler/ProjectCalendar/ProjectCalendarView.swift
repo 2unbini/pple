@@ -26,41 +26,33 @@ struct ProjectCalendarView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollViewReader { scrollView in
-            ScrollView {
-                LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130)), count: UIDevice.current.userInterfaceIdiom != .pad ? 5 : 7)) {
-                    ForEach(dayData, id: \.self) { day in
-                        Button {
-                            withAnimation {
-                                currentIndex = day
+                ScrollView {
+                    LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: UIDevice.current.userInterfaceIdiom != .pad ? 60 : 130)), count: UIDevice.current.userInterfaceIdiom != .pad ? 5 : 7)) {
+                        ForEach(dayData, id: \.self) { day in
+                            Button {
+                                withAnimation {
+                                    currentIndex = day
+                                }
+                            } label: {
+                                DayButtonView(nTHDay: day + 1, displayedDate: plusDays(startDate: startDate, dayOf: day))
                             }
-                        } label: {
-                            DayButtonView(nTHDay: day + 1, displayedDate: plusDays(startDate: startDate, dayOf: day))
                         }
                     }
                 }
-            }
-            .popup(item: $currentIndex) { index in
-                TaskList(
-                    item: $currentIndex,
-                    project: project,
-                    date: plusDays(startDate: startDate, dayOf: index)
+                .navigationBarTitle(project.name)
+                .navigationBarItems(trailing: ProjectCalendarNavigationTrailingEditButton(project: self.project)
+                                        .disabled(currentIndex != nil)
                 )
-                    .cardify(size: geometry.size)
-            }
-            .onChange(of: currentIndex) { newValue in
-                if newValue == nil {
-                    scrollView.scrollTo(lastIndex, anchor: .center)
-                } else {
-                    lastIndex = newValue!
-                    scrollView.scrollTo(newValue!, anchor: .center)
+                .popup(item: $currentIndex) { index in
+                    TaskList(
+                        item: $currentIndex,
+                        project: project,
+                        date: plusDays(startDate: startDate, dayOf: index)
+                    )
+                        .cardify(size: geometry.size)
                 }
+                .padding()
             }
-            .padding()
-            .navigationBarTitle(project.name)
-            .navigationBarItems(trailing: ProjectCalendarNavigationTrailingEditButton(project: self.project)
-                                    .disabled(currentIndex != nil)
-            )
-        }
         }
     }
 }
