@@ -13,6 +13,7 @@ struct TaskToolBar: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
     
+    @State private var alertInfo: AlertType = .invalidData
     @State private var showAlert: Bool = false
     @State private var showCoreDataAlert: Bool = false
 
@@ -20,9 +21,9 @@ struct TaskToolBar: View {
     private var barText: String
     private var task: Task?
     private var project: Project?
-    private var tempTask: TempData
+    private var taskDataHolder: DataHolder
 
-    init(_ action: ToolBarAction, task: Task?, with tempTask: TempData, to project: Project?) {
+    init(_ action: ToolBarAction, task: Task?, with tempTask: DataHolder, to project: Project?) {
         self.action = action
         self.barText = "할 일"
         
@@ -35,7 +36,7 @@ struct TaskToolBar: View {
         
         self.task = task
         self.project = project
-        self.tempTask = tempTask
+        self.taskDataHolder = tempTask
     }
     
     var body: some View {
@@ -63,61 +64,67 @@ struct TaskToolBar: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 else {
+                    alertInfo = .invalidData
                     showAlert.toggle()
                 }
             }
             .alert(isPresented: $showAlert) {
-                
-                // TODO: Alert 강종되는 오류 수정
-                    Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
-                        showAlert.toggle()
-                    }))
+                switch alertInfo {
+                case .saveError:
+                    return Alert(
+                        title: Text("저장오류"),
+                        message: Text("저장에 실패했습니다"),
+                        dismissButton: .default(Text("확인"))
+                    )
+                case .invalidData:
+                    return Alert(
+                        title: Text("제목이 없습니다"),
+                        message: Text("제목을 입력해주세요"),
+                        dismissButton: .default(Text("확인"))
+                    )
+                }
             }
             .padding()
         }
-        .alert(
-            isPresented: $showCoreDataAlert,
-            title: "저장 오류",
-            message: "저장에 실패했습니다",
-            buttonLabel: "확인"
-        )
     }
     
     private func isValidData() -> Bool {
         
-        if tempTask.name.isEmpty || tempTask.name == "" { return false }
-        if tempTask.startDate > tempTask.endDate { return false }
+        if taskDataHolder.name.isEmpty || taskDataHolder.name == "" { return false }
+        if taskDataHolder.startDate > taskDataHolder.endDate { return false }
         
         return true
     }
     
     private func setNewTask() {
         if project == nil {
-            fatalError("Error in setNewTask... Project to add new task is nil")
+            self.alertInfo = .saveError
+            self.showAlert.toggle()
         }
         else {
             let newTask = Task(context: viewContext)
             
             newTask.taskId = UUID()
-            newTask.name = tempTask.name
-            newTask.summary = tempTask.summary
-            newTask.startDate = tempTask.startDate
-            newTask.endDate = tempTask.endDate
-            newTask.isFinished = tempTask.isFinished
+            newTask.name = taskDataHolder.name
+            newTask.summary = taskDataHolder.summary
+            newTask.startDate = taskDataHolder.startDate
+            newTask.endDate = taskDataHolder.endDate
+            newTask.isFinished = taskDataHolder.isFinished
             newTask.project = project!
         }
     }
     
     private func editTask() {
         if task == nil {
-            fatalError("Error in editTask... Task to edit is nil")
+            self.alertInfo = .saveError
+            self.showAlert.toggle()
         }
         else {
-            task!.name = tempTask.name
-            task!.summary = tempTask.summary
-            task!.startDate = tempTask.startDate
-            task!.endDate = tempTask.endDate
-            task!.isFinished = tempTask.isFinished
+            task!.name = taskDataHolder.name
+            task!.summary = taskDataHolder.summary
+            task!.startDate = taskDataHolder.startDate
+            task!.endDate = taskDataHolder.endDate
+            task!.isFinished = taskDataHolder.isFinished
         }
     }
     
@@ -125,7 +132,9 @@ struct TaskToolBar: View {
         let saved = PersistenceController.shared.save(
             errorDescription: "Error in saveContext()"
         )
-        
-        saved == true ? nil : showCoreDataAlert.toggle()
+        if saved == false {
+            self.alertInfo = .saveError
+            self.showAlert.toggle()
+        }
     }
 }

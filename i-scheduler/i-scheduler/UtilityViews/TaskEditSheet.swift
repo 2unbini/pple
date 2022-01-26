@@ -10,7 +10,7 @@ import CoreData
 
 struct TaskEditSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @State private var tempTask: TempData = TempData()
+    @State private var taskDataHolder: DataHolder = DataHolder()
     
     private var prefix: String = "할 일"
     private var task: Task
@@ -21,33 +21,33 @@ struct TaskEditSheet: View {
     
     var body: some View {
         VStack {
-            TaskToolBar(.edit, task: task, with: tempTask, to: nil)
+            TaskToolBar(.edit, task: task, with: taskDataHolder, to: nil)
             Form {
                 Section(content: {
                     VStack {
-                        TextField("", text: $tempTask.name)
+                        TextField("", text: $taskDataHolder.name)
                     }
                 }, header: {
                     Text("\(prefix) 이름")
                 })
                 
                 Section(content: {
-                    TextEditor(text: $tempTask.summary)
+                    TextEditor(text: $taskDataHolder.summary)
                         .modifier(TextEditorModifier())
                 }, header: {
                     Text("\(prefix) 설명")
                 })
                 
                 Section(content: {
-                    DatePicker("시작 날짜", selection: $tempTask.startDate, displayedComponents: .date)
-                    DatePicker("종료 날짜", selection: $tempTask.endDate,
-                               in: PartialRangeFrom(tempTask.startDate), displayedComponents: .date)
+                    DatePicker("시작 날짜", selection: $taskDataHolder.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $taskDataHolder.endDate,
+                               in: PartialRangeFrom(taskDataHolder.startDate), displayedComponents: .date)
                 }, header: {
                     Text("\(prefix) 기간")
                 })
                 
                 Section(content: {
-                    Toggle("\(prefix) 완료", isOn: $tempTask.isFinished)
+                    Toggle("\(prefix) 완료", isOn: $taskDataHolder.isFinished)
                         .toggleStyle(.switch)
                 }, header: {
                     Text("\(prefix) 완료")
@@ -55,7 +55,7 @@ struct TaskEditSheet: View {
             }
         }
         .onAppear {
-            self.tempTask.setSpecificTask(with: task)
+            self.taskDataHolder.setSpecificTask(with: task)
         }
     }
 }

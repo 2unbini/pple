@@ -10,31 +10,31 @@ import CoreData
 
 struct ProjectAddSheet: View {
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
-    @State private var tempProject: TempData = TempData()
+    @State private var projectDataHolder: DataHolder = DataHolder()
     
     private var prefix: String = "프로젝트"
 
     var body: some View {
         VStack {
-            ProjectToolBar(.add, project: nil, with: tempProject)
+            ProjectToolBar(.add, project: nil, with: projectDataHolder)
             Form {
                 Section(content: {
-                    TextField("", text: $tempProject.name)
+                    TextField("", text: $projectDataHolder.name)
                 }, header: {
                     Text("\(prefix) 이름")
                 })
                 
                 Section(content: {
-                    TextEditor(text: $tempProject.summary)
+                    TextEditor(text: $projectDataHolder.summary)
                         .modifier(TextEditorModifier())
                 }, header: {
                     Text("\(prefix) 설명")
                 })
                 
                 Section(content: {
-                    DatePicker("시작 날짜", selection: $tempProject.startDate, displayedComponents: .date)
-                    DatePicker("종료 날짜", selection: $tempProject.endDate,
-                               in: PartialRangeFrom(tempProject.startDate), displayedComponents: .date)
+                    DatePicker("시작 날짜", selection: $projectDataHolder.startDate, displayedComponents: .date)
+                    DatePicker("종료 날짜", selection: $projectDataHolder.endDate,
+                               in: PartialRangeFrom(projectDataHolder.startDate), displayedComponents: .date)
                 }, header: {
                     Text("\(prefix) 기간")
                 })

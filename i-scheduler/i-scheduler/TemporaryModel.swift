@@ -7,37 +7,7 @@
 
 import Foundation
 
-//Edit시 계속 init 되는 현상때문에 사용X
-//class TempData: ObservableObject {
-//    @Published var name: String = ""
-//    @Published var summary: String = ""
-//    @Published var startDate: Date = Date()
-//    @Published var endDate: Date = Date(timeInterval: 60 * 60 * 24, since: Date())
-//    @Published var isFinished: Bool = false
-//
-//    func setSpecificProject(with project: Project) {
-//        self.name = project.name
-//        self.summary = project.summary
-//        self.startDate = project.startDate
-//        self.endDate = project.endDate
-//        self.isFinished = project.isFinished
-//    }
-//
-//    func setSpecificTask(with task: Task) {
-//        self.name = task.name
-//        self.summary = task.summary
-//        self.startDate = task.startDate
-//        self.endDate = task.endDate
-//        self.isFinished = task.isFinished
-//    }
-//
-//    func setSpecificDate(with startDate: Date, _ endDate: Date) {
-//        self.startDate = startDate
-//        self.endDate = endDate
-//    }
-//}
-
-struct TempData {
+struct DataHolder {
     var name: String
     var summary: String
     var startDate: Date

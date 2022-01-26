@@ -13,15 +13,16 @@ struct ProjectToolBar: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
     
+    @State private var alertInfo: AlertType = .invalidData
     @State private var showAlert: Bool = false
     @State private var showCoreDataAlert: Bool = false
     
     private var action: ToolBarAction
     private var barText: String
     private var project: Project?
-    private var tempProject: TempData
+    private var projectDataHolder: DataHolder
     
-    init(_ action: ToolBarAction, project: Project?, with tempProject: TempData) {
+    init(_ action: ToolBarAction, project: Project?, with tempProject: DataHolder) {
         self.action = action
         self.barText = "프로젝트"
         
@@ -33,7 +34,7 @@ struct ProjectToolBar: View {
         }
         
         self.project = project
-        self.tempProject = tempProject
+        self.projectDataHolder = tempProject
     }
     
     var body: some View {
@@ -61,30 +62,34 @@ struct ProjectToolBar: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 else {
+                    alertInfo = .invalidData
                     showAlert.toggle()
                 }
             }
             .alert(isPresented: $showAlert) {
-                
-                // TODO: Alert 강종되는 오류 수정
-                Alert(title: Text("제목을 추가해주세요!"), dismissButton: .cancel(Text("확인"), action: {
-                    showAlert.toggle()
-                }))
+                switch alertInfo {
+                case .saveError:
+                    return Alert(
+                        title: Text("저장오류"),
+                        message: Text("저장에 실패했습니다"),
+                        dismissButton: .default(Text("확인"))
+                    )
+                case .invalidData:
+                    return Alert(
+                        title: Text("제목이 없습니다"),
+                        message: Text("제목을 입력해주세요"),
+                        dismissButton: .default(Text("확인"))
+                    )
+                }
             }
             .padding()
         }
-        .alert(
-            isPresented: $showCoreDataAlert,
-            title: "저장 오류",
-            message: "저장에 실패했습니다",
-            buttonLabel: "확인"
-        )
     }
     
     private func isValidData() -> Bool {
         
-        if tempProject.name.isEmpty || tempProject.name == "" { return false }
-        if tempProject.startDate > tempProject.endDate { return false }
+        if projectDataHolder.name.isEmpty || projectDataHolder.name == "" { return false }
+        if projectDataHolder.startDate > projectDataHolder.endDate { return false }
         
         return true
     }
@@ -93,23 +98,24 @@ struct ProjectToolBar: View {
         let newProject = Project(context: viewContext)
         
         newProject.projectId = UUID()
-        newProject.name = tempProject.name
-        newProject.summary = tempProject.summary
-        newProject.startDate = tempProject.startDate
-        newProject.endDate = tempProject.endDate
-        newProject.isFinished = tempProject.isFinished
+        newProject.name = projectDataHolder.name
+        newProject.summary = projectDataHolder.summary
+        newProject.startDate = projectDataHolder.startDate
+        newProject.endDate = projectDataHolder.endDate
+        newProject.isFinished = projectDataHolder.isFinished
     }
     
     private func editProject() {
         if project == nil {
-            fatalError("Error in editProject... Project to edit is nil")
+            self.alertInfo = .saveError
+            self.showAlert.toggle()
         }
         else {
-            project!.name = tempProject.name
-            project!.summary = tempProject.summary
-            project!.startDate = tempProject.startDate
-            project!.endDate = tempProject.endDate
-            project!.isFinished = tempProject.isFinished
+            project!.name = projectDataHolder.name
+            project!.summary = projectDataHolder.summary
+            project!.startDate = projectDataHolder.startDate
+            project!.endDate = projectDataHolder.endDate
+            project!.isFinished = projectDataHolder.isFinished
         }
     }
     
@@ -117,6 +123,9 @@ struct ProjectToolBar: View {
         let saved = PersistenceController.shared.save(
             errorDescription: "Error in saveContext()"
         )
-        saved == true ? nil : showCoreDataAlert.toggle()
+        if saved == false {
+            self.alertInfo = .saveError
+            self.showAlert.toggle()
+        }
     }
 }

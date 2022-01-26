@@ -41,6 +41,7 @@ extension Date: Identifiable {
     var year: Int { self.getComponent(.year) }
     var isToday: Bool { calendar.isDateInToday(self)}
     var isWeekend: Bool { calendar.isDateInWeekend(self)}
+    var isExpired: Bool { self.midnight < Date().midnight }
     
     var midnight: Date {
         calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self) ?? self
@@ -142,5 +143,11 @@ struct CustomViewModifier: ViewModifier {
 extension View {
     func calendarStackModifier(width: CGFloat, height: CGFloat, offset: CGFloat, corners: UIRectCorner) -> some View {
         modifier(CustomViewModifier(width: width, height: height, offset: offset, corners: corners))
+    }
+}
+
+extension EditMode {
+    mutating func toggle() {
+        self = self == .active ? .inactive : .active
     }
 }
