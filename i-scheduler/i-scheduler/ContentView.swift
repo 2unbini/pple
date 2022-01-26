@@ -12,7 +12,15 @@ struct ContentView: View {
     var body: some View {
         TabView {
             MainCalendar()
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("calendar")
+                }
             ProjectList()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("list")
+                }
         }
     }
 }
