@@ -73,18 +73,31 @@ struct DateView: View {
         }
         
         return VStack(spacing: 0) {
-//            Spacer(minLength: 0)
+            // Spacer(minLength: 0)
             let end = lastIndex >= 3 ? 1 : lastIndex
             ForEach(0...end) { index in
                 if positions[index] != nil {
                     ZStack {
-                        Color.orange
                         if date.midnight == positions[index]!!.startDate.midnight {
-                            Text(positions[index]!!.name)
+                            if positions[index]!!.endDate.midnight == positions[index]!!.startDate.midnight {
+                                Text(positions[index]!!.name)
+                                    .calendarStackModifier(width: calendarConfig.cellSize.width * 0.95, height: calendarConfig.cellSize.width * 0.23, offset: 0, corners: .allCorners)
+                            }
+                            else {
+                                Text(positions[index]!!.name)
+                                    .calendarStackModifier(width: calendarConfig.cellSize.width,  height: calendarConfig.cellSize.width * 0.23, offset: calendarConfig.cellSize.width, corners: [.topLeft, .bottomLeft])
+                            }
+                        }
+                        else if date.midnight == positions[index]!!.endDate.midnight {
+                            Color.orange
+                                .calendarStackModifier(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23, offset: calendarConfig.cellSize.width * -1, corners: [.topRight, .bottomRight])
+                        }
+                        else {
+                            Color.orange
+                                .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
+                                .clipped()
                         }
                     }
-                    .frame(width: calendarConfig.cellSize.width, height: calendarConfig.cellSize.width * 0.23)
-                    .clipped()
                     .padding(.top, 2)
                 } else {
                     Color.orange
@@ -97,7 +110,7 @@ struct DateView: View {
             if lastIndex >= 3 {
                 // TODO: replace w/ image...?
                 Text("...")
-//                    .frame(width: width, height: width * 0.1)
+                //                    .frame(width: width, height: width * 0.1)
                     .font(.caption)
                     .clipped()
             }
