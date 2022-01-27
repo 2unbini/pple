@@ -89,7 +89,7 @@ struct ProjectList: View {
 }
 
 struct ProjectLabel: View {
-    var project: Project
+    @ObservedObject var project: Project
     
     var body: some View {
         Text(project.name)
