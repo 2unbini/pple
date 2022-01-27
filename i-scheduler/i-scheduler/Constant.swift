@@ -16,3 +16,8 @@ enum ToolBarAction {
     case add
     case edit
 }
+
+enum AlertType {
+    case saveError
+    case invalidData
+}

@@ -42,6 +42,7 @@ struct ProjectList: View {
                 .onDelete(perform: removeSelectedProject)
             }
             .listStyle(.plain)
+            .navigationViewStyle(StackNavigationViewStyle())
             .navigationTitle(isEditing ? "프로젝트 선택" : "내 프로젝트")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -66,11 +67,10 @@ struct ProjectList: View {
             }
             .environment(\.editMode, $editMode)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
         .alert(
             isPresented: $showCoreDataAlert,
             title: "삭제 오류",
-            message: "삭제에 실패했습니다",
+            message: "삭제에 실패했습니다.",
             buttonLabel: "확인"
         )
     }
@@ -93,17 +93,9 @@ struct ProjectLabel: View {
     
     var body: some View {
         Text(project.name)
-        // TODO: need to find the way to update isFinished when endDate expires
-        // stikethrough and foregroundColor change when isFinished
-            .strikethrough(project.isFinished, color: .gray)
-            .foregroundColor(project.isFinished ? .gray : .black)
+            .strikethrough(project.isFinished || project.endDate.isExpired, color: .gray)
+            .foregroundColor(project.isFinished || project.endDate.isExpired ? .gray : .primary)
             .font(.title3)
             .padding(8.0)
-    }
-}
-
-extension EditMode {
-    mutating func toggle() {
-        self = self == .active ? .inactive : .active
     }
 }
