@@ -19,7 +19,7 @@ struct ContentView: View {
             ProjectList()
                 .tabItem {
                     Image(systemName: "list.bullet")
-                    Text("list")
+                    Text("projects")
                 }
         }
     }
