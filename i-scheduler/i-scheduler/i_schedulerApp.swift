@@ -10,6 +10,9 @@ import CoreData
 
 @main
 struct i_schedulerApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     let persistenceController = PersistenceController.shared
     
     var body: some Scene {
