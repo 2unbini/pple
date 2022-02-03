@@ -1,5 +1,5 @@
 //
-//  i_schedulerApp.swift
+//  ppleApp.swift
 //  i-scheduler
 //
 //  Created by 권은빈 on 2021/12/06.
@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 @main
-struct i_schedulerApp: App {
+struct ppleApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
