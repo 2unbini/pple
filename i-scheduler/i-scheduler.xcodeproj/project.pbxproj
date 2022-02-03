@@ -29,6 +29,7 @@
 		A4D52AA2276877F300E0B17A /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D52AA1276877F300E0B17A /* UtilityExtensions.swift */; };
 		A4F86B2A279FEEC3006BFA6C /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F86B29279FEEC3006BFA6C /* Popup.swift */; };
 		A864EE8327ABE05E005A6954 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A864EE8227ABE05E005A6954 /* AppDelegate.swift */; };
+		A864EE8627ABE2DD005A6954 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A864EE8827ABE2DD005A6954 /* InfoPlist.strings */; };
 		A87FA85E275DD47100A77363 /* i_schedulerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85D275DD47100A77363 /* i_schedulerApp.swift */; };
 		A87FA860275DD47100A77363 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FA85F275DD47100A77363 /* ContentView.swift */; };
 		A87FA862275DD47200A77363 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87FA861275DD47200A77363 /* Assets.xcassets */; };
@@ -64,6 +65,9 @@
 		A4D52AA1276877F300E0B17A /* UtilityExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		A4F86B29279FEEC3006BFA6C /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		A864EE8227ABE05E005A6954 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A864EE8727ABE2DD005A6954 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A864EE8927ABE2EA005A6954 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A864EE8A27ABE36B005A6954 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A87FA85A275DD47100A77363 /* i-scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i-scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A87FA85D275DD47100A77363 /* i_schedulerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i_schedulerApp.swift; sourceTree = "<group>"; };
 		A87FA85F275DD47100A77363 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 		A87FA851275DD47100A77363 = {
 			isa = PBXGroup;
 			children = (
+				A864EE8827ABE2DD005A6954 /* InfoPlist.strings */,
 				A87FA85C275DD47100A77363 /* i-scheduler */,
 				A87FA85B275DD47100A77363 /* Products */,
 			);
@@ -147,6 +152,7 @@
 		A87FA85C275DD47100A77363 /* i-scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				A864EE8A27ABE36B005A6954 /* Info.plist */,
 				A865D028278EC883000814C2 /* Calendar */,
 				A865D02B278ECB6F000814C2 /* UtilityViews */,
 				A865D02C278ECCCF000814C2 /* ProjectCalendar */,
@@ -217,6 +223,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = A87FA851275DD47100A77363;
 			productRefGroup = A87FA85B275DD47100A77363 /* Products */;
@@ -234,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A87FA865275DD47200A77363 /* Preview Assets.xcassets in Resources */,
+				A864EE8627ABE2DD005A6954 /* InfoPlist.strings in Resources */,
 				A87FA862275DD47200A77363 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +287,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A864EE8827ABE2DD005A6954 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A864EE8727ABE2DD005A6954 /* ko */,
+				A864EE8927ABE2EA005A6954 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A87FA866275DD47200A77363 /* Debug */ = {
@@ -408,6 +428,8 @@
 				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "i-scheduler/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -439,6 +461,8 @@
 				DEVELOPMENT_TEAM = 4L7K3ZV8H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "i-scheduler/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
